@@ -5,17 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Paraíso FM 101,1 - Sobral</title>
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EF42RBHES1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF42RBHES1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-EF42RBHES1');
+  </script>
 
-  gtag('config', 'G-EF42RBHES1');
-</script>
-
-  <!-- Open Graph / Twitter Card dinâmicos -->
+  <!-- Open Graph / Twitter Card -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="📻 Paraíso FM 101,1 - Sobral">
   <meta property="og:description" content="Paraíso FM de Sobral Ao vivo - Informação e entretenimento em um só lugar.">
@@ -73,15 +72,19 @@
 
     <div class="social">
       <a class="instagram" href="https://www.instagram.com/sistemaparaiso" target="_blank" aria-label="Instagram">
+        <!-- Instagram Icon -->
         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"/></svg>
       </a>
       <a class="whatsapp" href="https://wa.me/5588999834349" target="_blank" aria-label="WhatsApp">
+        <!-- WhatsApp Icon -->
         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M.057 24l1.687-6.163A11.94 11.94 0 0112.02 0c6.627 0 12 5.373 12 12 0 6.627-5.373 12-12 12-2.042 0-3.953-.495-5.657-1.367L.057 24zM6.68 19.427c1.676.995 3.276 1.591 5.38 1.591 5.448 0 9.886-4.438 9.886-9.886 0-5.448-4.438-9.886-9.886-9.886-5.449 0-9.887 4.438-9.887 9.886 0 2.109.697 3.647 1.822 5.428L3.6 20.4l3.08-.973zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.471-.149-.67.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
       </a>
       <a class="youtube" href="https://youtube.com/" target="_blank" aria-label="YouTube">
+        <!-- YouTube Icon -->
         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a2.974 2.974 0 00-2.096-2.106C19.458 3.5 12 3.5 12 3.5s-7.458 0-9.402.58a2.974 2.974 0 00-2.096 2.106A31.533 31.533 0 000 12a31.533 31.533 0 00.502 5.814 2.974 2.974 0 002.096 2.106C4.542 20.5 12 20.5 12 20.5s7.458 0 9.402-.58a2.974 2.974 0 002.096-2.106A31.533 31.533 0 0024 12a31.533 31.533 0 00-.502-5.814zM9.75 15.568V8.432L15.818 12 9.75 15.568z"/></svg>
       </a>
       <a class="site" href="https://sistemaparaiso.com.br" target="_blank" aria-label="Site">
+        <!-- Site Icon -->
         <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 17.93V20h-2v-.07A8.001 8.001 0 014.07 13H4v-2h.07A8.001 8.001 0 0111 4.07V4h2v.07A8.001 8.001 0 0119.93 11H20v2h-.07A8.001 8.001 0 0113 19.93z"/></svg>
       </a>
     </div>
@@ -101,14 +104,35 @@
     const volumeControl = document.getElementById("volumeControl");
     const programacaoEl = document.getElementById("programacao");
 
+    // Grade com dias da semana (0=Domingo, 1=Segunda, ..., 6=Sábado)
     const grade = [
-      { inicio: "04:00", fim: "06:00", programa: "De Olho na Cidade" },
-      { inicio: "06:00", fim: "08:00", programa: "Chama a Paraíso" },
-      { inicio: "08:00", fim: "09:00", programa: "Variedades" },
-      { inicio: "09:00", fim: "11:00", programa: "Estação 101" },
-      { inicio: "11:00", fim: "13:00", programa: "Hora da Notícia" },
-      { inicio: "13:00", fim: "15:00", programa: "Tribuna & Plenário" },
-      { inicio: "15:00", fim: "17:00", programa: "Forronejo" }
+      // SEGUNDA A SEXTA
+      { dias: [1,2,3,4,5], inicio: "04:00", fim: "06:00", programa: "De Olho na Cidade" },
+      { dias: [1,2,3,4,5], inicio: "06:00", fim: "08:00", programa: "Chama a Paraíso" },
+      { dias: [1,2,3,4,5], inicio: "08:00", fim: "09:00", programa: "Variedades" },
+      { dias: [1,2,3,4,5], inicio: "09:00", fim: "11:00", programa: "Estação 101" },
+      { dias: [1,2,3,4,5], inicio: "11:00", fim: "13:00", programa: "Hora da Notícia" },
+      { dias: [1,2,3,4,5], inicio: "13:00", fim: "15:00", programa: "Tribuna & Plenário" },
+      { dias: [1,2,3,4,5], inicio: "15:00", fim: "17:00", programa: "Forronejo" },
+      { dias: [1,2,3,4,5], inicio: "17:00", fim: "19:00", programa: "Sucessos & Saudades" },
+      { dias: [1,2,3,4,5], inicio: "19:00", fim: "20:00", programa: "A voz do Brasil" },
+      { dias: [1,2,3,4,5], inicio: "20:00", fim: "22:00", programa: "Diário Policial" },
+      { dias: [1,2,3,4,5], inicio: "22:00", fim: "23:30", programa: "Plantão Alerta" },
+      { dias: [1,2,3,4,5], inicio: "23:30", fim: "1:00", programa: "Paraíso By Night" },
+      { dias: [1,2,3,4,5], inicio: "1:00", fim: "2:00", programa: "Novo Tempo" },
+      { dias: [1,2,3,4,5], inicio: "2:00", fim: "4:00", programa: "Madrugada 101" },
+
+      // SÁBADO
+      { dias: [6], inicio: "06:00", fim: "09:00", programa: "Manhã Sertaneja" },
+      { dias: [6], inicio: "09:00", fim: "12:00", programa: "Top Hits Paraíso" },
+      { dias: [6], inicio: "12:00", fim: "15:00", programa: "Sábado Esportivo" },
+      { dias: [6], inicio: "15:00", fim: "18:00", programa: "Especial Forró das Antigas" },
+
+      // DOMINGO
+      { dias: [0], inicio: "06:00", fim: "09:00", programa: "Domingo de Fé" },
+      { dias: [0], inicio: "09:00", fim: "12:00", programa: "Paradão Paraíso" },
+      { dias: [0], inicio: "12:00", fim: "15:00", programa: "Tarde de Sucessos" },
+      { dias: [0], inicio: "15:00", fim: "18:00", programa: "Especial Samba & Pagode" }
     ];
 
     // Status do player
@@ -144,11 +168,15 @@
 
     function atualizarProgramacao() {
       const agora = new Date();
+      const diaSemana = agora.getDay(); // 0=Dom, 1=Seg, ..., 6=Sáb
       const horaAtual = agora.getHours().toString().padStart(2,"0") + ":" +
                         agora.getMinutes().toString().padStart(2,"0");
-      const programaAtual = grade.find(p => horaEntre(horaAtual, p.inicio, p.fim));
-      programacaoEl.textContent = programaAtual ? `🎙️ Programa atual: ${programaAtual.programa} (${programaAtual.inicio}-${programaAtual.fim})`
-                                               : "🎙️ Programa atual: Fora do ar";
+
+      const programaAtual = grade.find(p => p.dias.includes(diaSemana) && horaEntre(horaAtual, p.inicio, p.fim));
+
+      programacaoEl.textContent = programaAtual 
+        ? `🎙️ Programa atual: ${programaAtual.programa} (${programaAtual.inicio}-${programaAtual.fim})`
+        : "🎙️ Programa atual: Fora do ar";
     }
 
     atualizarProgramacao();
@@ -156,5 +184,3 @@
   </script>
 </body>
 </html>
-
-
