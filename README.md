@@ -8,7 +8,7 @@ Isso significa que você pode acessar o player direto do navegador e também **i
 ## 🚀 Como acessar
 Basta abrir o link do GitHub Pages no navegador:
 
-👉 (https://rivaldrss.github.io/paraiso_aovivo/README.md)
+👉 (https://rivaldrss.github.io/paraiso_aovivo/)
 
 ---
 
