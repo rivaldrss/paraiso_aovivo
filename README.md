@@ -8,9 +8,7 @@ Isso significa que você pode acessar o player direto do navegador e também **i
 ## 🚀 Como acessar
 Basta abrir o link do GitHub Pages no navegador:
 
-👉 [https://rivaldrss.github.io/paraiso_player/](https://rivaldrss.github.io/paraiso_player/)
-
-(Substitua **SEU-USUARIO** pelo seu nome de usuário no GitHub.)
+👉 (https://rivaldrss.github.io/paraiso_player/)
 
 ---
 
