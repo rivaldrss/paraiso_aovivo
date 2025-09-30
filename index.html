@@ -32,6 +32,22 @@
 
   <!-- Optional: custom WhatsApp tag for internal use (not read by WhatsApp) -->
   <meta name="whatsapp:preview" content="https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png?v=2">
+<!-- Manifest -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e90ff">
+
+<!-- iOS suporte -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Paraíso FM">
+<link rel="apple-touch-icon" href="icone-192.png">
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker registrado."))
+    .catch((err) => console.error("Erro no Service Worker:", err));
+}
+</script>
 
   <style>
     *{box-sizing:border-box;margin:0;padding:0;}
@@ -191,6 +207,7 @@
   </script>
 </body>
 </html>
+
 
 
 
