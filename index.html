@@ -14,6 +14,9 @@
     gtag('config', 'G-EF42RBHES1');
   </script>
 
+  <!-- Font Awesome para ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
   <!-- Open Graph / WhatsApp / Twitter Card -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="📻 Paraíso FM 101,1 - Sobral">
@@ -210,13 +213,14 @@ if ("serviceWorker" in navigator) {
       background: rgba(255,255,255,0.1);
     }
     
+    /* Cores dos ícones */
     .social a.instagram{color:#E1306C;}
     .social a.whatsapp{color:#25D366;}
     .social a.youtube{color:#FF0000;}
     .social a.site{color:#1E90FF;}
-    .social svg{
-      width:24px; 
-      height:24px; 
+    
+    .social i{
+      font-size:24px; 
       display:block;
     }
     
@@ -228,7 +232,7 @@ if ("serviceWorker" in navigator) {
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Estilos do Carrossel - MAIOR E MAIS LEGÍVEL */
+    /* Estilos do Carrossel */
     .carrossel-container {
       margin: 20px 0;
       position: relative;
@@ -406,9 +410,8 @@ if ("serviceWorker" in navigator) {
         height: 48px;
       }
       
-      .social svg {
-        width: 22px;
-        height: 22px;
+      .social i {
+        font-size: 22px;
       }
     }
 
@@ -471,9 +474,8 @@ if ("serviceWorker" in navigator) {
         height:45px;
       }
       
-      .social svg{
-        width:20px;
-        height:20px;
+      .social i{
+        font-size:20px;
       }
       
       .slide { 
@@ -549,7 +551,7 @@ if ("serviceWorker" in navigator) {
 
     <div class="programacao" id="programacao">🎙️ Programa atual: Carregando...</div>
 
-    <!-- Carrossel de Notícias - MAIOR E MAIS LEGÍVEL -->
+    <!-- Carrossel de Notícias -->
     <div class="carrossel-container">
       <div class="carrossel" id="carrossel">
         <div class="carregando">Carregando notícias...</div>
@@ -565,22 +567,19 @@ if ("serviceWorker" in navigator) {
       </div>
     </div>
 
+    <!-- Redes Sociais com Font Awesome -->
     <div class="social">
       <a class="instagram" href="https://www.instagram.com/sistemaparaiso" target="_blank" aria-label="Instagram">
-        <!-- Instagram Icon -->
-        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654-1.346-3-3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"/></svg>
+        <i class="fab fa-instagram"></i>
       </a>
       <a class="whatsapp" href="https://wa.me/5588999834349" target="_blank" aria-label="WhatsApp">
-        <!-- WhatsApp Icon -->
-        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M.057 24l1.687-6.163A11.94 11.94 0 0112.02 0c6.627 0 12 5.373 12 12 0 6.627-5.373 12-12 12-2.042 0-3.953-.495-5.657-1.367L.057 24zM6.68 19.427c1.676.995 3.276 1.591 5.38 1.591 5.448 0 9.886-4.438 9.886-9.886 0-5.448-4.438-9.886-9.886-9.886-5.449 0-9.887 4.438-9.887 9.886 0 2.109.697 3.647 1.822 5.428L3.6 20.4l3.08-.973zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.471-.149-.67.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.372-.025-.521-.075-.149-.669-1.611-.916-2.206-.242-.579-.487-.5-.67-.51l-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/></svg>
+        <i class="fab fa-whatsapp"></i>
       </a>
       <a class="youtube" href="https://www.youtube.com/@paraisofmsobral" target="_blank" aria-label="YouTube">
-        <!-- YouTube Icon -->
-        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M23.498 6.186a2.974 2.974 0 00-2.096-2.106C19.458 3.5 12 3.5 12 3.5s-7.458 0-9.402.58a2.974 2.974 0 00-2.096 2.106A31.533 31.533 0 000 12a31.533 31.533 0 00.502 5.814 2.974 2.974 0 002.096 2.106C4.542 20.5 12 20.5 12 20.5s7.458 0 9.402-.58a2.974 2.974 0 002.096-2.106A31.533 31.533 0 0024 12a31.533 31.533 0 00-.502-5.814zM9.75 15.568V8.432L15.818 12 9.75 15.568z"/></svg>
+        <i class="fab fa-youtube"></i>
       </a>
       <a class="site" href="https://sistemaparaiso.com.br" target="_blank" aria-label="Site">
-        <!-- Site Icon -->
-        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm1 17.93V20h-2v-.07A8.001 8.001 0 014.07 13H4v-2h.07A8.001 8.001 0 0111 4.07V4h2v.07A8.001 8.001 0 0119.93 11H20v2h-.07A8.001 8.001 0 0113 19.93z"/></svg>
+        <i class="fas fa-globe"></i>
       </a>
     </div>
 
@@ -593,6 +592,7 @@ if ("serviceWorker" in navigator) {
   </audio>
 
   <script>
+    // ... (o mesmo JavaScript anterior) ...
     const player = document.getElementById("player");
     const playPause = document.getElementById("playPause");
     const statusText = document.getElementById("status");
@@ -691,7 +691,7 @@ if ("serviceWorker" in navigator) {
     atualizarProgramacao();
     setInterval(atualizarProgramacao, 60_000);
 
-    // ================= CARROSSEL CORRIGIDO - BOTÃO "LEIA MAIS" FUNCIONAL =================
+    // ================= CARROSSEL =================
     class CarrosselNoticias {
       constructor() {
         this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
