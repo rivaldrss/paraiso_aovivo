@@ -72,7 +72,7 @@ if ("serviceWorker" in navigator) {
     .social svg{width:20px; height:20px; display:block;}
     footer{font-size:12px; opacity:0.8; margin-top:6px;}
 
-    /* Estilos do Carrossel */
+    /* Estilos do Carrossel - SEM IMAGENS */
     .carrossel-container {
       margin: 15px 0;
       position: relative;
@@ -90,21 +90,23 @@ if ("serviceWorker" in navigator) {
 
     .slide {
       min-width: 100%;
-      padding: 15px;
       background: rgba(255,255,255,0.05);
+      padding: 20px;
     }
 
     .slide h3 {
       font-size: 16px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
       color: #fff;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      border-bottom: 2px solid rgba(30, 144, 255, 0.5);
+      padding-bottom: 8px;
     }
 
     .slide p {
-      font-size: 13px;
-      line-height: 1.4;
-      margin-bottom: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 15px;
       opacity: 0.9;
     }
 
@@ -112,15 +114,19 @@ if ("serviceWorker" in navigator) {
       display: inline-block;
       background: rgba(30, 144, 255, 0.7);
       color: white;
-      padding: 6px 12px;
+      padding: 10px 20px;
       text-decoration: none;
       border-radius: 6px;
-      font-size: 12px;
-      transition: background 0.3s;
+      font-size: 14px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(255,255,255,0.2);
     }
 
     .slide a:hover {
       background: rgba(30, 144, 255, 0.9);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
     }
 
     .controles {
@@ -137,51 +143,53 @@ if ("serviceWorker" in navigator) {
       background: rgba(0,0,0,0.5);
       color: white;
       border: none;
-      width: 30px;
-      height: 30px;
+      width: 35px;
+      height: 35px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
     }
 
     .controles button:hover {
       background: rgba(0,0,0,0.7);
+      transform: scale(1.1);
     }
 
     .indicadores {
       display: flex;
       justify-content: center;
       gap: 8px;
-      padding: 10px;
+      padding: 15px;
     }
 
     .indicador {
-      width: 8px;
-      height: 8px;
+      width: 10px;
+      height: 10px;
       border-radius: 50%;
       background: rgba(255,255,255,0.3);
       cursor: pointer;
-      transition: background 0.3s;
+      transition: all 0.3s ease;
     }
 
     .indicador.ativo {
       background: #1E90FF;
+      transform: scale(1.2);
     }
 
     .carregando {
       text-align: center;
-      padding: 30px 15px;
+      padding: 40px 20px;
       color: rgba(255,255,255,0.7);
       font-size: 14px;
     }
 
     .erro {
       text-align: center;
-      padding: 20px 15px;
+      padding: 30px 20px;
       color: #ff6b6b;
       font-size: 14px;
       background: rgba(255,107,107,0.1);
@@ -189,13 +197,21 @@ if ("serviceWorker" in navigator) {
       margin: 10px;
     }
 
+    .data-noticia {
+      font-size: 12px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+
     @media (max-width:480px){
       .player-card{padding:18px 12px;} 
       .player-card header img{width:76px;} 
       .social a{width:40px;height:40px;}
-      .slide { padding: 12px; }
+      .slide { padding: 15px; }
       .slide h3 { font-size: 15px; }
-      .slide p { font-size: 12px; }
+      .slide p { font-size: 13px; }
+      .slide a { padding: 8px 16px; font-size: 13px; }
     }
   </style>
 </head>
@@ -218,7 +234,7 @@ if ("serviceWorker" in navigator) {
 
     <div class="programacao" id="programacao">🎙️ Programa atual: Carregando...</div>
 
-    <!-- Carrossel de Notícias -->
+    <!-- Carrossel de Notícias - SEM IMAGENS -->
     <div class="carrossel-container">
       <div class="carrossel" id="carrossel">
         <div class="carregando">Carregando notícias...</div>
@@ -346,10 +362,9 @@ if ("serviceWorker" in navigator) {
     atualizarProgramacao();
     setInterval(atualizarProgramacao, 60_000);
 
-    // ================= CARROSSEL DE NOTÍCIAS CORRIGIDO =================
+    // ================= CARROSSEL SIMPLIFICADO - SEM IMAGENS =================
     class CarrosselNoticias {
       constructor() {
-        // URL CORRIGIDA - usando a sua URL do Google Sheets
         this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
         this.carrossel = document.getElementById('carrossel');
         this.indicadores = document.getElementById('indicadores');
@@ -364,7 +379,6 @@ if ("serviceWorker" in navigator) {
         try {
           console.log('🚀 Iniciando carregamento de notícias...');
           
-          // Tenta carregar do Google Sheets
           const sucesso = await this.carregarDoGoogleSheets();
           
           if (!sucesso) {
@@ -386,9 +400,8 @@ if ("serviceWorker" in navigator) {
       
       async carregarDoGoogleSheets() {
         try {
-          this.mostrarCarregando('Conectando ao Google Sheets...');
+          this.mostrarCarregando('Carregando notícias...');
           
-          console.log('📡 Fazendo requisição para:', this.sheetURL);
           const response = await fetch(this.sheetURL);
           
           if (!response.ok) {
@@ -396,16 +409,13 @@ if ("serviceWorker" in navigator) {
           }
           
           const csvData = await response.text();
-          console.log('✅ Dados recebidos. Tamanho:', csvData.length, 'caracteres');
-          console.log('📄 Primeiros 500 caracteres:', csvData.substring(0, 500));
           
           if (!csvData || csvData.trim().length === 0) {
             throw new Error('Planilha vazia ou sem dados');
           }
           
-          // Processar CSV - método simplificado
+          // Processar CSV
           const linhas = csvData.split('\n').filter(linha => linha.trim().length > 0);
-          console.log('📊 Total de linhas:', linhas.length);
           
           if (linhas.length <= 1) {
             throw new Error('Apenas cabeçalho encontrado - sem dados');
@@ -413,24 +423,21 @@ if ("serviceWorker" in navigator) {
           
           // Processar linhas de dados
           this.slides = [];
-          const cabecalho = linhas[0].split(',').map(col => col.trim().toLowerCase());
-          console.log('🏷️ Cabeçalho:', cabecalho);
           
           for (let i = 1; i < linhas.length; i++) {
             const linha = linhas[i].trim();
             if (!linha) continue;
             
-            // Método simples de split por vírgula
-            const colunas = linha.split(',').map(col => col.trim().replace(/^"|"$/g, ''));
+            // Método robusto para processar CSV
+            const colunas = this.processarCSVCorretamente(linha);
             
-            // Mapear colunas baseado no cabeçalho
-            const noticia = {};
-            
-            if (colunas.length > 0) noticia.titulo = colunas[0] || 'Sem título';
-            if (colunas.length > 1) noticia.descricao = colunas[1] || 'Sem descrição';
-            if (colunas.length > 2) noticia.imagem = colunas[2] || '';
-            if (colunas.length > 3) noticia.link = colunas[3] || '';
-            if (colunas.length > 4) noticia.data = colunas[4] || '';
+            // Mapear colunas - AGORA APENAS TÍTULO, DESCRIÇÃO, LINK E DATA
+            const noticia = {
+              titulo: colunas[0] || 'Sem título',
+              descricao: colunas[1] || 'Sem descrição',
+              link: colunas[3] || '',   // QUARTA coluna é o link
+              data: colunas[4] || ''    // QUINTA coluna é a data
+            };
             
             // Só adiciona se tiver pelo menos título
             if (noticia.titulo && noticia.titulo !== 'Sem título') {
@@ -439,7 +446,6 @@ if ("serviceWorker" in navigator) {
           }
           
           console.log(`✅ Carregadas ${this.slides.length} notícias do Google Sheets`);
-          console.log('📋 Notícias carregadas:', this.slides);
           
           return this.slides.length > 0;
           
@@ -449,24 +455,57 @@ if ("serviceWorker" in navigator) {
         }
       }
       
+      processarCSVCorretamente(linha) {
+        const resultado = [];
+        let campoAtual = '';
+        let dentroDeAspas = false;
+        
+        for (let i = 0; i < linha.length; i++) {
+          const char = linha[i];
+          
+          if (char === '"') {
+            dentroDeAspas = !dentroDeAspas;
+          } else if (char === ',' && !dentroDeAspas) {
+            // Remove aspas do início e fim do campo
+            let campo = campoAtual.trim();
+            if (campo.startsWith('"') && campo.endsWith('"')) {
+              campo = campo.slice(1, -1);
+            }
+            resultado.push(campo);
+            campoAtual = '';
+          } else {
+            campoAtual += char;
+          }
+        }
+        
+        // Adicionar o último campo
+        let ultimoCampo = campoAtual.trim();
+        if (ultimoCampo.startsWith('"') && ultimoCampo.endsWith('"')) {
+          ultimoCampo = ultimoCampo.slice(1, -1);
+        }
+        resultado.push(ultimoCampo);
+        
+        return resultado;
+      }
+      
       usarDadosExemplo() {
         this.slides = [
           {
             titulo: "Paraíso FM - Sua Rádio em Sobral",
-            descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral",
+            descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral e região com as melhores notícias e entretenimento.",
             link: "https://sistemaparaiso.com.br",
             data: new Date().toLocaleDateString('pt-BR')
           },
           {
-            titulo: "Notícias Locais em Destaque",
-            descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará",
+            titulo: "Notícias Locais em Destaque", 
+            descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará. Informação de qualidade para você se manter atualizado.",
             link: "https://sistemaparaiso.com.br",
             data: new Date().toLocaleDateString('pt-BR')
           },
           {
             titulo: "Eventos da Semana na Região",
-            descricao: "Confira a agenda completa de eventos culturais, esportivos e shows na região",
-            link: "https://sistemaparaiso.com.br", 
+            descricao: "Confira a agenda completa de eventos culturais, esportivos e shows na região. Não perca as novidades!",
+            link: "https://sistemaparaiso.com.br",
             data: new Date().toLocaleDateString('pt-BR')
           }
         ];
@@ -491,9 +530,9 @@ if ("serviceWorker" in navigator) {
         this.carrossel.innerHTML = this.slides.map((slide, index) => `
           <div class="slide">
             <h3>${this.escapeHtml(slide.titulo)}</h3>
+            ${slide.data ? `<div class="data-noticia">📅 ${this.escapeHtml(slide.data)}</div>` : ''}
             <p>${this.escapeHtml(slide.descricao)}</p>
-            ${slide.data ? `<small>Publicado em: ${this.escapeHtml(slide.data)}</small><br><br>` : ''}
-            ${slide.link ? `<a href="${this.escapeHtml(slide.link)}" target="_blank">Ler mais</a>` : ''}
+            ${slide.link ? `<a href="${this.escapeHtml(slide.link)}" target="_blank">📖 Leia mais</a>` : ''}
           </div>
         `).join('');
         
@@ -512,7 +551,6 @@ if ("serviceWorker" in navigator) {
       }
       
       inicializarEventos() {
-        // Limpar eventos anteriores
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         
@@ -522,7 +560,6 @@ if ("serviceWorker" in navigator) {
         prevBtn.addEventListener('click', () => this.mudarSlide(-1));
         nextBtn.addEventListener('click', () => this.mudarSlide(1));
         
-        // Atualizar eventos dos indicadores
         this.indicadores.querySelectorAll('.indicador').forEach(indicador => {
           indicador.onclick = null;
           indicador.addEventListener('click', (e) => {
@@ -565,16 +602,14 @@ if ("serviceWorker" in navigator) {
       }
       
       iniciarAutoPlay() {
-        // Limpar intervalo anterior
         if (this.autoPlayInterval) {
           clearInterval(this.autoPlayInterval);
         }
         
-        // Só inicia auto-play se tiver mais de 1 slide
         if (this.slides.length > 1) {
           this.autoPlayInterval = setInterval(() => {
             this.mudarSlide(1);
-          }, 5000);
+          }, 6000); // Muda a cada 6 segundos
         }
       }
       
