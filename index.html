@@ -71,7 +71,132 @@ if ("serviceWorker" in navigator) {
     .social a.site{color:#1E90FF;}
     .social svg{width:20px; height:20px; display:block;}
     footer{font-size:12px; opacity:0.8; margin-top:6px;}
-    @media (max-width:480px){.player-card{padding:18px 12px;} .player-card header img{width:76px;} .social a{width:40px;height:40px;}}
+
+    /* Estilos do Carrossel */
+    .carrossel-container {
+      margin: 15px 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      min-height: 120px;
+    }
+
+    .carrossel {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .slide {
+      min-width: 100%;
+      padding: 15px;
+      background: rgba(255,255,255,0.05);
+    }
+
+    .slide h3 {
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: #fff;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+    }
+
+    .slide p {
+      font-size: 13px;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      opacity: 0.9;
+    }
+
+    .slide a {
+      display: inline-block;
+      background: rgba(30, 144, 255, 0.7);
+      color: white;
+      padding: 6px 12px;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 12px;
+      transition: background 0.3s;
+    }
+
+    .slide a:hover {
+      background: rgba(30, 144, 255, 0.9);
+    }
+
+    .controles {
+      position: absolute;
+      top: 50%;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      transform: translateY(-50%);
+      padding: 0 10px;
+    }
+
+    .controles button {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+
+    .controles button:hover {
+      background: rgba(0,0,0,0.7);
+    }
+
+    .indicadores {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px;
+    }
+
+    .indicador {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .indicador.ativo {
+      background: #1E90FF;
+    }
+
+    .carregando {
+      text-align: center;
+      padding: 30px 15px;
+      color: rgba(255,255,255,0.7);
+      font-size: 14px;
+    }
+
+    .erro {
+      text-align: center;
+      padding: 20px 15px;
+      color: #ff6b6b;
+      font-size: 14px;
+      background: rgba(255,107,107,0.1);
+      border-radius: 8px;
+      margin: 10px;
+    }
+
+    @media (max-width:480px){
+      .player-card{padding:18px 12px;} 
+      .player-card header img{width:76px;} 
+      .social a{width:40px;height:40px;}
+      .slide { padding: 12px; }
+      .slide h3 { font-size: 15px; }
+      .slide p { font-size: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -93,10 +218,26 @@ if ("serviceWorker" in navigator) {
 
     <div class="programacao" id="programacao">🎙️ Programa atual: Carregando...</div>
 
+    <!-- Carrossel de Notícias -->
+    <div class="carrossel-container">
+      <div class="carrossel" id="carrossel">
+        <div class="carregando">Carregando notícias...</div>
+      </div>
+      
+      <div class="controles">
+        <button id="prevBtn">&#10094;</button>
+        <button id="nextBtn">&#10095;</button>
+      </div>
+      
+      <div class="indicadores" id="indicadores">
+        <!-- Indicadores serão inseridos aqui -->
+      </div>
+    </div>
+
     <div class="social">
       <a class="instagram" href="https://www.instagram.com/sistemaparaiso" target="_blank" aria-label="Instagram">
         <!-- Instagram Icon -->
-        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654 1.346-3 3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"/></svg>
+        <svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 2C4.243 2 2 4.243 2 7v10c0 2.757 2.243 5 5 5h10c2.757 0 5-2.243 5-5V7c0-2.757-2.243-5-5-5H7zm10 2c1.654 0 3 1.346 3 3v10c0 1.654-1.346 3-3 3H7c-1.654 0-3-1.346-3-3V7c0-1.654-1.346-3-3-3h10zm-5 3a5 5 0 100 10 5 5 0 000-10zm0 2a3 3 0 110 6 3 3 0 010-6zm4.5-.75a1.25 1.25 0 100 2.5 1.25 1.25 0 000-2.5z"/></svg>
       </a>
       <a class="whatsapp" href="https://wa.me/5588999834349" target="_blank" aria-label="WhatsApp">
         <!-- WhatsApp Icon -->
@@ -204,14 +345,249 @@ if ("serviceWorker" in navigator) {
 
     atualizarProgramacao();
     setInterval(atualizarProgramacao, 60_000);
+
+    // ================= CARROSSEL DE NOTÍCIAS CORRIGIDO =================
+    class CarrosselNoticias {
+      constructor() {
+        // URL CORRIGIDA - usando a sua URL do Google Sheets
+        this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
+        this.carrossel = document.getElementById('carrossel');
+        this.indicadores = document.getElementById('indicadores');
+        this.slides = [];
+        this.slideAtual = 0;
+        this.autoPlayInterval = null;
+        
+        this.inicializar();
+      }
+      
+      async carregarNoticias() {
+        try {
+          console.log('🚀 Iniciando carregamento de notícias...');
+          
+          // Tenta carregar do Google Sheets
+          const sucesso = await this.carregarDoGoogleSheets();
+          
+          if (!sucesso) {
+            console.log('📝 Usando dados de exemplo...');
+            this.usarDadosExemplo();
+          }
+          
+          this.renderizarCarrossel();
+          this.inicializarEventos();
+          
+        } catch (error) {
+          console.error('❌ Erro crítico:', error);
+          this.mostrarErro('Erro ao carregar notícias. Usando dados de exemplo.');
+          this.usarDadosExemplo();
+          this.renderizarCarrossel();
+          this.inicializarEventos();
+        }
+      }
+      
+      async carregarDoGoogleSheets() {
+        try {
+          this.mostrarCarregando('Conectando ao Google Sheets...');
+          
+          console.log('📡 Fazendo requisição para:', this.sheetURL);
+          const response = await fetch(this.sheetURL);
+          
+          if (!response.ok) {
+            throw new Error(`Erro HTTP! status: ${response.status}`);
+          }
+          
+          const csvData = await response.text();
+          console.log('✅ Dados recebidos. Tamanho:', csvData.length, 'caracteres');
+          console.log('📄 Primeiros 500 caracteres:', csvData.substring(0, 500));
+          
+          if (!csvData || csvData.trim().length === 0) {
+            throw new Error('Planilha vazia ou sem dados');
+          }
+          
+          // Processar CSV - método simplificado
+          const linhas = csvData.split('\n').filter(linha => linha.trim().length > 0);
+          console.log('📊 Total de linhas:', linhas.length);
+          
+          if (linhas.length <= 1) {
+            throw new Error('Apenas cabeçalho encontrado - sem dados');
+          }
+          
+          // Processar linhas de dados
+          this.slides = [];
+          const cabecalho = linhas[0].split(',').map(col => col.trim().toLowerCase());
+          console.log('🏷️ Cabeçalho:', cabecalho);
+          
+          for (let i = 1; i < linhas.length; i++) {
+            const linha = linhas[i].trim();
+            if (!linha) continue;
+            
+            // Método simples de split por vírgula
+            const colunas = linha.split(',').map(col => col.trim().replace(/^"|"$/g, ''));
+            
+            // Mapear colunas baseado no cabeçalho
+            const noticia = {};
+            
+            if (colunas.length > 0) noticia.titulo = colunas[0] || 'Sem título';
+            if (colunas.length > 1) noticia.descricao = colunas[1] || 'Sem descrição';
+            if (colunas.length > 2) noticia.imagem = colunas[2] || '';
+            if (colunas.length > 3) noticia.link = colunas[3] || '';
+            if (colunas.length > 4) noticia.data = colunas[4] || '';
+            
+            // Só adiciona se tiver pelo menos título
+            if (noticia.titulo && noticia.titulo !== 'Sem título') {
+              this.slides.push(noticia);
+            }
+          }
+          
+          console.log(`✅ Carregadas ${this.slides.length} notícias do Google Sheets`);
+          console.log('📋 Notícias carregadas:', this.slides);
+          
+          return this.slides.length > 0;
+          
+        } catch (error) {
+          console.error('❌ Erro ao carregar do Google Sheets:', error);
+          return false;
+        }
+      }
+      
+      usarDadosExemplo() {
+        this.slides = [
+          {
+            titulo: "Paraíso FM - Sua Rádio em Sobral",
+            descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral",
+            link: "https://sistemaparaiso.com.br",
+            data: new Date().toLocaleDateString('pt-BR')
+          },
+          {
+            titulo: "Notícias Locais em Destaque",
+            descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará",
+            link: "https://sistemaparaiso.com.br",
+            data: new Date().toLocaleDateString('pt-BR')
+          },
+          {
+            titulo: "Eventos da Semana na Região",
+            descricao: "Confira a agenda completa de eventos culturais, esportivos e shows na região",
+            link: "https://sistemaparaiso.com.br", 
+            data: new Date().toLocaleDateString('pt-BR')
+          }
+        ];
+      }
+      
+      mostrarCarregando(mensagem) {
+        this.carrossel.innerHTML = `<div class="carregando">${mensagem}</div>`;
+      }
+      
+      mostrarErro(mensagem) {
+        this.carrossel.innerHTML = `<div class="erro">${mensagem}</div>`;
+      }
+      
+      renderizarCarrossel() {
+        if (this.slides.length === 0) {
+          this.mostrarErro('Nenhuma notícia disponível no momento.');
+          return;
+        }
+        
+        console.log('🎨 Renderizando carrossel com', this.slides.length, 'slides');
+        
+        this.carrossel.innerHTML = this.slides.map((slide, index) => `
+          <div class="slide">
+            <h3>${this.escapeHtml(slide.titulo)}</h3>
+            <p>${this.escapeHtml(slide.descricao)}</p>
+            ${slide.data ? `<small>Publicado em: ${this.escapeHtml(slide.data)}</small><br><br>` : ''}
+            ${slide.link ? `<a href="${this.escapeHtml(slide.link)}" target="_blank">Ler mais</a>` : ''}
+          </div>
+        `).join('');
+        
+        this.indicadores.innerHTML = this.slides.map((_, index) => `
+          <div class="indicador ${index === 0 ? 'ativo' : ''}" data-index="${index}"></div>
+        `).join('');
+        
+        console.log('✅ Carrossel renderizado com sucesso!');
+      }
+      
+      escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+      
+      inicializarEventos() {
+        // Limpar eventos anteriores
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        prevBtn.onclick = null;
+        nextBtn.onclick = null;
+        
+        prevBtn.addEventListener('click', () => this.mudarSlide(-1));
+        nextBtn.addEventListener('click', () => this.mudarSlide(1));
+        
+        // Atualizar eventos dos indicadores
+        this.indicadores.querySelectorAll('.indicador').forEach(indicador => {
+          indicador.onclick = null;
+          indicador.addEventListener('click', (e) => {
+            const index = parseInt(e.target.getAttribute('data-index'));
+            this.irParaSlide(index);
+          });
+        });
+        
+        this.iniciarAutoPlay();
+      }
+      
+      mudarSlide(direcao) {
+        if (this.slides.length <= 1) return;
+        
+        this.slideAtual += direcao;
+        
+        if (this.slideAtual < 0) {
+          this.slideAtual = this.slides.length - 1;
+        } else if (this.slideAtual >= this.slides.length) {
+          this.slideAtual = 0;
+        }
+        
+        this.atualizarCarrossel();
+      }
+      
+      irParaSlide(index) {
+        if (index >= 0 && index < this.slides.length) {
+          this.slideAtual = index;
+          this.atualizarCarrossel();
+        }
+      }
+      
+      atualizarCarrossel() {
+        const translateX = -this.slideAtual * 100;
+        this.carrossel.style.transform = `translateX(${translateX}%)`;
+        
+        this.indicadores.querySelectorAll('.indicador').forEach((indicador, index) => {
+          indicador.classList.toggle('ativo', index === this.slideAtual);
+        });
+      }
+      
+      iniciarAutoPlay() {
+        // Limpar intervalo anterior
+        if (this.autoPlayInterval) {
+          clearInterval(this.autoPlayInterval);
+        }
+        
+        // Só inicia auto-play se tiver mais de 1 slide
+        if (this.slides.length > 1) {
+          this.autoPlayInterval = setInterval(() => {
+            this.mudarSlide(1);
+          }, 5000);
+        }
+      }
+      
+      inicializar() {
+        this.carregarNoticias();
+      }
+    }
+
+    // Inicializar o carrossel quando a página carregar
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🎯 Inicializando carrossel de notícias...');
+      new CarrosselNoticias();
+    });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
