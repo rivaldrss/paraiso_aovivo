@@ -362,7 +362,7 @@ if ("serviceWorker" in navigator) {
     atualizarProgramacao();
     setInterval(atualizarProgramacao, 60_000);
 
-    // ================= CARROSSEL SIMPLIFICADO - SEM IMAGENS =================
+    // ================= CARROSSEL CORRIGIDO - SEM REFERÊNCIAS A IMAGENS =================
     class CarrosselNoticias {
       constructor() {
         this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
@@ -409,6 +409,7 @@ if ("serviceWorker" in navigator) {
           }
           
           const csvData = await response.text();
+          console.log('📄 Dados CSV recebidos:', csvData);
           
           if (!csvData || csvData.trim().length === 0) {
             throw new Error('Planilha vazia ou sem dados');
@@ -416,28 +417,35 @@ if ("serviceWorker" in navigator) {
           
           // Processar CSV
           const linhas = csvData.split('\n').filter(linha => linha.trim().length > 0);
+          console.log('📊 Total de linhas:', linhas.length);
           
           if (linhas.length <= 1) {
             throw new Error('Apenas cabeçalho encontrado - sem dados');
           }
           
-          // Processar linhas de dados
+          // Processar linhas de dados - AGORA APENAS 3 COLUNAS: TÍTULO, DESCRIÇÃO, LINK
           this.slides = [];
           
           for (let i = 1; i < linhas.length; i++) {
             const linha = linhas[i].trim();
             if (!linha) continue;
             
+            console.log(`📄 Processando linha ${i}:`, linha);
+            
             // Método robusto para processar CSV
             const colunas = this.processarCSVCorretamente(linha);
+            console.log(`🔍 Colunas processadas linha ${i}:`, colunas);
             
-            // Mapear colunas - AGORA APENAS TÍTULO, DESCRIÇÃO, LINK E DATA
+            // AGORA APENAS 3 COLUNAS: Título, Descrição, Link
+            // Ignoramos completamente a coluna de imagens
             const noticia = {
               titulo: colunas[0] || 'Sem título',
               descricao: colunas[1] || 'Sem descrição',
-              link: colunas[3] || '',   // QUARTA coluna é o link
-              data: colunas[4] || ''    // QUINTA coluna é a data
+              link: colunas[2] || '',   // TERCEIRA coluna é o link (antes era a quarta)
+              data: colunas[3] || ''    // QUARTA coluna é a data (antes era a quinta)
             };
+            
+            console.log(`📰 Notícia ${i} processada:`, noticia);
             
             // Só adiciona se tiver pelo menos título
             if (noticia.titulo && noticia.titulo !== 'Sem título') {
