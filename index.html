@@ -53,34 +53,190 @@ if ("serviceWorker" in navigator) {
     *{box-sizing:border-box;margin:0;padding:0;}
     body{font-family:Arial,sans-serif;background:url('https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png') no-repeat center center fixed;background-size:cover;display:flex;justify-content:center;align-items:center;min-height:100vh;position:relative;color:#fff;}
     body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background: rgba(0,0,0,0.3);z-index:0;}
-    .player-card{position: relative; z-index:2; background: rgba(0,0,0,0.60); border-radius:20px; padding:25px 20px; max-width:480px; width:92%; text-align:center; box-shadow:0 10px 30px rgba(0,0,0,0.7);}
-    .player-card header img{width:90px; border-radius:50%; border:2px solid #fff; margin-bottom:10px; display:block; margin-left:auto;margin-right:auto;}
-    .player-card header h1{font-size:20px;margin-bottom:10px;text-shadow:1px 1px 5px rgba(0,0,0,0.7);}
-    .player-container{background: rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:12px; padding:10px; display:flex; align-items:center; gap:12px; box-shadow:0 5px 12px rgba(0,0,0,0.5); margin-bottom:12px;}
-    .btn{background: rgba(255,255,255,0.12); border:none; color:#fff; font-size:18px; border-radius:8px; width:48px; height:36px; cursor:pointer; transition: transform .15s, background .15s; display:inline-flex; align-items:center; justify-content:center;}
-    .btn:hover{transform:scale(1.05); background:rgba(255,255,255,0.18);}
-    .volume{flex:1;}
-    .volume input[type="range"]{width:100%; cursor:pointer;}
-    .status,.programacao{font-size:13px; opacity:0.95; margin-top:6px; text-align:left;}
-    .social{display:flex; justify-content:center; gap:12px; margin:14px 0 10px; align-items:center;}
-    .social a{display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:9px; background: rgba(255,255,255,0.03); text-decoration:none; transition: transform .15s, background .15s; z-index:3; color: inherit; border:1px solid rgba(255,255,255,0.04);}
-    .social a:hover{transform: translateY(-3px); background: rgba(255,255,255,0.06);}
+    
+    .player-card{
+      position: relative; 
+      z-index:2; 
+      background: rgba(0,0,0,0.70); 
+      border-radius:25px; 
+      padding:30px 25px; 
+      max-width:500px; 
+      width:95%; 
+      text-align:center; 
+      box-shadow:0 15px 40px rgba(0,0,0,0.8);
+      margin: 20px 10px;
+    }
+    
+    .player-card header img{
+      width:110px; 
+      border-radius:50%; 
+      border:3px solid #fff; 
+      margin-bottom:15px; 
+      display:block; 
+      margin-left:auto;
+      margin-right:auto;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+    }
+    
+    .player-card header h1{
+      font-size:24px;
+      margin-bottom:15px;
+      text-shadow:2px 2px 8px rgba(0,0,0,0.8);
+      font-weight: bold;
+    }
+    
+    .player-container{
+      background: rgba(255,255,255,0.08); 
+      border:2px solid rgba(255,255,255,0.15); 
+      border-radius:15px; 
+      padding:20px; 
+      display:flex; 
+      align-items:center; 
+      gap:15px; 
+      box-shadow:0 8px 20px rgba(0,0,0,0.6); 
+      margin-bottom:20px;
+    }
+    
+    .btn{
+      background: rgba(255,255,255,0.15); 
+      border:none; 
+      color:#fff; 
+      font-size:22px; 
+      border-radius:12px; 
+      width:65px; 
+      height:50px; 
+      cursor:pointer; 
+      transition: transform .2s, background .2s; 
+      display:inline-flex; 
+      align-items:center; 
+      justify-content:center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .btn:hover{
+      transform:scale(1.08); 
+      background:rgba(255,255,255,0.22);
+    }
+    
+    .btn:active{
+      transform:scale(0.98);
+    }
+    
+    .volume{
+      flex:1;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .volume input[type="range"]{
+      width:100%; 
+      height: 8px;
+      cursor:pointer;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      -webkit-appearance: none;
+    }
+    
+    .volume input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #1E90FF;
+      cursor: pointer;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    
+    .volume input[type="range"]::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: #1E90FF;
+      cursor: pointer;
+      border: none;
+    }
+    
+    .volume-icons {
+      display: flex;
+      gap: 5px;
+      color: rgba(255,255,255,0.7);
+      font-size: 16px;
+    }
+    
+    .status, .programacao{
+      font-size:15px; 
+      opacity:0.95; 
+      margin-top:8px; 
+      text-align:left;
+      font-weight: 500;
+    }
+    
+    .programacao {
+      background: rgba(30, 144, 255, 0.2);
+      padding: 12px 15px;
+      border-radius: 10px;
+      margin: 15px 0;
+      border-left: 4px solid #1E90FF;
+      font-size: 14px;
+    }
+    
+    .social{
+      display:flex; 
+      justify-content:center; 
+      gap:15px; 
+      margin:20px 0 15px; 
+      align-items:center;
+    }
+    
+    .social a{
+      display:inline-flex; 
+      align-items:center; 
+      justify-content:center; 
+      width:50px; 
+      height:50px; 
+      border-radius:12px; 
+      background: rgba(255,255,255,0.05); 
+      text-decoration:none; 
+      transition: transform .2s, background .2s; 
+      z-index:3; 
+      color: inherit; 
+      border:2px solid rgba(255,255,255,0.08);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    
+    .social a:hover{
+      transform: translateY(-4px); 
+      background: rgba(255,255,255,0.1);
+    }
+    
     .social a.instagram{color:#E1306C;}
     .social a.whatsapp{color:#25D366;}
     .social a.youtube{color:#FF0000;}
     .social a.site{color:#1E90FF;}
-    .social svg{width:20px; height:20px; display:block;}
-    footer{font-size:12px; opacity:0.8; margin-top:6px;}
+    .social svg{
+      width:24px; 
+      height:24px; 
+      display:block;
+    }
+    
+    footer{
+      font-size:13px; 
+      opacity:0.8; 
+      margin-top:10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
 
-    /* Estilos do Carrossel - SEM IMAGENS */
+    /* Estilos do Carrossel - MAIOR E MAIS LEGÍVEL */
     .carrossel-container {
-      margin: 15px 0;
+      margin: 20px 0;
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.1);
-      min-height: 120px;
+      border-radius: 15px;
+      background: rgba(255,255,255,0.07);
+      border: 2px solid rgba(255,255,255,0.12);
+      min-height: 140px;
     }
 
     .carrossel {
@@ -90,43 +246,50 @@ if ("serviceWorker" in navigator) {
 
     .slide {
       min-width: 100%;
-      background: rgba(255,255,255,0.05);
-      padding: 20px;
+      background: rgba(255,255,255,0.07);
+      padding: 25px;
     }
 
     .slide h3 {
-      font-size: 16px;
-      margin-bottom: 10px;
+      font-size: 18px;
+      margin-bottom: 12px;
       color: #fff;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-      border-bottom: 2px solid rgba(30, 144, 255, 0.5);
-      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(30, 144, 255, 0.6);
+      padding-bottom: 10px;
+      font-weight: bold;
     }
 
     .slide p {
-      font-size: 14px;
-      line-height: 1.5;
-      margin-bottom: 15px;
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 18px;
       opacity: 0.9;
     }
 
     .slide a {
       display: inline-block;
-      background: rgba(30, 144, 255, 0.7);
+      background: rgba(30, 144, 255, 0.8);
       color: white;
-      padding: 10px 20px;
+      padding: 12px 24px;
       text-decoration: none;
-      border-radius: 6px;
-      font-size: 14px;
+      border-radius: 8px;
+      font-size: 15px;
       font-weight: bold;
       transition: all 0.3s ease;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.3);
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
     }
 
     .slide a:hover {
-      background: rgba(30, 144, 255, 0.9);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+      background: rgba(30, 144, 255, 0.95);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(30, 144, 255, 0.4);
+    }
+
+    .slide a:active {
+      transform: translateY(-1px);
     }
 
     .controles {
@@ -136,39 +299,40 @@ if ("serviceWorker" in navigator) {
       display: flex;
       justify-content: space-between;
       transform: translateY(-50%);
-      padding: 0 10px;
+      padding: 0 15px;
     }
 
     .controles button {
-      background: rgba(0,0,0,0.5);
+      background: rgba(0,0,0,0.6);
       color: white;
       border: none;
-      width: 35px;
-      height: 35px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 16px;
+      font-size: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .controles button:hover {
-      background: rgba(0,0,0,0.7);
-      transform: scale(1.1);
+      background: rgba(0,0,0,0.8);
+      transform: scale(1.15);
     }
 
     .indicadores {
       display: flex;
       justify-content: center;
-      gap: 8px;
-      padding: 15px;
+      gap: 10px;
+      padding: 18px;
     }
 
     .indicador {
-      width: 10px;
-      height: 10px;
+      width: 12px;
+      height: 12px;
       border-radius: 50%;
       background: rgba(255,255,255,0.3);
       cursor: pointer;
@@ -177,41 +341,188 @@ if ("serviceWorker" in navigator) {
 
     .indicador.ativo {
       background: #1E90FF;
-      transform: scale(1.2);
+      transform: scale(1.3);
+      box-shadow: 0 2px 6px rgba(30, 144, 255, 0.5);
     }
 
     .carregando {
       text-align: center;
-      padding: 40px 20px;
+      padding: 50px 25px;
       color: rgba(255,255,255,0.7);
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .erro {
       text-align: center;
-      padding: 30px 20px;
+      padding: 35px 25px;
       color: #ff6b6b;
-      font-size: 14px;
+      font-size: 15px;
       background: rgba(255,107,107,0.1);
-      border-radius: 8px;
-      margin: 10px;
+      border-radius: 10px;
+      margin: 15px;
+      border: 1px solid rgba(255,107,107,0.3);
     }
 
     .data-noticia {
-      font-size: 12px;
+      font-size: 13px;
       color: rgba(255,255,255,0.7);
-      margin-bottom: 12px;
+      margin-bottom: 15px;
       font-style: italic;
+      background: rgba(255,255,255,0.05);
+      padding: 6px 12px;
+      border-radius: 6px;
+      display: inline-block;
     }
 
-    @media (max-width:480px){
-      .player-card{padding:18px 12px;} 
-      .player-card header img{width:76px;} 
-      .social a{width:40px;height:40px;}
-      .slide { padding: 15px; }
-      .slide h3 { font-size: 15px; }
-      .slide p { font-size: 13px; }
-      .slide a { padding: 8px 16px; font-size: 13px; }
+    /* Melhorias para Mobile */
+    @media (max-width: 768px) {
+      .player-card {
+        padding: 25px 20px;
+        margin: 15px 10px;
+        border-radius: 20px;
+      }
+      
+      .player-card header img {
+        width: 100px;
+      }
+      
+      .player-card header h1 {
+        font-size: 22px;
+      }
+      
+      .player-container {
+        padding: 18px;
+        gap: 12px;
+      }
+      
+      .btn {
+        width: 60px;
+        height: 48px;
+        font-size: 20px;
+      }
+      
+      .social a {
+        width: 48px;
+        height: 48px;
+      }
+      
+      .social svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+
+    @media (max-width: 480px){
+      .player-card{
+        padding:20px 15px; 
+        margin: 10px 5px;
+        border-radius: 18px;
+      } 
+      
+      .player-card header img{
+        width:90px; 
+      } 
+      
+      .player-card header h1{
+        font-size:20px;
+        margin-bottom: 12px;
+      }
+      
+      .player-container {
+        padding: 15px;
+        gap: 10px;
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 70px;
+        height: 55px;
+        font-size: 24px;
+        order: -1;
+        margin-bottom: 10px;
+      }
+      
+      .volume {
+        width: 100%;
+        gap: 10px;
+      }
+      
+      .volume-icons {
+        font-size: 14px;
+      }
+      
+      .status, .programacao {
+        text-align: center;
+        font-size: 14px;
+      }
+      
+      .programacao {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      
+      .social{
+        gap:12px; 
+        margin:18px 0 12px;
+      }
+      
+      .social a{
+        width:45px;
+        height:45px;
+      }
+      
+      .social svg{
+        width:20px;
+        height:20px;
+      }
+      
+      .slide { 
+        padding: 20px; 
+      }
+      
+      .slide h3 { 
+        font-size: 17px; 
+      }
+      
+      .slide p { 
+        font-size: 14px; 
+      }
+      
+      .slide a { 
+        padding: 10px 20px; 
+        font-size: 14px; 
+        width: 100%;
+        text-align: center;
+      }
+      
+      .controles button {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+      
+      footer {
+        font-size: 12px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .player-card {
+        padding: 18px 12px;
+      }
+      
+      .player-card header img {
+        width: 80px;
+      }
+      
+      .player-card header h1 {
+        font-size: 18px;
+      }
+      
+      .btn {
+        width: 65px;
+        height: 50px;
+      }
     }
   </style>
 </head>
@@ -225,16 +536,20 @@ if ("serviceWorker" in navigator) {
     <div class="player-container">
       <button class="btn" id="playPause">▶️</button>
       <div class="volume">
-        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+        <div class="volume-icons">
+          <span>🔈</span>
+          <span>🔊</span>
+        </div>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
       </div>
-      <div style="min-width:110px; text-align:right;">
+      <div style="min-width:120px; text-align:center;">
         <div class="status" id="status">Conectando...</div>
       </div>
     </div>
 
     <div class="programacao" id="programacao">🎙️ Programa atual: Carregando...</div>
 
-    <!-- Carrossel de Notícias - SEM IMAGENS -->
+    <!-- Carrossel de Notícias - MAIOR E MAIS LEGÍVEL -->
     <div class="carrossel-container">
       <div class="carrossel" id="carrossel">
         <div class="carregando">Carregando notícias...</div>
@@ -317,19 +632,33 @@ if ("serviceWorker" in navigator) {
 
     // Status do player
     player.onplaying = () => {
-      statusText.textContent = "▶️ Ao vivo";
+      statusText.textContent = "▶️ Tocando Agora";
+      statusText.style.color = "#4CAF50";
       gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
     };
+    
     player.onpause = () => {
       statusText.textContent = "⏸️ Pausado";
+      statusText.style.color = "#ff9800";
       gtag('event', 'pause', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
     };
-    player.onwaiting = () => statusText.textContent = "⏳ Conectando...";
-    player.onerror = () => statusText.textContent = "⚠️ Erro na transmissão";
+    
+    player.onwaiting = () => {
+      statusText.textContent = "⏳ Conectando...";
+      statusText.style.color = "#fff";
+    };
+    
+    player.onerror = () => {
+      statusText.textContent = "⚠️ Erro na transmissão";
+      statusText.style.color = "#ff6b6b";
+    };
 
     playPause.addEventListener("click", () => {
       if (player.paused) {
-        player.play().catch(()=>{ statusText.textContent = "▶️ Toque bloqueado pelo navegador"; });
+        player.play().catch(()=>{ 
+          statusText.textContent = "▶️ Toque para iniciar";
+          statusText.style.color = "#ff6b6b";
+        });
         playPause.textContent = "⏸️";
       } else {
         player.pause();
@@ -355,14 +684,14 @@ if ("serviceWorker" in navigator) {
       const programaAtual = grade.find(p => p.dias.includes(diaSemana) && horaEntre(horaAtual, p.inicio, p.fim));
 
       programacaoEl.textContent = programaAtual 
-        ? `🎙️ Programa atual: ${programaAtual.programa} (${programaAtual.inicio}-${programaAtual.fim})`
-        : "🎙️ Programa atual: Fora do ar";
+        ? `🎙️ ${programaAtual.programa} (${programaAtual.inicio}-${programaAtual.fim})`
+        : "🎙️ Fora do ar - Programação especial";
     }
 
     atualizarProgramacao();
     setInterval(atualizarProgramacao, 60_000);
 
-    // ================= CARROSSEL CORRIGIDO - SEM REFERÊNCIAS A IMAGENS =================
+    // ================= CARROSSEL CORRIGIDO - BOTÃO "LEIA MAIS" FUNCIONAL =================
     class CarrosselNoticias {
       constructor() {
         this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
@@ -423,7 +752,7 @@ if ("serviceWorker" in navigator) {
             throw new Error('Apenas cabeçalho encontrado - sem dados');
           }
           
-          // Processar linhas de dados - AGORA APENAS 3 COLUNAS: TÍTULO, DESCRIÇÃO, LINK
+          // Processar linhas de dados
           this.slides = [];
           
           for (let i = 1; i < linhas.length; i++) {
@@ -436,16 +765,23 @@ if ("serviceWorker" in navigator) {
             const colunas = this.processarCSVCorretamente(linha);
             console.log(`🔍 Colunas processadas linha ${i}:`, colunas);
             
-            // AGORA APENAS 3 COLUNAS: Título, Descrição, Link
-            // Ignoramos completamente a coluna de imagens
+            // Mapear colunas - Título, Descrição, Link, Data
             const noticia = {
               titulo: colunas[0] || 'Sem título',
               descricao: colunas[1] || 'Sem descrição',
-              link: colunas[2] || '',   // TERCEIRA coluna é o link (antes era a quarta)
-              data: colunas[3] || ''    // QUARTA coluna é a data (antes era a quinta)
+              link: colunas[2] || '',   // TERCEIRA coluna é o link
+              data: colunas[3] || ''    // QUARTA coluna é a data
             };
             
             console.log(`📰 Notícia ${i} processada:`, noticia);
+            
+            // VALIDAR O LINK - CORREÇÃO IMPORTANTE!
+            if (noticia.link) {
+              noticia.linkValido = this.validarLink(noticia.link);
+              console.log(`🔗 Link da notícia ${i}:`, noticia.link, 'Válido:', noticia.linkValido);
+            } else {
+              noticia.linkValido = false;
+            }
             
             // Só adiciona se tiver pelo menos título
             if (noticia.titulo && noticia.titulo !== 'Sem título') {
@@ -454,6 +790,7 @@ if ("serviceWorker" in navigator) {
           }
           
           console.log(`✅ Carregadas ${this.slides.length} notícias do Google Sheets`);
+          console.log('📋 Todas as notícias:', this.slides);
           
           return this.slides.length > 0;
           
@@ -461,6 +798,36 @@ if ("serviceWorker" in navigator) {
           console.error('❌ Erro ao carregar do Google Sheets:', error);
           return false;
         }
+      }
+      
+      validarLink(url) {
+        try {
+          // Verifica se é uma URL válida
+          if (!url || url.trim() === '') return false;
+          
+          // Adiciona https:// se não tiver protocolo
+          let urlCorrigida = url.trim();
+          if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
+            urlCorrigida = 'https://' + urlCorrigida;
+          }
+          
+          // Tenta criar um objeto URL
+          new URL(urlCorrigida);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+      
+      corrigirURL(url) {
+        if (!url || url.trim() === '') return '';
+        
+        let urlCorrigida = url.trim();
+        if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
+          urlCorrigida = 'https://' + urlCorrigida;
+        }
+        
+        return urlCorrigida;
       }
       
       processarCSVCorretamente(linha) {
@@ -502,19 +869,22 @@ if ("serviceWorker" in navigator) {
             titulo: "Paraíso FM - Sua Rádio em Sobral",
             descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral e região com as melhores notícias e entretenimento.",
             link: "https://sistemaparaiso.com.br",
-            data: new Date().toLocaleDateString('pt-BR')
+            data: new Date().toLocaleDateString('pt-BR'),
+            linkValido: true
           },
           {
             titulo: "Notícias Locais em Destaque", 
             descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará. Informação de qualidade para você se manter atualizado.",
             link: "https://sistemaparaiso.com.br",
-            data: new Date().toLocaleDateString('pt-BR')
+            data: new Date().toLocaleDateString('pt-BR'),
+            linkValido: true
           },
           {
             titulo: "Eventos da Semana na Região",
             descricao: "Confira a agenda completa de eventos culturais, esportivos e shows na região. Não perca as novidades!",
             link: "https://sistemaparaiso.com.br",
-            data: new Date().toLocaleDateString('pt-BR')
+            data: new Date().toLocaleDateString('pt-BR'),
+            linkValido: true
           }
         ];
       }
@@ -535,14 +905,24 @@ if ("serviceWorker" in navigator) {
         
         console.log('🎨 Renderizando carrossel com', this.slides.length, 'slides');
         
-        this.carrossel.innerHTML = this.slides.map((slide, index) => `
-          <div class="slide">
-            <h3>${this.escapeHtml(slide.titulo)}</h3>
-            ${slide.data ? `<div class="data-noticia">📅 ${this.escapeHtml(slide.data)}</div>` : ''}
-            <p>${this.escapeHtml(slide.descricao)}</p>
-            ${slide.link ? `<a href="${this.escapeHtml(slide.link)}" target="_blank">📖 Leia mais</a>` : ''}
-          </div>
-        `).join('');
+        this.carrossel.innerHTML = this.slides.map((slide, index) => {
+          const linkCorrigido = slide.linkValido ? this.corrigirURL(slide.link) : '';
+          const temLinkValido = slide.linkValido && linkCorrigido;
+          
+          console.log(`🔗 Slide ${index} - Link:`, slide.link, 'Corrigido:', linkCorrigido, 'Válido:', temLinkValido);
+          
+          return `
+            <div class="slide">
+              <h3>${this.escapeHtml(slide.titulo)}</h3>
+              ${slide.data ? `<div class="data-noticia">📅 ${this.escapeHtml(slide.data)}</div>` : ''}
+              <p>${this.escapeHtml(slide.descricao)}</p>
+              ${temLinkValido ? 
+                `<a href="${this.escapeHtml(linkCorrigido)}" target="_blank" rel="noopener noreferrer">📖 Leia mais</a>` : 
+                '<span style="color: #ff6b6b; font-size: 12px;">🔗 Link indisponível</span>'
+              }
+            </div>
+          `;
+        }).join('');
         
         this.indicadores.innerHTML = this.slides.map((_, index) => `
           <div class="indicador ${index === 0 ? 'ativo' : ''}" data-index="${index}"></div>
