@@ -12,6 +12,14 @@
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-EF42RBHES1');
+    
+    // CONFIGURAÇÃO PARA DETECÇÃO DE CIDADE
+    gtag('config', 'G-EF42RBHES1', {
+      'custom_map': {
+        'dimension1': 'user_city',
+        'dimension2': 'detection_method'
+      }
+    });
   </script>
 
   <!-- Font Awesome para ícones -->
@@ -378,6 +386,48 @@ if ("serviceWorker" in navigator) {
       display: inline-block;
     }
 
+    /* Estilos para o Location Badge */
+    .location-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: rgba(0,0,0,0.8);
+      color: white;
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 13px;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .location-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .location-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+    .location-text {
+      font-weight: 500;
+    }
+    .location-badge.success {
+      background: rgba(34, 197, 94, 0.9);
+    }
+    .location-badge.error {
+      background: rgba(239, 68, 68, 0.9);
+    }
+    .location-badge.loading {
+      background: rgba(59, 130, 246, 0.9);
+    }
+
     /* Melhorias para Mobile */
     @media (max-width: 768px) {
       .player-card {
@@ -412,6 +462,14 @@ if ("serviceWorker" in navigator) {
       
       .social i {
         font-size: 22px;
+      }
+      
+      .location-badge {
+        top: 10px;
+        left: 10px;
+        padding: 6px 12px;
+        font-size: 12px;
+        max-width: 160px;
       }
     }
 
@@ -506,6 +564,14 @@ if ("serviceWorker" in navigator) {
       footer {
         font-size: 12px;
       }
+      
+      .location-badge {
+        top: 8px;
+        left: 8px;
+        padding: 5px 10px;
+        font-size: 11px;
+        max-width: 140px;
+      }
     }
 
     @media (max-width: 360px) {
@@ -524,6 +590,10 @@ if ("serviceWorker" in navigator) {
       .btn {
         width: 65px;
         height: 50px;
+      }
+      
+      .location-badge {
+        max-width: 120px;
       }
     }
   </style>
@@ -592,7 +662,7 @@ if ("serviceWorker" in navigator) {
   </audio>
 
   <script>
-    // ... (o mesmo JavaScript anterior) ...
+    // ================= PLAYER PRINCIPAL =================
     const player = document.getElementById("player");
     const playPause = document.getElementById("playPause");
     const statusText = document.getElementById("status");
@@ -691,7 +761,211 @@ if ("serviceWorker" in navigator) {
     atualizarProgramacao();
     setInterval(atualizarProgramacao, 60_000);
 
-    // ================= CARROSSEL =================
+    // ================= SISTEMA DE DETECÇÃO DE CIDADE =================
+    class LocationTracker {
+        constructor() {
+            this.city = 'Detectando...';
+            this.isDetecting = false;
+            this.locationElement = null;
+        }
+
+        init() {
+            console.log('🎯 Iniciando Location Tracker...');
+            this.createLocationUI();
+            this.detectUserCity();
+            
+            // Detectar cidade quando o player iniciar
+            player.onplaying = () => {
+                this.trackToAnalytics(this.city, 'play');
+            };
+        }
+
+        createLocationUI() {
+            // Criar badge de localização
+            const locationBadge = document.createElement('div');
+            locationBadge.className = 'location-badge loading';
+            locationBadge.innerHTML = `
+                <div class="location-info">
+                    <span class="location-icon">📍</span>
+                    <span class="location-text">${this.city}</span>
+                </div>
+            `;
+
+            // Adicionar ao container do player
+            const playerCard = document.querySelector('.player-card');
+            if (playerCard) {
+                playerCard.style.position = 'relative';
+                playerCard.appendChild(locationBadge);
+                this.locationElement = locationBadge;
+            }
+        }
+
+        updateLocationUI(city, status = 'success') {
+            this.city = city;
+            
+            if (this.locationElement) {
+                const locationText = this.locationElement.querySelector('.location-text');
+                if (locationText) {
+                    locationText.textContent = city;
+                }
+                
+                // Atualizar classes de status
+                this.locationElement.className = 'location-badge ' + status;
+            }
+        }
+
+        async detectUserCity() {
+            if (this.isDetecting) return;
+            this.isDetecting = true;
+
+            this.updateLocationUI('Detectando cidade...', 'loading');
+
+            try {
+                // Tentar GPS primeiro (mais preciso)
+                let city = await this.getCityByGPS();
+                
+                // Se GPS falhou, tentar IP
+                if (!city || city === 'Desconhecida') {
+                    city = await this.getCityByIP();
+                }
+
+                this.updateLocationUI(city, 'success');
+                this.trackToAnalytics(city, 'location_detected');
+                
+                console.log('🎯 Cidade detectada:', city);
+                
+            } catch (error) {
+                console.error('Erro na detecção:', error);
+                this.updateLocationUI('Localização indisponível', 'error');
+            } finally {
+                this.isDetecting = false;
+            }
+        }
+
+        async getCityByGPS() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    resolve('Desconhecida');
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        try {
+                            const city = await this.reverseGeocode(
+                                position.coords.latitude, 
+                                position.coords.longitude
+                            );
+                            resolve(city);
+                        } catch (error) {
+                            resolve('Desconhecida');
+                        }
+                    },
+                    (error) => {
+                        console.log('GPS não disponível:', this.getGeoError(error));
+                        resolve('Desconhecida');
+                    },
+                    { 
+                        enableHighAccuracy: false,
+                        timeout: 8000,
+                        maximumAge: 300000 // 5 minutos
+                    }
+                );
+            });
+        }
+
+        async getCityByIP() {
+            try {
+                // Tentar ipapi primeiro
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                if (data.city) {
+                    return data.city + ', ' + data.region;
+                }
+                throw new Error('Sem dados de cidade');
+            } catch {
+                try {
+                    // Fallback para ip-api
+                    const response = await fetch('http://ip-api.com/json/?fields=status,message,city,regionName,country');
+                    const data = await response.json();
+                    
+                    if (data.status === 'success') {
+                        return data.city + ', ' + data.regionName;
+                    }
+                    throw new Error('Sem dados de cidade');
+                } catch {
+                    return 'Desconhecida';
+                }
+            }
+        }
+
+        async reverseGeocode(lat, lon) {
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=pt`
+                );
+                const data = await response.json();
+                return data.address.city || data.address.town || data.address.village || 'Desconhecida';
+            } catch {
+                return 'Desconhecida';
+            }
+        }
+
+        trackToAnalytics(city, eventType = 'location_detected') {
+            // Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventType, {
+                    'city': city,
+                    'radio_station': 'Paraíso FM 101.1 Sobral',
+                    'event_category': 'Location'
+                });
+            }
+
+            // Enviar para analytics personalizado
+            this.sendToCustomAnalytics(city, eventType);
+        }
+
+        async sendToCustomAnalytics(city, eventType) {
+            try {
+                await fetch('https://api.example.com/analytics/location', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        city: city,
+                        event_type: eventType,
+                        station: 'Paraíso FM 101.1',
+                        timestamp: new Date().toISOString(),
+                        user_agent: navigator.userAgent,
+                        url: window.location.href
+                    })
+                });
+            } catch (error) {
+                // Silencioso - não afeta a experiência do usuário
+                console.log('Analytics offline:', error);
+            }
+        }
+
+        getGeoError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    return "Permissão negada";
+                case error.POSITION_UNAVAILABLE:
+                    return "Localização indisponível";
+                case error.TIMEOUT:
+                    return "Tempo esgotado";
+                default:
+                    return "Erro desconhecido";
+            }
+        }
+
+        // Método público para obter cidade atual
+        getCurrentCity() {
+            return this.city;
+        }
+    }
+
+    // ================= CARROSSEL DE NOTÍCIAS =================
     class CarrosselNoticias {
       constructor() {
         this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
@@ -1006,10 +1280,27 @@ if ("serviceWorker" in navigator) {
       }
     }
 
-    // Inicializar o carrossel quando a página carregar
-    document.addEventListener('DOMContentLoaded', () => {
+    // ================= INICIALIZAÇÃO GERAL =================
+    document.addEventListener('DOMContentLoaded', function() {
       console.log('🎯 Inicializando carrossel de notícias...');
       new CarrosselNoticias();
+      
+      // Inicializar location tracker
+      const locationTracker = new LocationTracker();
+      locationTracker.init();
+      
+      // Expor globalmente para debug
+      window.locationTracker = locationTracker;
+      
+      // Também detectar cidade quando o usuário interagir com o player
+      playPause.addEventListener('click', () => {
+        if (!player.paused) {
+          // Se está tocando, enviar evento de localização
+          setTimeout(() => {
+            locationTracker.trackToAnalytics(locationTracker.getCurrentCity(), 'play_with_location');
+          }, 1000);
+        }
+      });
     });
   </script>
 </body>
