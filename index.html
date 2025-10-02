@@ -8,11 +8,19 @@
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF42RBHES1"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
+     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-EF42RBHES1');
     
+    // CONFIGURAÇÃO PARA DETECÇÃO DE CIDADE
+    gtag('config', 'G-EF42RBHES1', {
+        'custom_map': {
+            'dimension1': 'user_city',
+            'dimension2': 'detection_method', 
+            'dimension3': 'radio_station'
+        }
+    });    
     // CONFIGURAÇÃO PARA DETECÇÃO DE CIDADE
     gtag('config', 'G-EF42RBHES1', {
       'custom_map': {
@@ -1305,3 +1313,4 @@ if ("serviceWorker" in navigator) {
   </script>
 </body>
 </html>
+
