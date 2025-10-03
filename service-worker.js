@@ -1,12 +1,31 @@
 self.addEventListener("install", (event) => {
+  self.skipWaiting(); // ⚠️ Ativa imediatamente
   event.waitUntil(
-    caches.open("paraiso-cache").then((cache) => {
+    caches.open("paraiso-cache-v2").then((cache) => {
       return cache.addAll([
         "./",
         "./index.html",
-        "./icone-192.png",
+        "./icone-192.png", 
         "./icone-512.png"
       ]);
+    })
+  );
+});
+
+// ⚠️ EVENTO NOVO - LIMPA CACHE ANTIGO
+self.addEventListener("activate", (event) => {
+  self.clients.claim(); // Toma controle das páginas
+  
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          // ⚠️ Remove SOMENTE o cache antigo
+          if (cacheName === "paraiso-cache") {
+            return caches.delete(cacheName);
+          }
+        })
+      );
     })
   );
 });
