@@ -3,155 +3,150 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paraíso FM 101,1 - Sobral</title>
+  <title>Paraíso FM 101,1 - Sobral | Rádio Online</title>
 
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Analytics CORRETO -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF42RBHES1"></script>
   <script>
-     window.dataLayer = window.dataLayer || [];
+    window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-    gtag('config', 'G-EF42RBHES1');
-    
-    // CONFIGURAÇÃO PARA DETECÇÃO DE CIDADE
-    gtag('config', 'G-EF42RBHES1', {
-        'custom_map': {
-            'dimension1': 'user_city',
-            'dimension2': 'detection_method', 
-            'dimension3': 'radio_station'
-        }
-    });    
-    // CONFIGURAÇÃO PARA DETECÇÃO DE CIDADE
     gtag('config', 'G-EF42RBHES1', {
       'custom_map': {
         'dimension1': 'user_city',
-        'dimension2': 'detection_method'
+        'dimension2': 'detection_method',
+        'dimension3': 'radio_station'
       }
     });
   </script>
 
-  <!-- Font Awesome para ícones -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-  <!-- Open Graph / WhatsApp / Twitter Card -->
+  <!-- Meta Tags -->
+  <meta name="description" content="Ouça a Rádio Paraíso FM 101.1 de Sobral ao vivo. Programação variada, notícias locais e os melhores sucessos da região.">
+  
+  <!-- Open Graph -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="📻 Paraíso FM 101,1 - Sobral">
   <meta property="og:description" content="Paraíso FM de Sobral Ao vivo - Informação e entretenimento em um só lugar.">
   <meta property="og:image" content="https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png?v=2">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="1200">
   <meta property="og:url" content="https://rivaldrss.github.io/paraiso_aovivo/">
-  <meta property="og:site_name" content="Paraíso FM Sobral">
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="📻 Paraíso FM 101,1 - Sobral">
-  <meta name="twitter:description" content="Paraíso FM de Sobral Ao vivo - Informação e entretenimento em um só lugar.">
-  <meta name="twitter:image" content="https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png?v=2">
-
-  <!-- Optional: custom WhatsApp tag for internal use (not read by WhatsApp) -->
-  <meta name="whatsapp:preview" content="https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png?v=2">
-<!-- Manifest -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1e90ff">
-
-<!-- iOS suporte -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Paraíso FM">
-<link rel="apple-touch-icon" href="icone-192.png">
-  <script>
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("service-worker.js")
-    .then(() => console.log("Service Worker registrado."))
-    .catch((err) => console.error("Erro no Service Worker:", err));
-}
-</script>
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1e90ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <style>
-    *{box-sizing:border-box;margin:0;padding:0;}
-    body{font-family:Arial,sans-serif;background:url('https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png') no-repeat center center fixed;background-size:cover;display:flex;justify-content:center;align-items:center;min-height:100vh;position:relative;color:#fff;}
-    body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background: rgba(0,0,0,0.3);z-index:0;}
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: url('https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      position: relative;
+      color: #fff;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.3);
+      z-index: 0;
+    }
     
-    .player-card{
-      position: relative; 
-      z-index:2; 
-      background: rgba(0,0,0,0.70); 
-      border-radius:25px; 
-      padding:30px 25px; 
-      max-width:500px; 
-      width:95%; 
-      text-align:center; 
-      box-shadow:0 15px 40px rgba(0,0,0,0.8);
+    .player-card {
+      position: relative;
+      z-index: 2;
+      background: rgba(0,0,0,0.70);
+      border-radius: 25px;
+      padding: 30px 25px;
+      max-width: 500px;
+      width: 95%;
+      text-align: center;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
       margin: 20px 10px;
     }
     
-    .player-card header img{
-      width:110px; 
-      border-radius:50%; 
-      border:3px solid #fff; 
-      margin-bottom:15px; 
-      display:block; 
-      margin-left:auto;
-      margin-right:auto;
+    .player-card header img {
+      width: 110px;
+      border-radius: 50%;
+      border: 3px solid #fff;
+      margin-bottom: 15px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
     }
     
-    .player-card header h1{
-      font-size:24px;
-      margin-bottom:15px;
-      text-shadow:2px 2px 8px rgba(0,0,0,0.8);
+    .player-card header h1 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
       font-weight: bold;
     }
     
-    .player-container{
-      background: rgba(255,255,255,0.08); 
-      border:2px solid rgba(255,255,255,0.15); 
-      border-radius:15px; 
-      padding:20px; 
-      display:flex; 
-      align-items:center; 
-      gap:15px; 
-      box-shadow:0 8px 20px rgba(0,0,0,0.6); 
-      margin-bottom:20px;
+    .player-container {
+      background: rgba(255,255,255,0.08);
+      border: 2px solid rgba(255,255,255,0.15);
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+      margin-bottom: 20px;
     }
     
-    .btn{
-      background: rgba(255,255,255,0.15); 
-      border:none; 
-      color:#fff; 
-      font-size:22px; 
-      border-radius:12px; 
-      width:65px; 
-      height:50px; 
-      cursor:pointer; 
-      transition: transform .2s, background .2s; 
-      display:inline-flex; 
-      align-items:center; 
-      justify-content:center;
+    .btn {
+      background: rgba(255,255,255,0.15);
+      border: none;
+      color: #fff;
+      font-size: 22px;
+      border-radius: 12px;
+      width: 65px;
+      height: 50px;
+      cursor: pointer;
+      transition: transform .2s, background .2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     
-    .btn:hover{
-      transform:scale(1.08); 
-      background:rgba(255,255,255,0.22);
+    .btn:hover {
+      transform: scale(1.08);
+      background: rgba(255,255,255,0.22);
     }
     
-    .btn:active{
-      transform:scale(0.98);
+    .btn:active {
+      transform: scale(0.98);
     }
     
-    .volume{
-      flex:1;
+    .volume {
+      flex: 1;
       display: flex;
       align-items: center;
       gap: 12px;
     }
     
-    .volume input[type="range"]{
-      width:100%; 
+    .volume input[type="range"] {
+      width: 100%;
       height: 8px;
-      cursor:pointer;
+      cursor: pointer;
       border-radius: 4px;
       background: rgba(255,255,255,0.1);
       -webkit-appearance: none;
@@ -183,11 +178,11 @@ if ("serviceWorker" in navigator) {
       font-size: 16px;
     }
     
-    .status, .programacao{
-      font-size:15px; 
-      opacity:0.95; 
-      margin-top:8px; 
-      text-align:left;
+    .status, .programacao {
+      font-size: 15px;
+      opacity: 0.95;
+      margin-top: 8px;
+      text-align: left;
       font-weight: 500;
     }
     
@@ -200,55 +195,54 @@ if ("serviceWorker" in navigator) {
       font-size: 14px;
     }
     
-    .social{
-      display:flex; 
-      justify-content:center; 
-      gap:15px; 
-      margin:20px 0 15px; 
-      align-items:center;
+    .social {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0 15px;
+      align-items: center;
     }
     
-    .social a{
-      display:inline-flex; 
-      align-items:center; 
-      justify-content:center; 
-      width:50px; 
-      height:50px; 
-      border-radius:12px; 
-      background: rgba(255,255,255,0.05); 
-      text-decoration:none; 
-      transition: transform .2s, background .2s; 
-      z-index:3; 
-      color: inherit; 
-      border:2px solid rgba(255,255,255,0.08);
+    .social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      text-decoration: none;
+      transition: transform .2s, background .2s;
+      z-index: 3;
+      color: inherit;
+      border: 2px solid rgba(255,255,255,0.08);
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     
-    .social a:hover{
-      transform: translateY(-4px); 
+    .social a:hover {
+      transform: translateY(-4px);
       background: rgba(255,255,255,0.1);
     }
     
-    /* Cores dos ícones */
-    .social a.instagram{color:#E1306C;}
-    .social a.whatsapp{color:#25D366;}
-    .social a.youtube{color:#FF0000;}
-    .social a.site{color:#1E90FF;}
+    .social a.instagram { color: #E1306C; }
+    .social a.whatsapp { color: #25D366; }
+    .social a.youtube { color: #FF0000; }
+    .social a.site { color: #1E90FF; }
     
-    .social i{
-      font-size:24px; 
-      display:block;
+    .social i {
+      font-size: 24px;
+      display: block;
     }
     
-    footer{
-      font-size:13px; 
-      opacity:0.8; 
-      margin-top:10px;
+    footer {
+      font-size: 13px;
+      opacity: 0.8;
+      margin-top: 10px;
       padding-top: 10px;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
 
-    /* Estilos do Carrossel */
+    /* Carrossel */
     .carrossel-container {
       margin: 20px 0;
       position: relative;
@@ -306,10 +300,6 @@ if ("serviceWorker" in navigator) {
       background: rgba(30, 144, 255, 0.95);
       transform: translateY(-3px);
       box-shadow: 0 6px 18px rgba(30, 144, 255, 0.4);
-    }
-
-    .slide a:active {
-      transform: translateY(-1px);
     }
 
     .controles {
@@ -394,7 +384,7 @@ if ("serviceWorker" in navigator) {
       display: inline-block;
     }
 
-    /* Estilos para o Location Badge */
+    /* Location Badge */
     .location-badge {
       position: absolute;
       top: 15px;
@@ -414,34 +404,39 @@ if ("serviceWorker" in navigator) {
       text-overflow: ellipsis;
       white-space: nowrap;
     }
+
     .location-info {
       display: flex;
       align-items: center;
       gap: 8px;
     }
+
     .location-icon {
       font-size: 14px;
       flex-shrink: 0;
     }
+
     .location-text {
       font-weight: 500;
     }
+
     .location-badge.success {
       background: rgba(34, 197, 94, 0.9);
     }
+
     .location-badge.error {
       background: rgba(239, 68, 68, 0.9);
     }
+
     .location-badge.loading {
       background: rgba(59, 130, 246, 0.9);
     }
 
-    /* Melhorias para Mobile */
+    /* Responsividade */
     @media (max-width: 768px) {
       .player-card {
         padding: 25px 20px;
         margin: 15px 10px;
-        border-radius: 20px;
       }
       
       .player-card header img {
@@ -473,28 +468,22 @@ if ("serviceWorker" in navigator) {
       }
       
       .location-badge {
-        top: 10px;
-        left: 10px;
-        padding: 6px 12px;
-        font-size: 12px;
         max-width: 160px;
       }
     }
 
-    @media (max-width: 480px){
-      .player-card{
-        padding:20px 15px; 
+    @media (max-width: 480px) {
+      .player-card {
+        padding: 20px 15px;
         margin: 10px 5px;
-        border-radius: 18px;
-      } 
+      }
       
-      .player-card header img{
-        width:90px; 
-      } 
+      .player-card header img {
+        width: 90px;
+      }
       
-      .player-card header h1{
-        font-size:20px;
-        margin-bottom: 12px;
+      .player-card header h1 {
+        font-size: 20px;
       }
       
       .player-container {
@@ -513,11 +502,6 @@ if ("serviceWorker" in navigator) {
       
       .volume {
         width: 100%;
-        gap: 10px;
-      }
-      
-      .volume-icons {
-        font-size: 14px;
       }
       
       .status, .programacao {
@@ -530,35 +514,35 @@ if ("serviceWorker" in navigator) {
         font-size: 13px;
       }
       
-      .social{
-        gap:12px; 
-        margin:18px 0 12px;
+      .social {
+        gap: 12px;
+        margin: 18px 0 12px;
       }
       
-      .social a{
-        width:45px;
-        height:45px;
+      .social a {
+        width: 45px;
+        height: 45px;
       }
       
-      .social i{
-        font-size:20px;
+      .social i {
+        font-size: 20px;
       }
       
-      .slide { 
-        padding: 20px; 
+      .slide {
+        padding: 20px;
       }
       
-      .slide h3 { 
-        font-size: 17px; 
+      .slide h3 {
+        font-size: 17px;
       }
       
-      .slide p { 
-        font-size: 14px; 
+      .slide p {
+        font-size: 14px;
       }
       
-      .slide a { 
-        padding: 10px 20px; 
-        font-size: 14px; 
+      .slide a {
+        padding: 10px 20px;
+        font-size: 14px;
         width: 100%;
         text-align: center;
       }
@@ -574,34 +558,7 @@ if ("serviceWorker" in navigator) {
       }
       
       .location-badge {
-        top: 8px;
-        left: 8px;
-        padding: 5px 10px;
-        font-size: 11px;
         max-width: 140px;
-      }
-    }
-
-    @media (max-width: 360px) {
-      .player-card {
-        padding: 18px 12px;
-      }
-      
-      .player-card header img {
-        width: 80px;
-      }
-      
-      .player-card header h1 {
-        font-size: 18px;
-      }
-      
-      .btn {
-        width: 65px;
-        height: 50px;
-      }
-      
-      .location-badge {
-        max-width: 120px;
       }
     }
   </style>
@@ -645,7 +602,7 @@ if ("serviceWorker" in navigator) {
       </div>
     </div>
 
-    <!-- Redes Sociais com Font Awesome -->
+    <!-- Redes Sociais -->
     <div class="social">
       <a class="instagram" href="https://www.instagram.com/sistemaparaiso" target="_blank" aria-label="Instagram">
         <i class="fab fa-instagram"></i>
@@ -670,16 +627,15 @@ if ("serviceWorker" in navigator) {
   </audio>
 
   <script>
-    // ================= PLAYER PRINCIPAL =================
+    // ================= PLAYER PRINCIPAL CORRIGIDO =================
     const player = document.getElementById("player");
     const playPause = document.getElementById("playPause");
     const statusText = document.getElementById("status");
     const volumeControl = document.getElementById("volumeControl");
     const programacaoEl = document.getElementById("programacao");
 
-    // Grade com dias da semana (0=Domingo, 1=Segunda, ..., 6=Sábado)
+    // Grade de programação
     const grade = [
-      // SEGUNDA A SEXTA
       { dias: [1,2,3,4,5], inicio: "04:00", fim: "06:00", programa: "De Olho na Cidade" },
       { dias: [1,2,3,4,5], inicio: "06:00", fim: "08:00", programa: "Chama a Paraíso" },
       { dias: [1,2,3,4,5], inicio: "08:00", fim: "09:00", programa: "Variedades" },
@@ -694,68 +650,72 @@ if ("serviceWorker" in navigator) {
       { dias: [1,2,3,4,5], inicio: "23:30", fim: "1:00", programa: "Paraíso By Night" },
       { dias: [1,2,3,4,5], inicio: "1:00", fim: "2:00", programa: "Novo Tempo" },
       { dias: [1,2,3,4,5], inicio: "2:00", fim: "4:00", programa: "Madrugada 101" },
-
-      // SÁBADO
       { dias: [6], inicio: "06:00", fim: "09:00", programa: "Manhã Sertaneja" },
       { dias: [6], inicio: "09:00", fim: "12:00", programa: "Top Hits Paraíso" },
       { dias: [6], inicio: "12:00", fim: "15:00", programa: "Sábado Esportivo" },
       { dias: [6], inicio: "15:00", fim: "18:00", programa: "Especial Forró das Antigas" },
-
-      // DOMINGO
       { dias: [0], inicio: "06:00", fim: "09:00", programa: "Domingo de Fé" },
       { dias: [0], inicio: "09:00", fim: "12:00", programa: "Paradão Paraíso" },
       { dias: [0], inicio: "12:00", fim: "15:00", programa: "Tarde de Sucessos" },
       { dias: [0], inicio: "15:00", fim: "18:00", programa: "Especial Samba & Pagode" }
     ];
 
-    // Status do player
-    player.onplaying = () => {
+    // Event listeners CORRETOS para o player
+    player.addEventListener('playing', () => {
       statusText.textContent = "▶️ Tocando Agora";
       statusText.style.color = "#4CAF50";
+      playPause.textContent = "⏸️";
       gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
-    };
+    });
     
-    player.onpause = () => {
+    player.addEventListener('pause', () => {
       statusText.textContent = "⏸️ Pausado";
       statusText.style.color = "#ff9800";
+      playPause.textContent = "▶️";
       gtag('event', 'pause', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
-    };
+    });
     
-    player.onwaiting = () => {
+    player.addEventListener('waiting', () => {
       statusText.textContent = "⏳ Conectando...";
       statusText.style.color = "#fff";
-    };
+    });
     
-    player.onerror = () => {
+    player.addEventListener('error', () => {
       statusText.textContent = "⚠️ Erro na transmissão";
       statusText.style.color = "#ff6b6b";
-    };
+      gtag('event', 'player_error', { 'event_category': 'Player', 'event_label': 'Erro streaming' });
+    });
 
+    // Play/Pause function
     playPause.addEventListener("click", () => {
       if (player.paused) {
-        player.play().catch(()=>{ 
+        player.play().catch(() => { 
           statusText.textContent = "▶️ Toque para iniciar";
           statusText.style.color = "#ff6b6b";
         });
-        playPause.textContent = "⏸️";
       } else {
         player.pause();
-        playPause.textContent = "▶️";
       }
     });
 
+    // Volume control
     volumeControl.addEventListener("input", (e) => {
       player.volume = e.target.value;
-      gtag('event', 'volume_change', { 'event_category': 'Player', 'event_label': 'Volume', 'value': e.target.value });
+      gtag('event', 'volume_change', { 
+        'event_category': 'Player', 
+        'event_label': 'Volume', 
+        'value': e.target.value 
+      });
     });
 
+    // Programação
     function horaEntre(hora, inicio, fim) {
       return (inicio <= fim) ? (hora >= inicio && hora < fim) : (hora >= inicio || hora < fim);
     }
 
     function atualizarProgramacao() {
       const agora = new Date();
-      const diaSemana = agora.getDay(); // 0=Dom, 1=Seg, ..., 6=Sáb
+      const diaSemana = agora.getDay();
       const horaAtual = agora.getHours().toString().padStart(2,"0") + ":" +
                         agora.getMinutes().toString().padStart(2,"0");
 
@@ -767,213 +727,150 @@ if ("serviceWorker" in navigator) {
     }
 
     atualizarProgramacao();
-    setInterval(atualizarProgramacao, 60_000);
+    setInterval(atualizarProgramacao, 60000);
 
     // ================= SISTEMA DE DETECÇÃO DE CIDADE =================
     class LocationTracker {
-        constructor() {
-            this.city = 'Detectando...';
-            this.isDetecting = false;
-            this.locationElement = null;
+      constructor() {
+        this.city = 'Detectando...';
+        this.isDetecting = false;
+        this.locationElement = null;
+      }
+
+      init() {
+        this.createLocationUI();
+        this.detectUserCity();
+      }
+
+      createLocationUI() {
+        const locationBadge = document.createElement('div');
+        locationBadge.className = 'location-badge loading';
+        locationBadge.innerHTML = `
+          <div class="location-info">
+            <span class="location-icon">📍</span>
+            <span class="location-text">${this.city}</span>
+          </div>
+        `;
+
+        const playerCard = document.querySelector('.player-card');
+        if (playerCard) {
+          playerCard.style.position = 'relative';
+          playerCard.appendChild(locationBadge);
+          this.locationElement = locationBadge;
         }
+      }
 
-        init() {
-            console.log('🎯 Iniciando Location Tracker...');
-            this.createLocationUI();
-            this.detectUserCity();
-            
-            // Detectar cidade quando o player iniciar
-            player.onplaying = () => {
-                this.trackToAnalytics(this.city, 'play');
-            };
+      updateLocationUI(city, status = 'success') {
+        this.city = city;
+        if (this.locationElement) {
+          const locationText = this.locationElement.querySelector('.location-text');
+          if (locationText) {
+            locationText.textContent = city;
+          }
+          this.locationElement.className = 'location-badge ' + status;
         }
+      }
 
-        createLocationUI() {
-            // Criar badge de localização
-            const locationBadge = document.createElement('div');
-            locationBadge.className = 'location-badge loading';
-            locationBadge.innerHTML = `
-                <div class="location-info">
-                    <span class="location-icon">📍</span>
-                    <span class="location-text">${this.city}</span>
-                </div>
-            `;
+      async detectUserCity() {
+        if (this.isDetecting) return;
+        this.isDetecting = true;
 
-            // Adicionar ao container do player
-            const playerCard = document.querySelector('.player-card');
-            if (playerCard) {
-                playerCard.style.position = 'relative';
-                playerCard.appendChild(locationBadge);
-                this.locationElement = locationBadge;
-            }
+        this.updateLocationUI('Detectando cidade...', 'loading');
+
+        try {
+          let city = await this.getCityByGPS();
+          if (!city || city === 'Desconhecida') {
+            city = await this.getCityByIP();
+          }
+
+          this.updateLocationUI(city, 'success');
+          this.trackToAnalytics(city, 'location_detected');
+        } catch (error) {
+          this.updateLocationUI('Localização indisponível', 'error');
+        } finally {
+          this.isDetecting = false;
         }
+      }
 
-        updateLocationUI(city, status = 'success') {
-            this.city = city;
-            
-            if (this.locationElement) {
-                const locationText = this.locationElement.querySelector('.location-text');
-                if (locationText) {
-                    locationText.textContent = city;
-                }
-                
-                // Atualizar classes de status
-                this.locationElement.className = 'location-badge ' + status;
-            }
-        }
+      async getCityByGPS() {
+        return new Promise((resolve) => {
+          if (!navigator.geolocation) {
+            resolve('Desconhecida');
+            return;
+          }
 
-        async detectUserCity() {
-            if (this.isDetecting) return;
-            this.isDetecting = true;
-
-            this.updateLocationUI('Detectando cidade...', 'loading');
-
-            try {
-                // Tentar GPS primeiro (mais preciso)
-                let city = await this.getCityByGPS();
-                
-                // Se GPS falhou, tentar IP
-                if (!city || city === 'Desconhecida') {
-                    city = await this.getCityByIP();
-                }
-
-                this.updateLocationUI(city, 'success');
-                this.trackToAnalytics(city, 'location_detected');
-                
-                console.log('🎯 Cidade detectada:', city);
-                
-            } catch (error) {
-                console.error('Erro na detecção:', error);
-                this.updateLocationUI('Localização indisponível', 'error');
-            } finally {
-                this.isDetecting = false;
-            }
-        }
-
-        async getCityByGPS() {
-            return new Promise((resolve) => {
-                if (!navigator.geolocation) {
-                    resolve('Desconhecida');
-                    return;
-                }
-
-                navigator.geolocation.getCurrentPosition(
-                    async (position) => {
-                        try {
-                            const city = await this.reverseGeocode(
-                                position.coords.latitude, 
-                                position.coords.longitude
-                            );
-                            resolve(city);
-                        } catch (error) {
-                            resolve('Desconhecida');
-                        }
-                    },
-                    (error) => {
-                        console.log('GPS não disponível:', this.getGeoError(error));
-                        resolve('Desconhecida');
-                    },
-                    { 
-                        enableHighAccuracy: false,
-                        timeout: 8000,
-                        maximumAge: 300000 // 5 minutos
-                    }
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              try {
+                const city = await this.reverseGeocode(
+                  position.coords.latitude, 
+                  position.coords.longitude
                 );
-            });
-        }
-
-        async getCityByIP() {
-            try {
-                // Tentar ipapi primeiro
-                const response = await fetch('https://ipapi.co/json/');
-                const data = await response.json();
-                
-                if (data.city) {
-                    return data.city + ', ' + data.region;
-                }
-                throw new Error('Sem dados de cidade');
-            } catch {
-                try {
-                    // Fallback para ip-api
-                    const response = await fetch('http://ip-api.com/json/?fields=status,message,city,regionName,country');
-                    const data = await response.json();
-                    
-                    if (data.status === 'success') {
-                        return data.city + ', ' + data.regionName;
-                    }
-                    throw new Error('Sem dados de cidade');
-                } catch {
-                    return 'Desconhecida';
-                }
+                resolve(city);
+              } catch (error) {
+                resolve('Desconhecida');
+              }
+            },
+            () => resolve('Desconhecida'),
+            { 
+              enableHighAccuracy: false,
+              timeout: 8000,
+              maximumAge: 300000
             }
-        }
+          );
+        });
+      }
 
-        async reverseGeocode(lat, lon) {
-            try {
-                const response = await fetch(
-                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=pt`
-                );
-                const data = await response.json();
-                return data.address.city || data.address.town || data.address.village || 'Desconhecida';
-            } catch {
-                return 'Desconhecida';
+      async getCityByIP() {
+        try {
+          const response = await fetch('https://ipapi.co/json/');
+          const data = await response.json();
+          if (data.city) {
+            return data.city + ', ' + data.region;
+          }
+          throw new Error('Sem dados de cidade');
+        } catch {
+          try {
+            const response = await fetch('https://ip-api.com/json/?fields=status,message,city,regionName,country');
+            const data = await response.json();
+            if (data.status === 'success') {
+              return data.city + ', ' + data.regionName;
             }
+            throw new Error('Sem dados de cidade');
+          } catch {
+            return 'Desconhecida';
+          }
         }
+      }
 
-        trackToAnalytics(city, eventType = 'location_detected') {
-            // Google Analytics
-            if (typeof gtag !== 'undefined') {
-                gtag('event', eventType, {
-                    'city': city,
-                    'radio_station': 'Paraíso FM 101.1 Sobral',
-                    'event_category': 'Location'
-                });
-            }
-
-            // Enviar para analytics personalizado
-            this.sendToCustomAnalytics(city, eventType);
+      async reverseGeocode(lat, lon) {
+        try {
+          const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=pt`
+          );
+          const data = await response.json();
+          return data.address.city || data.address.town || data.address.village || 'Desconhecida';
+        } catch {
+          return 'Desconhecida';
         }
+      }
 
-        async sendToCustomAnalytics(city, eventType) {
-            try {
-                await fetch('https://api.example.com/analytics/location', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        city: city,
-                        event_type: eventType,
-                        station: 'Paraíso FM 101.1',
-                        timestamp: new Date().toISOString(),
-                        user_agent: navigator.userAgent,
-                        url: window.location.href
-                    })
-                });
-            } catch (error) {
-                // Silencioso - não afeta a experiência do usuário
-                console.log('Analytics offline:', error);
-            }
+      trackToAnalytics(city, eventType = 'location_detected') {
+        if (typeof gtag !== 'undefined') {
+          gtag('event', eventType, {
+            'city': city,
+            'radio_station': 'Paraíso FM 101.1 Sobral',
+            'event_category': 'Location'
+          });
         }
+      }
 
-        getGeoError(error) {
-            switch(error.code) {
-                case error.PERMISSION_DENIED:
-                    return "Permissão negada";
-                case error.POSITION_UNAVAILABLE:
-                    return "Localização indisponível";
-                case error.TIMEOUT:
-                    return "Tempo esgotado";
-                default:
-                    return "Erro desconhecido";
-            }
-        }
-
-        // Método público para obter cidade atual
-        getCurrentCity() {
-            return this.city;
-        }
+      getCurrentCity() {
+        return this.city;
+      }
     }
 
-    // ================= CARROSSEL DE NOTÍCIAS =================
+    // ================= CARROSSEL DE NOTÍCIAS CORRIGIDO =================
     class CarrosselNoticias {
       constructor() {
         this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
@@ -988,20 +885,13 @@ if ("serviceWorker" in navigator) {
       
       async carregarNoticias() {
         try {
-          console.log('🚀 Iniciando carregamento de notícias...');
-          
           const sucesso = await this.carregarDoGoogleSheets();
-          
           if (!sucesso) {
-            console.log('📝 Usando dados de exemplo...');
             this.usarDadosExemplo();
           }
-          
           this.renderizarCarrossel();
           this.inicializarEventos();
-          
         } catch (error) {
-          console.error('❌ Erro crítico:', error);
           this.mostrarErro('Erro ao carregar notícias. Usando dados de exemplo.');
           this.usarDadosExemplo();
           this.renderizarCarrossel();
@@ -1012,88 +902,55 @@ if ("serviceWorker" in navigator) {
       async carregarDoGoogleSheets() {
         try {
           this.mostrarCarregando('Carregando notícias...');
-          
           const response = await fetch(this.sheetURL);
-          
-          if (!response.ok) {
-            throw new Error(`Erro HTTP! status: ${response.status}`);
-          }
+          if (!response.ok) throw new Error(`Erro HTTP! status: ${response.status}`);
           
           const csvData = await response.text();
-          console.log('📄 Dados CSV recebidos:', csvData);
-          
           if (!csvData || csvData.trim().length === 0) {
-            throw new Error('Planilha vazia ou sem dados');
+            throw new Error('Planilha vazia');
           }
           
-          // Processar CSV
           const linhas = csvData.split('\n').filter(linha => linha.trim().length > 0);
-          console.log('📊 Total de linhas:', linhas.length);
+          if (linhas.length <= 1) throw new Error('Sem dados');
           
-          if (linhas.length <= 1) {
-            throw new Error('Apenas cabeçalho encontrado - sem dados');
-          }
-          
-          // Processar linhas de dados
           this.slides = [];
-          
           for (let i = 1; i < linhas.length; i++) {
             const linha = linhas[i].trim();
             if (!linha) continue;
             
-            console.log(`📄 Processando linha ${i}:`, linha);
-            
-            // Método robusto para processar CSV
             const colunas = this.processarCSVCorretamente(linha);
-            console.log(`🔍 Colunas processadas linha ${i}:`, colunas);
-            
-            // Mapear colunas - Título, Descrição, Link, Data
             const noticia = {
               titulo: colunas[0] || 'Sem título',
               descricao: colunas[1] || 'Sem descrição',
-              link: colunas[2] || '',   // TERCEIRA coluna é o link
-              data: colunas[3] || ''    // QUARTA coluna é a data
+              link: colunas[2] || '',
+              data: colunas[3] || ''
             };
             
-            console.log(`📰 Notícia ${i} processada:`, noticia);
-            
-            // VALIDAR O LINK - CORREÇÃO IMPORTANTE!
             if (noticia.link) {
               noticia.linkValido = this.validarLink(noticia.link);
-              console.log(`🔗 Link da notícia ${i}:`, noticia.link, 'Válido:', noticia.linkValido);
             } else {
               noticia.linkValido = false;
             }
             
-            // Só adiciona se tiver pelo menos título
             if (noticia.titulo && noticia.titulo !== 'Sem título') {
               this.slides.push(noticia);
             }
           }
           
-          console.log(`✅ Carregadas ${this.slides.length} notícias do Google Sheets`);
-          console.log('📋 Todas as notícias:', this.slides);
-          
           return this.slides.length > 0;
-          
         } catch (error) {
-          console.error('❌ Erro ao carregar do Google Sheets:', error);
+          console.error('Erro ao carregar do Google Sheets:', error);
           return false;
         }
       }
       
       validarLink(url) {
         try {
-          // Verifica se é uma URL válida
           if (!url || url.trim() === '') return false;
-          
-          // Adiciona https:// se não tiver protocolo
           let urlCorrigida = url.trim();
           if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
             urlCorrigida = 'https://' + urlCorrigida;
           }
-          
-          // Tenta criar um objeto URL
           new URL(urlCorrigida);
           return true;
         } catch {
@@ -1103,12 +960,10 @@ if ("serviceWorker" in navigator) {
       
       corrigirURL(url) {
         if (!url || url.trim() === '') return '';
-        
         let urlCorrigida = url.trim();
         if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
           urlCorrigida = 'https://' + urlCorrigida;
         }
-        
         return urlCorrigida;
       }
       
@@ -1119,11 +974,9 @@ if ("serviceWorker" in navigator) {
         
         for (let i = 0; i < linha.length; i++) {
           const char = linha[i];
-          
           if (char === '"') {
             dentroDeAspas = !dentroDeAspas;
           } else if (char === ',' && !dentroDeAspas) {
-            // Remove aspas do início e fim do campo
             let campo = campoAtual.trim();
             if (campo.startsWith('"') && campo.endsWith('"')) {
               campo = campo.slice(1, -1);
@@ -1135,13 +988,11 @@ if ("serviceWorker" in navigator) {
           }
         }
         
-        // Adicionar o último campo
         let ultimoCampo = campoAtual.trim();
         if (ultimoCampo.startsWith('"') && ultimoCampo.endsWith('"')) {
           ultimoCampo = ultimoCampo.slice(1, -1);
         }
         resultado.push(ultimoCampo);
-        
         return resultado;
       }
       
@@ -1149,21 +1000,14 @@ if ("serviceWorker" in navigator) {
         this.slides = [
           {
             titulo: "Paraíso FM - Sua Rádio em Sobral",
-            descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral e região com as melhores notícias e entretenimento.",
+            descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral e região.",
             link: "https://sistemaparaiso.com.br",
             data: new Date().toLocaleDateString('pt-BR'),
             linkValido: true
           },
           {
             titulo: "Notícias Locais em Destaque", 
-            descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará. Informação de qualidade para você se manter atualizado.",
-            link: "https://sistemaparaiso.com.br",
-            data: new Date().toLocaleDateString('pt-BR'),
-            linkValido: true
-          },
-          {
-            titulo: "Eventos da Semana na Região",
-            descricao: "Confira a agenda completa de eventos culturais, esportivos e shows na região. Não perca as novidades!",
+            descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará.",
             link: "https://sistemaparaiso.com.br",
             data: new Date().toLocaleDateString('pt-BR'),
             linkValido: true
@@ -1185,13 +1029,9 @@ if ("serviceWorker" in navigator) {
           return;
         }
         
-        console.log('🎨 Renderizando carrossel com', this.slides.length, 'slides');
-        
         this.carrossel.innerHTML = this.slides.map((slide, index) => {
           const linkCorrigido = slide.linkValido ? this.corrigirURL(slide.link) : '';
           const temLinkValido = slide.linkValido && linkCorrigido;
-          
-          console.log(`🔗 Slide ${index} - Link:`, slide.link, 'Corrigido:', linkCorrigido, 'Válido:', temLinkValido);
           
           return `
             <div class="slide">
@@ -1209,8 +1049,6 @@ if ("serviceWorker" in navigator) {
         this.indicadores.innerHTML = this.slides.map((_, index) => `
           <div class="indicador ${index === 0 ? 'ativo' : ''}" data-index="${index}"></div>
         `).join('');
-        
-        console.log('✅ Carrossel renderizado com sucesso!');
       }
       
       escapeHtml(text) {
@@ -1224,14 +1062,10 @@ if ("serviceWorker" in navigator) {
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
         
-        prevBtn.onclick = null;
-        nextBtn.onclick = null;
-        
         prevBtn.addEventListener('click', () => this.mudarSlide(-1));
         nextBtn.addEventListener('click', () => this.mudarSlide(1));
         
         this.indicadores.querySelectorAll('.indicador').forEach(indicador => {
-          indicador.onclick = null;
           indicador.addEventListener('click', (e) => {
             const index = parseInt(e.target.getAttribute('data-index'));
             this.irParaSlide(index);
@@ -1243,15 +1077,12 @@ if ("serviceWorker" in navigator) {
       
       mudarSlide(direcao) {
         if (this.slides.length <= 1) return;
-        
         this.slideAtual += direcao;
-        
         if (this.slideAtual < 0) {
           this.slideAtual = this.slides.length - 1;
         } else if (this.slideAtual >= this.slides.length) {
           this.slideAtual = 0;
         }
-        
         this.atualizarCarrossel();
       }
       
@@ -1265,21 +1096,15 @@ if ("serviceWorker" in navigator) {
       atualizarCarrossel() {
         const translateX = -this.slideAtual * 100;
         this.carrossel.style.transform = `translateX(${translateX}%)`;
-        
         this.indicadores.querySelectorAll('.indicador').forEach((indicador, index) => {
           indicador.classList.toggle('ativo', index === this.slideAtual);
         });
       }
       
       iniciarAutoPlay() {
-        if (this.autoPlayInterval) {
-          clearInterval(this.autoPlayInterval);
-        }
-        
+        if (this.autoPlayInterval) clearInterval(this.autoPlayInterval);
         if (this.slides.length > 1) {
-          this.autoPlayInterval = setInterval(() => {
-            this.mudarSlide(1);
-          }, 6000); // Muda a cada 6 segundos
+          this.autoPlayInterval = setInterval(() => this.mudarSlide(1), 6000);
         }
       }
       
@@ -1290,28 +1115,23 @@ if ("serviceWorker" in navigator) {
 
     // ================= INICIALIZAÇÃO GERAL =================
     document.addEventListener('DOMContentLoaded', function() {
-      console.log('🎯 Inicializando carrossel de notícias...');
+      // Inicializar carrossel
       new CarrosselNoticias();
       
       // Inicializar location tracker
       const locationTracker = new LocationTracker();
       locationTracker.init();
       
-      // Expor globalmente para debug
+      // Debug
       window.locationTracker = locationTracker;
-      
-      // Também detectar cidade quando o usuário interagir com o player
-      playPause.addEventListener('click', () => {
-        if (!player.paused) {
-          // Se está tocando, enviar evento de localização
-          setTimeout(() => {
-            locationTracker.trackToAnalytics(locationTracker.getCurrentCity(), 'play_with_location');
-          }, 1000);
-        }
-      });
     });
+
+    // Service Worker
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("service-worker.js")
+        .then(() => console.log("Service Worker registrado."))
+        .catch((err) => console.error("Erro no Service Worker:", err));
+    }
   </script>
 </body>
 </html>
-
-
