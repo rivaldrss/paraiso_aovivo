@@ -3,32 +3,37 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Paraíso FM 101,1 - Sobral | Rádio Online</title>
+  <title>Paraíso FM 101,1 - Sobral</title>
 
-  <!-- Google Analytics -->
+  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF42RBHES1"></script>
   <script>
-    window.dataLayer = window.dataLayer || [];
+     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
+    gtag('config', 'G-EF42RBHES1');
+    
+    // CONFIGURAÇÃO PARA DETECÇÃO DE CIDADE
+    gtag('config', 'G-EF42RBHES1', {
+        'custom_map': {
+            'dimension1': 'user_city',
+            'dimension2': 'detection_method', 
+            'dimension3': 'radio_station'
+        }
+    });    
+    // CONFIGURAÇÃO PARA DETECÇÃO DE CIDADE
     gtag('config', 'G-EF42RBHES1', {
       'custom_map': {
         'dimension1': 'user_city',
-        'dimension2': 'detection_method',
-        'dimension3': 'radio_station'
+        'dimension2': 'detection_method'
       }
     });
   </script>
 
-  <!-- Font Awesome -->
+  <!-- Font Awesome para ícones -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Ouça a Rádio Paraíso FM 101.1 de Sobral ao vivo. Programação variada, notícias locais e os melhores sucessos da região.">
-  <meta name="keywords" content="rádio Sobral, Paraíso FM, 101.1, rádio online, música, notícias Sobral">
-  <meta name="author" content="Sistema Paraíso">
-
-  <!-- Open Graph -->
+  <!-- Open Graph / WhatsApp / Twitter Card -->
   <meta property="og:type" content="website">
   <meta property="og:title" content="📻 Paraíso FM 101,1 - Sobral">
   <meta property="og:description" content="Paraíso FM de Sobral Ao vivo - Informação e entretenimento em um só lugar.">
@@ -44,267 +49,201 @@
   <meta name="twitter:description" content="Paraíso FM de Sobral Ao vivo - Informação e entretenimento em um só lugar.">
   <meta name="twitter:image" content="https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png?v=2">
 
-  <!-- Schema.org -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "RadioStation",
-    "name": "Paraíso FM 101.1",
-    "frequency": "101.1 MHz",
-    "broadcastArea": "Sobral, CE",
-    "description": "Rádio Paraíso FM de Sobral - Informação e entretenimento",
-    "url": "https://rivaldrss.github.io/paraiso_aovivo/",
-    "logo": "https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg"
-  }
-  </script>
+  <!-- Optional: custom WhatsApp tag for internal use (not read by WhatsApp) -->
+  <meta name="whatsapp:preview" content="https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png?v=2">
+<!-- Manifest -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#1e90ff">
 
-  <!-- PWA -->
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e90ff">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Paraíso FM">
-  <link rel="apple-touch-icon" href="assets/icons/icon-192.png">
+<!-- iOS suporte -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Paraíso FM">
+<link rel="apple-touch-icon" href="icone-192.png">
+  <script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js")
+    .then(() => console.log("Service Worker registrado."))
+    .catch((err) => console.error("Erro no Service Worker:", err));
+}
+</script>
 
   <style>
-    /* Reset e Variáveis CSS */
-    :root {
-      --primary-color: #1e90ff;
-      --success-color: #4CAF50;
-      --warning-color: #ff9800;
-      --error-color: #ff6b6b;
-      --text-color: #ffffff;
-      --bg-overlay: rgba(0,0,0,0.7);
-      --card-bg: rgba(0,0,0,0.85);
-      --shadow: 0 15px 40px rgba(0,0,0,0.8);
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Segoe UI', Arial, sans-serif;
-      background: linear-gradient(var(--bg-overlay), var(--bg-overlay)),
-                  url('https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      color: var(--text-color);
-      line-height: 1.6;
-    }
-
-    .player-card {
-      background: var(--card-bg);
-      border-radius: 25px;
-      padding: 30px 25px;
-      max-width: 500px;
-      width: 95%;
-      text-align: center;
-      box-shadow: var(--shadow);
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:Arial,sans-serif;background:url('https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png') no-repeat center center fixed;background-size:cover;display:flex;justify-content:center;align-items:center;min-height:100vh;position:relative;color:#fff;}
+    body::before{content:"";position:absolute;top:0;left:0;width:100%;height:100%;background: rgba(0,0,0,0.3);z-index:0;}
+    
+    .player-card{
+      position: relative; 
+      z-index:2; 
+      background: rgba(0,0,0,0.70); 
+      border-radius:25px; 
+      padding:30px 25px; 
+      max-width:500px; 
+      width:95%; 
+      text-align:center; 
+      box-shadow:0 15px 40px rgba(0,0,0,0.8);
       margin: 20px 10px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.1);
     }
-
-    .player-card header img {
-      width: 110px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      margin-bottom: 15px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
+    
+    .player-card header img{
+      width:110px; 
+      border-radius:50%; 
+      border:3px solid #fff; 
+      margin-bottom:15px; 
+      display:block; 
+      margin-left:auto;
+      margin-right:auto;
       box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-      transition: transform 0.3s ease;
     }
-
-    .player-card header img:hover {
-      transform: scale(1.05);
+    
+    .player-card header h1{
+      font-size:24px;
+      margin-bottom:15px;
+      text-shadow:2px 2px 8px rgba(0,0,0,0.8);
+      font-weight: bold;
     }
-
-    .player-card header h1 {
-      font-size: 24px;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-      font-weight: 700;
+    
+    .player-container{
+      background: rgba(255,255,255,0.08); 
+      border:2px solid rgba(255,255,255,0.15); 
+      border-radius:15px; 
+      padding:20px; 
+      display:flex; 
+      align-items:center; 
+      gap:15px; 
+      box-shadow:0 8px 20px rgba(0,0,0,0.6); 
+      margin-bottom:20px;
     }
-
-    .player-container {
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.15);
-      border-radius: 15px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-      margin-bottom: 20px;
-    }
-
-    .btn {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: #fff;
-      font-size: 22px;
-      border-radius: 12px;
-      width: 65px;
-      height: 50px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    
+    .btn{
+      background: rgba(255,255,255,0.15); 
+      border:none; 
+      color:#fff; 
+      font-size:22px; 
+      border-radius:12px; 
+      width:65px; 
+      height:50px; 
+      cursor:pointer; 
+      transition: transform .2s, background .2s; 
+      display:inline-flex; 
+      align-items:center; 
+      justify-content:center;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    .btn:hover {
-      transform: scale(1.08);
-      background: rgba(255,255,255,0.22);
+    
+    .btn:hover{
+      transform:scale(1.08); 
+      background:rgba(255,255,255,0.22);
     }
-
-    .btn:active {
-      transform: scale(0.98);
+    
+    .btn:active{
+      transform:scale(0.98);
     }
-
-    .btn.playing {
-      animation: pulse 1.5s infinite;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
-    .volume {
-      flex: 1;
+    
+    .volume{
+      flex:1;
       display: flex;
       align-items: center;
       gap: 12px;
     }
-
-    .volume input[type="range"] {
-      width: 100%;
+    
+    .volume input[type="range"]{
+      width:100%; 
       height: 8px;
-      cursor: pointer;
+      cursor:pointer;
       border-radius: 4px;
       background: rgba(255,255,255,0.1);
       -webkit-appearance: none;
     }
-
+    
     .volume input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: var(--primary-color);
+      background: #1E90FF;
       cursor: pointer;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
-
+    
     .volume input[type="range"]::-moz-range-thumb {
       width: 20px;
       height: 20px;
       border-radius: 50%;
-      background: var(--primary-color);
+      background: #1E90FF;
       cursor: pointer;
       border: none;
     }
-
+    
     .volume-icons {
       display: flex;
       gap: 5px;
       color: rgba(255,255,255,0.7);
       font-size: 16px;
     }
-
-    .status, .programacao {
-      font-size: 15px;
-      opacity: 0.95;
-      margin-top: 8px;
-      text-align: left;
+    
+    .status, .programacao{
+      font-size:15px; 
+      opacity:0.95; 
+      margin-top:8px; 
+      text-align:left;
       font-weight: 500;
     }
-
+    
     .programacao {
       background: rgba(30, 144, 255, 0.2);
       padding: 12px 15px;
       border-radius: 10px;
       margin: 15px 0;
-      border-left: 4px solid var(--primary-color);
+      border-left: 4px solid #1E90FF;
       font-size: 14px;
     }
-
-    .quality-indicator {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      justify-content: center;
-      margin: 10px 0;
-      font-size: 13px;
-      opacity: 0.8;
+    
+    .social{
+      display:flex; 
+      justify-content:center; 
+      gap:15px; 
+      margin:20px 0 15px; 
+      align-items:center;
     }
-
-    .quality-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--success-color);
-      animation: blink 2s infinite;
-    }
-
-    @keyframes blink {
-      0%, 50% { opacity: 1; }
-      51%, 100% { opacity: 0.3; }
-    }
-
-    .social {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0 15px;
-      align-items: center;
-    }
-
-    .social a {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.05);
-      text-decoration: none;
-      transition: all 0.3s ease;
-      color: inherit;
-      border: 2px solid rgba(255,255,255,0.08);
+    
+    .social a{
+      display:inline-flex; 
+      align-items:center; 
+      justify-content:center; 
+      width:50px; 
+      height:50px; 
+      border-radius:12px; 
+      background: rgba(255,255,255,0.05); 
+      text-decoration:none; 
+      transition: transform .2s, background .2s; 
+      z-index:3; 
+      color: inherit; 
+      border:2px solid rgba(255,255,255,0.08);
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
-
-    .social a:hover {
-      transform: translateY(-4px);
+    
+    .social a:hover{
+      transform: translateY(-4px); 
       background: rgba(255,255,255,0.1);
     }
-
-    .social a.instagram { color: #E1306C; }
-    .social a.whatsapp { color: #25D366; }
-    .social a.youtube { color: #FF0000; }
-    .social a.site { color: var(--primary-color); }
-
-    .social i {
-      font-size: 24px;
-      display: block;
+    
+    /* Cores dos ícones */
+    .social a.instagram{color:#E1306C;}
+    .social a.whatsapp{color:#25D366;}
+    .social a.youtube{color:#FF0000;}
+    .social a.site{color:#1E90FF;}
+    
+    .social i{
+      font-size:24px; 
+      display:block;
     }
-
-    footer {
-      font-size: 13px;
-      opacity: 0.8;
-      margin-top: 10px;
+    
+    footer{
+      font-size:13px; 
+      opacity:0.8; 
+      margin-top:10px;
       padding-top: 10px;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
@@ -369,6 +308,10 @@
       box-shadow: 0 6px 18px rgba(30, 144, 255, 0.4);
     }
 
+    .slide a:active {
+      transform: translateY(-1px);
+    }
+
     .controles {
       position: absolute;
       top: 50%;
@@ -417,7 +360,7 @@
     }
 
     .indicador.ativo {
-      background: var(--primary-color);
+      background: #1E90FF;
       transform: scale(1.3);
       box-shadow: 0 2px 6px rgba(30, 144, 255, 0.5);
     }
@@ -432,7 +375,7 @@
     .erro {
       text-align: center;
       padding: 35px 25px;
-      color: var(--error-color);
+      color: #ff6b6b;
       font-size: 15px;
       background: rgba(255,107,107,0.1);
       border-radius: 10px;
@@ -451,7 +394,7 @@
       display: inline-block;
     }
 
-    /* Location Badge */
+    /* Estilos para o Location Badge */
     .location-badge {
       position: absolute;
       top: 15px;
@@ -471,81 +414,194 @@
       text-overflow: ellipsis;
       white-space: nowrap;
     }
-
     .location-info {
       display: flex;
       align-items: center;
       gap: 8px;
     }
-
     .location-icon {
       font-size: 14px;
       flex-shrink: 0;
     }
-
     .location-text {
       font-weight: 500;
     }
+    .location-badge.success {
+      background: rgba(34, 197, 94, 0.9);
+    }
+    .location-badge.error {
+      background: rgba(239, 68, 68, 0.9);
+    }
+    .location-badge.loading {
+      background: rgba(59, 130, 246, 0.9);
+    }
 
-    .location-badge.success { background: rgba(34, 197, 94, 0.9); }
-    .location-badge.error { background: rgba(239, 68, 68, 0.9); }
-    .location-badge.loading { background: rgba(59, 130, 246, 0.9); }
-
-    /* Responsividade */
+    /* Melhorias para Mobile */
     @media (max-width: 768px) {
-      .player-card { padding: 25px 20px; margin: 15px 10px; }
-      .player-card header img { width: 100px; }
-      .player-card header h1 { font-size: 22px; }
-      .player-container { padding: 18px; gap: 12px; }
-      .btn { width: 60px; height: 48px; font-size: 20px; }
-      .social a { width: 48px; height: 48px; }
-      .social i { font-size: 22px; }
-      .location-badge { max-width: 160px; }
-    }
-
-    @media (max-width: 480px) {
-      .player-card { padding: 20px 15px; margin: 10px 5px; }
-      .player-card header img { width: 90px; }
-      .player-card header h1 { font-size: 20px; }
-      .player-container { padding: 15px; gap: 10px; flex-direction: column; }
-      .btn { width: 70px; height: 55px; font-size: 24px; order: -1; margin-bottom: 10px; }
-      .volume { width: 100%; }
-      .status, .programacao { text-align: center; font-size: 14px; }
-      .programacao { padding: 10px 12px; font-size: 13px; }
-      .social { gap: 12px; margin: 18px 0 12px; }
-      .social a { width: 45px; height: 45px; }
-      .social i { font-size: 20px; }
-      .slide { padding: 20px; }
-      .slide h3 { font-size: 17px; }
-      .slide p { font-size: 14px; }
-      .slide a { padding: 10px 20px; font-size: 14px; width: 100%; text-align: center; }
-      .controles button { width: 35px; height: 35px; font-size: 16px; }
-      footer { font-size: 12px; }
-      .location-badge { max-width: 140px; }
-    }
-
-    @media (max-width: 360px) {
-      .player-card { padding: 18px 12px; }
-      .player-card header img { width: 80px; }
-      .player-card header h1 { font-size: 18px; }
-      .btn { width: 65px; height: 50px; }
-      .location-badge { max-width: 120px; }
-    }
-
-    /* High contrast mode support */
-    @media (prefers-contrast: high) {
-      :root {
-        --card-bg: rgba(0,0,0,0.95);
-        --text-color: #ffffff;
+      .player-card {
+        padding: 25px 20px;
+        margin: 15px 10px;
+        border-radius: 20px;
+      }
+      
+      .player-card header img {
+        width: 100px;
+      }
+      
+      .player-card header h1 {
+        font-size: 22px;
+      }
+      
+      .player-container {
+        padding: 18px;
+        gap: 12px;
+      }
+      
+      .btn {
+        width: 60px;
+        height: 48px;
+        font-size: 20px;
+      }
+      
+      .social a {
+        width: 48px;
+        height: 48px;
+      }
+      
+      .social i {
+        font-size: 22px;
+      }
+      
+      .location-badge {
+        top: 10px;
+        left: 10px;
+        padding: 6px 12px;
+        font-size: 12px;
+        max-width: 160px;
       }
     }
 
-    /* Reduced motion support */
-    @media (prefers-reduced-motion: reduce) {
-      * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
+    @media (max-width: 480px){
+      .player-card{
+        padding:20px 15px; 
+        margin: 10px 5px;
+        border-radius: 18px;
+      } 
+      
+      .player-card header img{
+        width:90px; 
+      } 
+      
+      .player-card header h1{
+        font-size:20px;
+        margin-bottom: 12px;
+      }
+      
+      .player-container {
+        padding: 15px;
+        gap: 10px;
+        flex-direction: column;
+      }
+      
+      .btn {
+        width: 70px;
+        height: 55px;
+        font-size: 24px;
+        order: -1;
+        margin-bottom: 10px;
+      }
+      
+      .volume {
+        width: 100%;
+        gap: 10px;
+      }
+      
+      .volume-icons {
+        font-size: 14px;
+      }
+      
+      .status, .programacao {
+        text-align: center;
+        font-size: 14px;
+      }
+      
+      .programacao {
+        padding: 10px 12px;
+        font-size: 13px;
+      }
+      
+      .social{
+        gap:12px; 
+        margin:18px 0 12px;
+      }
+      
+      .social a{
+        width:45px;
+        height:45px;
+      }
+      
+      .social i{
+        font-size:20px;
+      }
+      
+      .slide { 
+        padding: 20px; 
+      }
+      
+      .slide h3 { 
+        font-size: 17px; 
+      }
+      
+      .slide p { 
+        font-size: 14px; 
+      }
+      
+      .slide a { 
+        padding: 10px 20px; 
+        font-size: 14px; 
+        width: 100%;
+        text-align: center;
+      }
+      
+      .controles button {
+        width: 35px;
+        height: 35px;
+        font-size: 16px;
+      }
+      
+      footer {
+        font-size: 12px;
+      }
+      
+      .location-badge {
+        top: 8px;
+        left: 8px;
+        padding: 5px 10px;
+        font-size: 11px;
+        max-width: 140px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .player-card {
+        padding: 18px 12px;
+      }
+      
+      .player-card header img {
+        width: 80px;
+      }
+      
+      .player-card header h1 {
+        font-size: 18px;
+      }
+      
+      .btn {
+        width: 65px;
+        height: 50px;
+      }
+      
+      .location-badge {
+        max-width: 120px;
       }
     }
   </style>
@@ -553,30 +609,22 @@
 <body>
   <div class="player-card">
     <header>
-      <img src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" 
-           alt="Logo da Rádio Paraíso FM 101.1 Sobral" 
-           loading="lazy">
+      <img src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo da Rádio">
       <h1>Paraíso FM 101,1 - Sobral</h1>
     </header>
 
     <div class="player-container">
-      <button class="btn" id="playPause" aria-label="Reproduzir ou pausar rádio">▶️</button>
+      <button class="btn" id="playPause">▶️</button>
       <div class="volume">
         <div class="volume-icons">
-          <span aria-hidden="true">🔈</span>
-          <span aria-hidden="true">🔊</span>
+          <span>🔈</span>
+          <span>🔊</span>
         </div>
-        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7" 
-               aria-label="Controle de volume">
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
       </div>
       <div style="min-width:120px; text-align:center;">
         <div class="status" id="status">Conectando...</div>
       </div>
-    </div>
-
-    <div class="quality-indicator">
-      <span class="quality-dot"></span>
-      <span>Qualidade: <span id="qualityStatus">Ótima</span></span>
     </div>
 
     <div class="programacao" id="programacao">🎙️ Programa atual: Carregando...</div>
@@ -588,8 +636,8 @@
       </div>
       
       <div class="controles">
-        <button id="prevBtn" aria-label="Notícia anterior">&#10094;</button>
-        <button id="nextBtn" aria-label="Próxima notícia">&#10095;</button>
+        <button id="prevBtn">&#10094;</button>
+        <button id="nextBtn">&#10095;</button>
       </div>
       
       <div class="indicadores" id="indicadores">
@@ -597,275 +645,673 @@
       </div>
     </div>
 
-    <!-- Redes Sociais -->
+    <!-- Redes Sociais com Font Awesome -->
     <div class="social">
-      <a class="instagram" href="https://www.instagram.com/sistemaparaiso" target="_blank" 
-         aria-label="Instagram da Paraíso FM" rel="noopener noreferrer">
+      <a class="instagram" href="https://www.instagram.com/sistemaparaiso" target="_blank" aria-label="Instagram">
         <i class="fab fa-instagram"></i>
       </a>
-      <a class="whatsapp" href="https://wa.me/5588999834349" target="_blank" 
-         aria-label="WhatsApp da Paraíso FM" rel="noopener noreferrer">
+      <a class="whatsapp" href="https://wa.me/5588999834349" target="_blank" aria-label="WhatsApp">
         <i class="fab fa-whatsapp"></i>
       </a>
-      <a class="youtube" href="https://www.youtube.com/@paraisofmsobral" target="_blank" 
-         aria-label="YouTube da Paraíso FM" rel="noopener noreferrer">
+      <a class="youtube" href="https://www.youtube.com/@paraisofmsobral" target="_blank" aria-label="YouTube">
         <i class="fab fa-youtube"></i>
       </a>
-      <a class="site" href="https://sistemaparaiso.com.br" target="_blank" 
-         aria-label="Site oficial da Paraíso FM" rel="noopener noreferrer">
+      <a class="site" href="https://sistemaparaiso.com.br" target="_blank" aria-label="Site">
         <i class="fas fa-globe"></i>
       </a>
     </div>
 
-    <footer>
-      <p>© 2025 Paraíso FM 101,1 - Todos os direitos reservados</p>
-      <p style="font-size: 11px; opacity: 0.6; margin-top: 5px;">
-        Desenvolvido com ❤️ para a comunidade de Sobral
-      </p>
-    </footer>
+    <footer>© 2025 Paraíso FM 101,1 - Todos os direitos reservados</footer>
   </div>
 
-  <audio id="player" crossorigin="anonymous" preload="metadata">
+  <audio id="player" crossorigin="anonymous">
     <source src="https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
     Seu navegador não suporta o player de áudio.
   </audio>
 
   <script>
-    // ================= CONFIGURAÇÃO E INICIALIZAÇÃO =================
-    class RadioApp {
-      constructor() {
-        this.player = document.getElementById('player');
-        this.playPause = document.getElementById('playPause');
-        this.statusText = document.getElementById('status');
-        this.volumeControl = document.getElementById('volumeControl');
-        this.programacaoEl = document.getElementById('programacao');
-        this.qualityStatus = document.getElementById('qualityStatus');
-        
-        this.volumeTimeout = null;
-        this.bufferingEvents = 0;
-        this.startTime = 0;
-        
-        this.init();
+    // ================= PLAYER PRINCIPAL =================
+    const player = document.getElementById("player");
+    const playPause = document.getElementById("playPause");
+    const statusText = document.getElementById("status");
+    const volumeControl = document.getElementById("volumeControl");
+    const programacaoEl = document.getElementById("programacao");
+
+    // Grade com dias da semana (0=Domingo, 1=Segunda, ..., 6=Sábado)
+    const grade = [
+      // SEGUNDA A SEXTA
+      { dias: [1,2,3,4,5], inicio: "04:00", fim: "06:00", programa: "De Olho na Cidade" },
+      { dias: [1,2,3,4,5], inicio: "06:00", fim: "08:00", programa: "Chama a Paraíso" },
+      { dias: [1,2,3,4,5], inicio: "08:00", fim: "09:00", programa: "Variedades" },
+      { dias: [1,2,3,4,5], inicio: "09:00", fim: "11:00", programa: "Estação 101" },
+      { dias: [1,2,3,4,5], inicio: "11:00", fim: "13:00", programa: "Hora da Notícia" },
+      { dias: [1,2,3,4,5], inicio: "13:00", fim: "15:00", programa: "Tribuna & Plenário" },
+      { dias: [1,2,3,4,5], inicio: "15:00", fim: "17:00", programa: "Forronejo" },
+      { dias: [1,2,3,4,5], inicio: "17:00", fim: "19:00", programa: "Sucessos & Saudades" },
+      { dias: [1,2,3,4,5], inicio: "19:00", fim: "20:00", programa: "A voz do Brasil" },
+      { dias: [1,2,3,4,5], inicio: "20:00", fim: "22:00", programa: "Diário Policial" },
+      { dias: [1,2,3,4,5], inicio: "22:00", fim: "23:30", programa: "Plantão Alerta" },
+      { dias: [1,2,3,4,5], inicio: "23:30", fim: "1:00", programa: "Paraíso By Night" },
+      { dias: [1,2,3,4,5], inicio: "1:00", fim: "2:00", programa: "Novo Tempo" },
+      { dias: [1,2,3,4,5], inicio: "2:00", fim: "4:00", programa: "Madrugada 101" },
+
+      // SÁBADO
+      { dias: [6], inicio: "06:00", fim: "09:00", programa: "Manhã Sertaneja" },
+      { dias: [6], inicio: "09:00", fim: "12:00", programa: "Top Hits Paraíso" },
+      { dias: [6], inicio: "12:00", fim: "15:00", programa: "Sábado Esportivo" },
+      { dias: [6], inicio: "15:00", fim: "18:00", programa: "Especial Forró das Antigas" },
+
+      // DOMINGO
+      { dias: [0], inicio: "06:00", fim: "09:00", programa: "Domingo de Fé" },
+      { dias: [0], inicio: "09:00", fim: "12:00", programa: "Paradão Paraíso" },
+      { dias: [0], inicio: "12:00", fim: "15:00", programa: "Tarde de Sucessos" },
+      { dias: [0], inicio: "15:00", fim: "18:00", programa: "Especial Samba & Pagode" }
+    ];
+
+    // Status do player
+    player.onplaying = () => {
+      statusText.textContent = "▶️ Tocando Agora";
+      statusText.style.color = "#4CAF50";
+      gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
+    };
+    
+    player.onpause = () => {
+      statusText.textContent = "⏸️ Pausado";
+      statusText.style.color = "#ff9800";
+      gtag('event', 'pause', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
+    };
+    
+    player.onwaiting = () => {
+      statusText.textContent = "⏳ Conectando...";
+      statusText.style.color = "#fff";
+    };
+    
+    player.onerror = () => {
+      statusText.textContent = "⚠️ Erro na transmissão";
+      statusText.style.color = "#ff6b6b";
+    };
+
+    playPause.addEventListener("click", () => {
+      if (player.paused) {
+        player.play().catch(()=>{ 
+          statusText.textContent = "▶️ Toque para iniciar";
+          statusText.style.color = "#ff6b6b";
+        });
+        playPause.textContent = "⏸️";
+      } else {
+        player.pause();
+        playPause.textContent = "▶️";
       }
+    });
 
-      init() {
-        this.setupEventListeners();
-        this.setupErrorHandling();
-        this.startQoSTracking();
-        this.loadProgramacaoFromCache();
-      }
+    volumeControl.addEventListener("input", (e) => {
+      player.volume = e.target.value;
+      gtag('event', 'volume_change', { 'event_category': 'Player', 'event_label': 'Volume', 'value': e.target.value });
+    });
 
-      setupEventListeners() {
-        // Eventos do player
-        this.player.addEventListener('playing', this.handlePlaying.bind(this));
-        this.player.addEventListener('pause', this.handlePause.bind(this));
-        this.player.addEventListener('waiting', this.handleWaiting.bind(this));
-        this.player.addEventListener('error', this.handleError.bind(this));
-        this.player.addEventListener('canplay', this.handleCanPlay.bind(this));
+    function horaEntre(hora, inicio, fim) {
+      return (inicio <= fim) ? (hora >= inicio && hora < fim) : (hora >= inicio || hora < fim);
+    }
 
-        // Eventos de UI
-        this.playPause.addEventListener('click', this.togglePlay.bind(this));
-        
-        this.volumeControl.addEventListener('input', (e) => {
-          clearTimeout(this.volumeTimeout);
-          this.volumeTimeout = setTimeout(() => {
-            this.player.volume = e.target.value;
-            gtag('event', 'volume_change', {
-              'event_category': 'Player',
-              'event_label': 'Volume',
-              'value': e.target.value
+    function atualizarProgramacao() {
+      const agora = new Date();
+      const diaSemana = agora.getDay(); // 0=Dom, 1=Seg, ..., 6=Sáb
+      const horaAtual = agora.getHours().toString().padStart(2,"0") + ":" +
+                        agora.getMinutes().toString().padStart(2,"0");
+
+      const programaAtual = grade.find(p => p.dias.includes(diaSemana) && horaEntre(horaAtual, p.inicio, p.fim));
+
+      programacaoEl.textContent = programaAtual 
+        ? `🎙️ ${programaAtual.programa} (${programaAtual.inicio}-${programaAtual.fim})`
+        : "🎙️ Fora do ar - Programação especial";
+    }
+
+    atualizarProgramacao();
+    setInterval(atualizarProgramacao, 60_000);
+
+    // ================= SISTEMA DE DETECÇÃO DE CIDADE =================
+    class LocationTracker {
+        constructor() {
+            this.city = 'Detectando...';
+            this.isDetecting = false;
+            this.locationElement = null;
+        }
+
+        init() {
+            console.log('🎯 Iniciando Location Tracker...');
+            this.createLocationUI();
+            this.detectUserCity();
+            
+            // Detectar cidade quando o player iniciar
+            player.onplaying = () => {
+                this.trackToAnalytics(this.city, 'play');
+            };
+        }
+
+        createLocationUI() {
+            // Criar badge de localização
+            const locationBadge = document.createElement('div');
+            locationBadge.className = 'location-badge loading';
+            locationBadge.innerHTML = `
+                <div class="location-info">
+                    <span class="location-icon">📍</span>
+                    <span class="location-text">${this.city}</span>
+                </div>
+            `;
+
+            // Adicionar ao container do player
+            const playerCard = document.querySelector('.player-card');
+            if (playerCard) {
+                playerCard.style.position = 'relative';
+                playerCard.appendChild(locationBadge);
+                this.locationElement = locationBadge;
+            }
+        }
+
+        updateLocationUI(city, status = 'success') {
+            this.city = city;
+            
+            if (this.locationElement) {
+                const locationText = this.locationElement.querySelector('.location-text');
+                if (locationText) {
+                    locationText.textContent = city;
+                }
+                
+                // Atualizar classes de status
+                this.locationElement.className = 'location-badge ' + status;
+            }
+        }
+
+        async detectUserCity() {
+            if (this.isDetecting) return;
+            this.isDetecting = true;
+
+            this.updateLocationUI('Detectando cidade...', 'loading');
+
+            try {
+                // Tentar GPS primeiro (mais preciso)
+                let city = await this.getCityByGPS();
+                
+                // Se GPS falhou, tentar IP
+                if (!city || city === 'Desconhecida') {
+                    city = await this.getCityByIP();
+                }
+
+                this.updateLocationUI(city, 'success');
+                this.trackToAnalytics(city, 'location_detected');
+                
+                console.log('🎯 Cidade detectada:', city);
+                
+            } catch (error) {
+                console.error('Erro na detecção:', error);
+                this.updateLocationUI('Localização indisponível', 'error');
+            } finally {
+                this.isDetecting = false;
+            }
+        }
+
+        async getCityByGPS() {
+            return new Promise((resolve) => {
+                if (!navigator.geolocation) {
+                    resolve('Desconhecida');
+                    return;
+                }
+
+                navigator.geolocation.getCurrentPosition(
+                    async (position) => {
+                        try {
+                            const city = await this.reverseGeocode(
+                                position.coords.latitude, 
+                                position.coords.longitude
+                            );
+                            resolve(city);
+                        } catch (error) {
+                            resolve('Desconhecida');
+                        }
+                    },
+                    (error) => {
+                        console.log('GPS não disponível:', this.getGeoError(error));
+                        resolve('Desconhecida');
+                    },
+                    { 
+                        enableHighAccuracy: false,
+                        timeout: 8000,
+                        maximumAge: 300000 // 5 minutos
+                    }
+                );
             });
-          }, 100);
-        });
+        }
 
-        // Teclas de atalho
-        document.addEventListener('keydown', (e) => {
-          if (e.code === 'Space') {
-            e.preventDefault();
-            this.togglePlay();
+        async getCityByIP() {
+            try {
+                // Tentar ipapi primeiro
+                const response = await fetch('https://ipapi.co/json/');
+                const data = await response.json();
+                
+                if (data.city) {
+                    return data.city + ', ' + data.region;
+                }
+                throw new Error('Sem dados de cidade');
+            } catch {
+                try {
+                    // Fallback para ip-api
+                    const response = await fetch('http://ip-api.com/json/?fields=status,message,city,regionName,country');
+                    const data = await response.json();
+                    
+                    if (data.status === 'success') {
+                        return data.city + ', ' + data.regionName;
+                    }
+                    throw new Error('Sem dados de cidade');
+                } catch {
+                    return 'Desconhecida';
+                }
+            }
+        }
+
+        async reverseGeocode(lat, lon) {
+            try {
+                const response = await fetch(
+                    `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=pt`
+                );
+                const data = await response.json();
+                return data.address.city || data.address.town || data.address.village || 'Desconhecida';
+            } catch {
+                return 'Desconhecida';
+            }
+        }
+
+        trackToAnalytics(city, eventType = 'location_detected') {
+            // Google Analytics
+            if (typeof gtag !== 'undefined') {
+                gtag('event', eventType, {
+                    'city': city,
+                    'radio_station': 'Paraíso FM 101.1 Sobral',
+                    'event_category': 'Location'
+                });
+            }
+
+            // Enviar para analytics personalizado
+            this.sendToCustomAnalytics(city, eventType);
+        }
+
+        async sendToCustomAnalytics(city, eventType) {
+            try {
+                await fetch('https://api.example.com/analytics/location', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        city: city,
+                        event_type: eventType,
+                        station: 'Paraíso FM 101.1',
+                        timestamp: new Date().toISOString(),
+                        user_agent: navigator.userAgent,
+                        url: window.location.href
+                    })
+                });
+            } catch (error) {
+                // Silencioso - não afeta a experiência do usuário
+                console.log('Analytics offline:', error);
+            }
+        }
+
+        getGeoError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    return "Permissão negada";
+                case error.POSITION_UNAVAILABLE:
+                    return "Localização indisponível";
+                case error.TIMEOUT:
+                    return "Tempo esgotado";
+                default:
+                    return "Erro desconhecido";
+            }
+        }
+
+        // Método público para obter cidade atual
+        getCurrentCity() {
+            return this.city;
+        }
+    }
+
+    // ================= CARROSSEL DE NOTÍCIAS =================
+    class CarrosselNoticias {
+      constructor() {
+        this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
+        this.carrossel = document.getElementById('carrossel');
+        this.indicadores = document.getElementById('indicadores');
+        this.slides = [];
+        this.slideAtual = 0;
+        this.autoPlayInterval = null;
+        
+        this.inicializar();
+      }
+      
+      async carregarNoticias() {
+        try {
+          console.log('🚀 Iniciando carregamento de notícias...');
+          
+          const sucesso = await this.carregarDoGoogleSheets();
+          
+          if (!sucesso) {
+            console.log('📝 Usando dados de exemplo...');
+            this.usarDadosExemplo();
           }
-        });
+          
+          this.renderizarCarrossel();
+          this.inicializarEventos();
+          
+        } catch (error) {
+          console.error('❌ Erro crítico:', error);
+          this.mostrarErro('Erro ao carregar notícias. Usando dados de exemplo.');
+          this.usarDadosExemplo();
+          this.renderizarCarrossel();
+          this.inicializarEventos();
+        }
       }
-
-      setupErrorHandling() {
-        window.addEventListener('error', (e) => {
-          console.error('Erro global:', e.error);
-          gtag('event', 'error', {
-            'event_category': 'JavaScript',
-            'event_label': e.error.message
-          });
-        });
-
-        window.addEventListener('unhandledrejection', (e) => {
-          console.error('Promise rejeitada:', e.reason);
-          gtag('event', 'promise_error', {
-            'event_category': 'JavaScript',
-            'event_label': e.reason
-          });
-        });
-      }
-
-      startQoSTracking() {
-        this.player.addEventListener('waiting', () => {
-          this.bufferingEvents++;
-          this.updateQualityStatus();
-        });
-
-        this.player.addEventListener('playing', () => {
-          if (this.startTime === 0) {
-            this.startTime = Date.now();
+      
+      async carregarDoGoogleSheets() {
+        try {
+          this.mostrarCarregando('Carregando notícias...');
+          
+          const response = await fetch(this.sheetURL);
+          
+          if (!response.ok) {
+            throw new Error(`Erro HTTP! status: ${response.status}`);
           }
-          this.updateQualityStatus();
-        });
-      }
-
-      updateQualityStatus() {
-        let status = 'Ótima';
-        let color = 'var(--success-color)';
-
-        if (this.bufferingEvents > 3) {
-          status = 'Instável';
-          color = 'var(--error-color)';
-        } else if (this.bufferingEvents > 1) {
-          status = 'Boa';
-          color = 'var(--warning-color)';
+          
+          const csvData = await response.text();
+          console.log('📄 Dados CSV recebidos:', csvData);
+          
+          if (!csvData || csvData.trim().length === 0) {
+            throw new Error('Planilha vazia ou sem dados');
+          }
+          
+          // Processar CSV
+          const linhas = csvData.split('\n').filter(linha => linha.trim().length > 0);
+          console.log('📊 Total de linhas:', linhas.length);
+          
+          if (linhas.length <= 1) {
+            throw new Error('Apenas cabeçalho encontrado - sem dados');
+          }
+          
+          // Processar linhas de dados
+          this.slides = [];
+          
+          for (let i = 1; i < linhas.length; i++) {
+            const linha = linhas[i].trim();
+            if (!linha) continue;
+            
+            console.log(`📄 Processando linha ${i}:`, linha);
+            
+            // Método robusto para processar CSV
+            const colunas = this.processarCSVCorretamente(linha);
+            console.log(`🔍 Colunas processadas linha ${i}:`, colunas);
+            
+            // Mapear colunas - Título, Descrição, Link, Data
+            const noticia = {
+              titulo: colunas[0] || 'Sem título',
+              descricao: colunas[1] || 'Sem descrição',
+              link: colunas[2] || '',   // TERCEIRA coluna é o link
+              data: colunas[3] || ''    // QUARTA coluna é a data
+            };
+            
+            console.log(`📰 Notícia ${i} processada:`, noticia);
+            
+            // VALIDAR O LINK - CORREÇÃO IMPORTANTE!
+            if (noticia.link) {
+              noticia.linkValido = this.validarLink(noticia.link);
+              console.log(`🔗 Link da notícia ${i}:`, noticia.link, 'Válido:', noticia.linkValido);
+            } else {
+              noticia.linkValido = false;
+            }
+            
+            // Só adiciona se tiver pelo menos título
+            if (noticia.titulo && noticia.titulo !== 'Sem título') {
+              this.slides.push(noticia);
+            }
+          }
+          
+          console.log(`✅ Carregadas ${this.slides.length} notícias do Google Sheets`);
+          console.log('📋 Todas as notícias:', this.slides);
+          
+          return this.slides.length > 0;
+          
+        } catch (error) {
+          console.error('❌ Erro ao carregar do Google Sheets:', error);
+          return false;
         }
-
-        this.qualityStatus.textContent = status;
-        this.qualityStatus.style.color = color;
       }
-
-      // Handlers de eventos do player
-      handlePlaying() {
-        this.statusText.textContent = "▶️ Tocando Agora";
-        this.statusText.style.color = "var(--success-color)";
-        this.playPause.textContent = "⏸️";
-        this.playPause.classList.add('playing');
+      
+      validarLink(url) {
+        try {
+          // Verifica se é uma URL válida
+          if (!url || url.trim() === '') return false;
+          
+          // Adiciona https:// se não tiver protocolo
+          let urlCorrigida = url.trim();
+          if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
+            urlCorrigida = 'https://' + urlCorrigida;
+          }
+          
+          // Tenta criar um objeto URL
+          new URL(urlCorrigida);
+          return true;
+        } catch {
+          return false;
+        }
+      }
+      
+      corrigirURL(url) {
+        if (!url || url.trim() === '') return '';
         
-        gtag('event', 'play', {
-          'event_category': 'Player',
-          'event_label': 'Ao vivo'
-        });
-      }
-
-      handlePause() {
-        this.statusText.textContent = "⏸️ Pausado";
-        this.statusText.style.color = "var(--warning-color)";
-        this.playPause.textContent = "▶️";
-        this.playPause.classList.remove('playing');
+        let urlCorrigida = url.trim();
+        if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
+          urlCorrigida = 'https://' + urlCorrigida;
+        }
         
-        gtag('event', 'pause', {
-          'event_category': 'Player', 
-          'event_label': 'Ao vivo'
-        });
+        return urlCorrigida;
       }
-
-      handleWaiting() {
-        this.statusText.textContent = "⏳ Buffering...";
-        this.statusText.style.color = "var(--text-color)";
-      }
-
-      handleCanPlay() {
-        const loadTime = this.startTime ? Date.now() - this.startTime : 0;
-        gtag('event', 'can_play', {
-          'event_category': 'Player',
-          'event_label': 'Pronto para tocar',
-          'value': loadTime
-        });
-      }
-
-      handleError(e) {
-        const error = this.player.error;
-        let message = "⚠️ Erro na transmissão";
+      
+      processarCSVCorretamente(linha) {
+        const resultado = [];
+        let campoAtual = '';
+        let dentroDeAspas = false;
         
-        if (error) {
-          switch(error.code) {
-            case error.MEDIA_ERR_NETWORK:
-              message = "📡 Problema de conexão";
-              break;
-            case error.MEDIA_ERR_SRC_NOT_SUPPORTED:
-              message = "🔊 Formato não suportado";
-              break;
-            case error.MEDIA_ERR_DECODE:
-              message = "🔊 Erro no áudio";
-              break;
+        for (let i = 0; i < linha.length; i++) {
+          const char = linha[i];
+          
+          if (char === '"') {
+            dentroDeAspas = !dentroDeAspas;
+          } else if (char === ',' && !dentroDeAspas) {
+            // Remove aspas do início e fim do campo
+            let campo = campoAtual.trim();
+            if (campo.startsWith('"') && campo.endsWith('"')) {
+              campo = campo.slice(1, -1);
+            }
+            resultado.push(campo);
+            campoAtual = '';
+          } else {
+            campoAtual += char;
           }
         }
         
-        this.statusText.textContent = message;
-        this.statusText.style.color = "var(--error-color)";
-        
-        gtag('event', 'player_error', {
-          'event_category': 'Player',
-          'event_label': message
-        });
-      }
-
-      togglePlay() {
-        if (this.player.paused) {
-          this.player.play().catch(error => {
-            this.statusText.textContent = "▶️ Toque para iniciar";
-            this.statusText.style.color = "var(--error-color)";
-            console.error('Erro ao reproduzir:', error);
-          });
-        } else {
-          this.player.pause();
+        // Adicionar o último campo
+        let ultimoCampo = campoAtual.trim();
+        if (ultimoCampo.startsWith('"') && ultimoCampo.endsWith('"')) {
+          ultimoCampo = ultimoCampo.slice(1, -1);
         }
-      }
-
-      loadProgramacaoFromCache() {
-        const cached = localStorage.getItem('programacao_cache');
-        const timestamp = localStorage.getItem('programacao_timestamp');
+        resultado.push(ultimoCampo);
         
-        if (cached && timestamp && (Date.now() - timestamp < 300000)) { // 5 minutos
-          this.programacaoEl.textContent = JSON.parse(cached);
-        } else {
-          this.atualizarProgramacao();
-          setInterval(this.atualizarProgramacao.bind(this), 60000);
-        }
+        return resultado;
       }
-
-      atualizarProgramacao() {
-        const grade = [
-          { dias: [1,2,3,4,5], inicio: "04:00", fim: "06:00", programa: "De Olho na Cidade" },
-          { dias: [1,2,3,4,5], inicio: "06:00", fim: "08:00", programa: "Chama a Paraíso" },
-          { dias: [1,2,3,4,5], inicio: "08:00", fim: "09:00", programa: "Variedades" },
-          { dias: [1,2,3,4,5], inicio: "09:00", fim: "11:00", programa: "Estação 101" },
-          { dias: [1,2,3,4,5], inicio: "11:00", fim: "13:00", programa: "Hora da Notícia" },
-          { dias: [1,2,3,4,5], inicio: "13:00", fim: "15:00", programa: "Tribuna & Plenário" },
-          { dias: [1,2,3,4,5], inicio: "15:00", fim: "17:00", programa: "Forronejo" },
-          { dias: [1,2,3,4,5], inicio: "17:00", fim: "19:00", programa: "Sucessos & Saudades" },
-          { dias: [1,2,3,4,5], inicio: "19:00", fim: "20:00", programa: "A voz do Brasil" },
-          { dias: [1,2,3,4,5], inicio: "20:00", fim: "22:00", programa: "Diário Policial" },
-          { dias: [1,2,3,4,5], inicio: "22:00", fim: "23:30", programa: "Plantão Alerta" },
-          { dias: [1,2,3,4,5], inicio: "23:30", fim: "1:00", programa: "Paraíso By Night" },
-          { dias: [1,2,3,4,5], inicio: "1:00", fim: "2:00", programa: "Novo Tempo" },
-          { dias: [1,2,3,4,5], inicio: "2:00", fim: "4:00", programa: "Madrugada 101" },
-          { dias: [6], inicio: "06:00", fim: "09:00", programa: "Manhã Sertaneja" },
-          { dias: [6], inicio: "09:00", fim: "12:00", programa: "Top Hits Paraíso" },
-          { dias: [6], inicio: "12:00", fim: "15:00", programa: "Sábado Esportivo" },
-          { dias: [6], inicio: "15:00", fim: "18:00", programa: "Especial Forró das Antigas" },
-          { dias: [0], inicio: "06:00", fim: "09:00", programa: "Domingo de Fé" },
-          { dias: [0], inicio: "09:00", fim: "12:00", programa: "Paradão Paraíso" },
-          { dias: [0], inicio: "12:00", fim: "15:00", programa: "Tarde de Sucessos" },
-          { dias: [0], inicio: "15:00", fim: "18:00", programa: "Especial Samba & Pagode" }
+      
+      usarDadosExemplo() {
+        this.slides = [
+          {
+            titulo: "Paraíso FM - Sua Rádio em Sobral",
+            descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral e região com as melhores notícias e entretenimento.",
+            link: "https://sistemaparaiso.com.br",
+            data: new Date().toLocaleDateString('pt-BR'),
+            linkValido: true
+          },
+          {
+            titulo: "Notícias Locais em Destaque", 
+            descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará. Informação de qualidade para você se manter atualizado.",
+            link: "https://sistemaparaiso.com.br",
+            data: new Date().toLocaleDateString('pt-BR'),
+            linkValido: true
+          },
+          {
+            titulo: "Eventos da Semana na Região",
+            descricao: "Confira a agenda completa de eventos culturais, esportivos e shows na região. Não perca as novidades!",
+            link: "https://sistemaparaiso.com.br",
+            data: new Date().toLocaleDateString('pt-BR'),
+            linkValido: true
+          }
         ];
-
-        const agora = new Date();
-        const diaSemana = agora.getDay();
-        const horaAtual = agora.getHours().toString().padStart(2,"0") + ":" +
-                          agora.getMinutes().toString().padStart(2,"0");
-
-        const programaAtual = grade.find(p => 
-          p.dias.includes(diaSemana) && 
-          this.horaEntre(horaAtual, p.inicio, p.fim)
-        );
-
-        const textoProgramacao = programaAtual 
-          ? `🎙️ ${programaAtual.programa} (${programaAtual.inicio}-${programaAtual.fim})`
-          : "🎙️ Fora do ar - Programação especial";
-
-        this.programacaoEl.textContent = textoProgramacao;
+      }
+      
+      mostrarCarregando(mensagem) {
+        this.carrossel.innerHTML = `<div class="carregando">${mensagem}</div>`;
+      }
+      
+      mostrarErro(mensagem) {
+        this.carrossel.innerHTML = `<div class="erro">${mensagem}</div>`;
+      }
+      
+      renderizarCarrossel() {
+        if (this.slides.length === 0) {
+          this.mostrarErro('Nenhuma notícia disponível no momento.');
+          return;
+        }
         
-        // Cache por 5 minutos
-        localStorage.setItem
+        console.log('🎨 Renderizando carrossel com', this.slides.length, 'slides');
+        
+        this.carrossel.innerHTML = this.slides.map((slide, index) => {
+          const linkCorrigido = slide.linkValido ? this.corrigirURL(slide.link) : '';
+          const temLinkValido = slide.linkValido && linkCorrigido;
+          
+          console.log(`🔗 Slide ${index} - Link:`, slide.link, 'Corrigido:', linkCorrigido, 'Válido:', temLinkValido);
+          
+          return `
+            <div class="slide">
+              <h3>${this.escapeHtml(slide.titulo)}</h3>
+              ${slide.data ? `<div class="data-noticia">📅 ${this.escapeHtml(slide.data)}</div>` : ''}
+              <p>${this.escapeHtml(slide.descricao)}</p>
+              ${temLinkValido ? 
+                `<a href="${this.escapeHtml(linkCorrigido)}" target="_blank" rel="noopener noreferrer">📖 Leia mais</a>` : 
+                '<span style="color: #ff6b6b; font-size: 12px;">🔗 Link indisponível</span>'
+              }
+            </div>
+          `;
+        }).join('');
+        
+        this.indicadores.innerHTML = this.slides.map((_, index) => `
+          <div class="indicador ${index === 0 ? 'ativo' : ''}" data-index="${index}"></div>
+        `).join('');
+        
+        console.log('✅ Carrossel renderizado com sucesso!');
+      }
+      
+      escapeHtml(text) {
+        if (!text) return '';
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+      }
+      
+      inicializarEventos() {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        prevBtn.onclick = null;
+        nextBtn.onclick = null;
+        
+        prevBtn.addEventListener('click', () => this.mudarSlide(-1));
+        nextBtn.addEventListener('click', () => this.mudarSlide(1));
+        
+        this.indicadores.querySelectorAll('.indicador').forEach(indicador => {
+          indicador.onclick = null;
+          indicador.addEventListener('click', (e) => {
+            const index = parseInt(e.target.getAttribute('data-index'));
+            this.irParaSlide(index);
+          });
+        });
+        
+        this.iniciarAutoPlay();
+      }
+      
+      mudarSlide(direcao) {
+        if (this.slides.length <= 1) return;
+        
+        this.slideAtual += direcao;
+        
+        if (this.slideAtual < 0) {
+          this.slideAtual = this.slides.length - 1;
+        } else if (this.slideAtual >= this.slides.length) {
+          this.slideAtual = 0;
+        }
+        
+        this.atualizarCarrossel();
+      }
+      
+      irParaSlide(index) {
+        if (index >= 0 && index < this.slides.length) {
+          this.slideAtual = index;
+          this.atualizarCarrossel();
+        }
+      }
+      
+      atualizarCarrossel() {
+        const translateX = -this.slideAtual * 100;
+        this.carrossel.style.transform = `translateX(${translateX}%)`;
+        
+        this.indicadores.querySelectorAll('.indicador').forEach((indicador, index) => {
+          indicador.classList.toggle('ativo', index === this.slideAtual);
+        });
+      }
+      
+      iniciarAutoPlay() {
+        if (this.autoPlayInterval) {
+          clearInterval(this.autoPlayInterval);
+        }
+        
+        if (this.slides.length > 1) {
+          this.autoPlayInterval = setInterval(() => {
+            this.mudarSlide(1);
+          }, 6000); // Muda a cada 6 segundos
+        }
+      }
+      
+      inicializar() {
+        this.carregarNoticias();
+      }
+    }
+
+    // ================= INICIALIZAÇÃO GERAL =================
+    document.addEventListener('DOMContentLoaded', function() {
+      console.log('🎯 Inicializando carrossel de notícias...');
+      new CarrosselNoticias();
+      
+      // Inicializar location tracker
+      const locationTracker = new LocationTracker();
+      locationTracker.init();
+      
+      // Expor globalmente para debug
+      window.locationTracker = locationTracker;
+      
+      // Também detectar cidade quando o usuário interagir com o player
+      playPause.addEventListener('click', () => {
+        if (!player.paused) {
+          // Se está tocando, enviar evento de localização
+          setTimeout(() => {
+            locationTracker.trackToAnalytics(locationTracker.getCurrentCity(), 'play_with_location');
+          }, 1000);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+
+
