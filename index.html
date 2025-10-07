@@ -1132,9 +1132,33 @@
         .then(() => console.log("Service Worker registrado."))
         .catch((err) => console.error("Erro no Service Worker:", err));
     }
-  </script>
+   // ================= HEARTBEAT PARA ANALYTICS =================
+// Mantém a sessão ativa mesmo com tela desligada
+setInterval(() => {
+  if (!document.hidden && !player.paused) {
+    gtag('event', 'heartbeat', {
+      'event_category': 'Engajamento',
+      'event_label': 'Ouvindo ativo',
+      'value': 1
+    });
+    console.log('Heartbeat enviado - Sessão mantida ativa');
+  }
+}, 5 * 60 * 1000); // 5 minutos
+
+// Detecta quando usuário volta ao app após tela escurecer
+document.addEventListener('visibilitychange', function() {
+  if (!document.hidden && !player.paused) {
+    gtag('event', 'user_returned', {
+      'event_category': 'Engajamento', 
+      'event_label': 'Retornou à sessão'
+    });
+    console.log('Usuário retornou à sessão');
+  }
+});
+</script>
 </body>
 </html>
+
 
 
 
