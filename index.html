@@ -1155,10 +1155,49 @@ document.addEventListener('visibilitychange', function() {
     console.log('Usuário retornou à sessão');
   }
 });
-</script>
+    // ===== Inicialização dos sistemas =====
+    document.addEventListener('DOMContentLoaded', () => {
+      const localizador = new LocationTracker();
+      localizador.init();
+
+      const carrossel = new CarrosselNoticias();
+    });
+
+    /* ============================================
+       SISTEMA DE STREAMING COM URL ALTERNATIVA
+       ============================================ */
+    document.addEventListener("DOMContentLoaded", () => {
+      const player = document.getElementById("player");
+
+      // ✅ URLs oficiais da Rádio Paraíso FM de Sobral
+      const streamPrincipal = "https://stm28.xcast.com.br:11582/stream";
+      const streamAlternativo = "http://192.95.18.87:21599/stream";
+
+      // Tenta iniciar o stream principal
+      player.src = streamPrincipal;
+      player.play().catch(() => {});
+
+      // Se a principal falhar, troca automaticamente para o backup
+      player.addEventListener("error", () => {
+        if (player.src !== streamAlternativo) {
+          console.warn("⚠️ Stream principal indisponível. Alternando para o backup...");
+          player.src = streamAlternativo;
+          player.play().catch(() => {});
+        } else {
+          console.error("❌ Nenhum streaming disponível no momento.");
+        }
+      });
+
+      // Se travar, tenta reconectar automaticamente
+      player.addEventListener("stalled", () => {
+        console.log("🔄 Tentando reconectar...");
+        player.load();
+        player.play().catch(() => {});
+      });
+    });
+  </script>
 </body>
 </html>
-
 
 
 
