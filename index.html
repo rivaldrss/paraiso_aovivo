@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Paraíso FM 101,1 - Sobral | Rádio Online</title>
 
-  <!-- Google Analytics CORRETO -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-EF42RBHES1"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -621,38 +621,29 @@
     <footer>© 2025 Paraíso FM 101,1 - Todos os direitos reservados</footer>
   </div>
 
-  <!-- MÚLTIPLAS FONTES DE STREAMING COM PROXIES HTTPS -->
+  <!-- SOLUÇÃO FINAL - 2 URLs FUNCIONAIS -->
   <audio id="player" crossorigin="anonymous" preload="none">
-    <!-- Proxy 1 - Servidor principal via CORS proxy -->
-    <source src="https://corsproxy.io/?http://192.95.18.87:21599/stream" type="audio/mpeg">
+    <!-- 01 - XCast -->
+    <source src="https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
     
-    <!-- Proxy 2 - Servidor alternativo via CORS proxy -->
-    <source src="https://corsproxy.io/?https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
-    
-    <!-- Proxy 3 - Servidor principal via outro proxy -->
-    <source src="https://api.allorigins.win/raw?url=http://192.95.18.87:21599/stream" type="audio/mpeg">
-    
-    <!-- Proxy 4 - Servidor alternativo via outro proxy -->
-    <source src="https://api.allorigins.win/raw?url=https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
-    
-    <!-- Proxy 5 - Servidor principal via mais um proxy -->
-    <source src="https://cors-anywhere.herokuapp.com/http://192.95.18.87:21599/stream" type="audio/mpeg">
+    <!-- 02 - FastCast4U -->
+    <source src="https://usa16.fastcast4u.com/proxy/paraisofm101?mp=/1" type="audio/mpeg">
     
     Seu navegador não suporta o player de áudio.
   </audio>
 
   <script>
-    // ================= PLAYER PRINCIPAL CORRIGIDO =================
+    // ================= SOLUÇÃO FINAL - PLAYER =================
     const player = document.getElementById("player");
     const playPause = document.getElementById("playPause");
     const statusText = document.getElementById("status");
-    const volumeControl = document.getElementById("volumeControl");
     const programacaoEl = document.getElementById("programacao");
 
-    // Configuração inicial
-    player.volume = 0.7;
-    let currentSourceIndex = 0;
-    const sources = Array.from(player.querySelectorAll('source'));
+    let fonteAtual = 1;
+    const fontes = [
+      "https://stm28.xcast.com.br:11582/stream",
+      "https://usa16.fastcast4u.com/proxy/paraisofm101?mp=/1"
+    ];
 
     // Grade de programação
     const grade = [
@@ -680,98 +671,82 @@
       { dias: [0], inicio: "15:00", fim: "18:00", programa: "Especial Samba & Pagode" }
     ];
 
-    // Event listeners CORRETOS para o player
-    player.addEventListener('playing', () => {
-      const currentSource = player.currentSrc;
-      console.log('🎵 Tocando da fonte:', currentSource);
-      
+    // Play/Pause
+    playPause.onclick = function() {
+      if (player.paused) {
+        statusText.textContent = "🔄 Conectando...";
+        console.log('🎧 Iniciando player...');
+        
+        player.play().catch(error => {
+          console.error('❌ Erro na fonte', fonteAtual, error);
+          statusText.textContent = "❌ Tentando outra fonte...";
+          trocarFonte();
+        });
+      } else {
+        player.pause();
+        console.log('⏸️ Player pausado');
+      }
+    };
+
+    // Eventos do player
+    player.onplaying = function() {
       statusText.textContent = "▶️ Tocando Agora";
       statusText.style.color = "#4CAF50";
       playPause.textContent = "⏸️";
+      console.log('🎵 Tocando da fonte', fonteAtual, '-', fontes[fonteAtual - 1]);
       gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
-    });
-    
-    player.addEventListener('pause', () => {
+    };
+
+    player.onpause = function() {
       statusText.textContent = "⏸️ Pausado";
       statusText.style.color = "#ff9800";
       playPause.textContent = "▶️";
       gtag('event', 'pause', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
-    });
-    
-    player.addEventListener('waiting', () => {
-      statusText.textContent = "⏳ Buffering...";
-      statusText.style.color = "#fff";
-    });
-    
-    player.addEventListener('error', (e) => {
-      console.error('❌ Erro no player:', player.error);
-      console.error('📊 Código do erro:', player.error?.code);
-      console.error('📝 Mensagem:', player.error?.message);
-      console.error('🔗 Fonte atual:', player.currentSrc);
-      
-      // Tentar próxima fonte automaticamente
-      setTimeout(() => tentarProximaFonte(), 500);
-    });
+    };
 
-    // Função para tentar próxima fonte
-    function tentarProximaFonte() {
-      currentSourceIndex++;
+    player.onwaiting = function() {
+      statusText.textContent = "⏳ Buffering...";
+      console.log('⏳ Buffering...');
+    };
+
+    player.onerror = function() {
+      console.error('❌ Erro na fonte', fonteAtual, player.error);
+      trocarFonte();
+    };
+
+    // Função para trocar de fonte
+    function trocarFonte() {
+      fonteAtual++;
       
-      if (currentSourceIndex < sources.length) {
-        statusText.textContent = `🔄 Tentando fonte ${currentSourceIndex + 1} de ${sources.length}...`;
-        console.log(`🔄 Tentando fonte ${currentSourceIndex + 1}:`, sources[currentSourceIndex].src);
+      if (fonteAtual <= fontes.length) {
+        statusText.textContent = `🔄 Tentando fonte ${fonteAtual}...`;
+        console.log(`🔄 Tentando fonte ${fonteAtual}: ${fontes[fonteAtual - 1]}`);
         
-        player.src = sources[currentSourceIndex].src;
+        player.src = fontes[fonteAtual - 1];
         setTimeout(() => {
           player.play().catch(error => {
-            console.error(`❌ Falha na fonte ${currentSourceIndex + 1}:`, error);
-            tentarProximaFonte();
+            console.error(`❌ Falha na fonte ${fonteAtual}:`, error);
+            trocarFonte();
           });
-        }, 1000);
+        }, 500);
       } else {
-        statusText.textContent = "❌ Todas as fontes falharam";
+        statusText.textContent = "❌ Ambas as fontes falharam";
         statusText.style.color = "#ff6b6b";
-        console.error('❌ Todas as fontes de streaming falharam');
-        playPause.disabled = false;
+        console.error('❌ Todas as fontes falharam');
+        gtag('event', 'player_error', { 'event_category': 'Player', 'event_label': 'Erro streaming' });
       }
     }
 
-    // Play/Pause function com tratamento melhorado
-    playPause.addEventListener("click", async () => {
-      try {
-        if (player.paused) {
-          statusText.textContent = "🔄 Conectando...";
-          statusText.style.color = "#fff";
-          
-          // Se é a primeira vez ou houve erro anterior, reinicia das fontes
-          if (!player.currentSrc || player.error) {
-            currentSourceIndex = 0;
-            player.src = sources[0].src;
-          }
-          
-          await player.play();
-        } else {
-          player.pause();
-        }
-      } catch (error) {
-        console.error("❌ Erro ao reproduzir:", error);
-        statusText.textContent = "❌ Erro ao conectar";
-        statusText.style.color = "#ff6b6b";
-        
-        // Tentar próxima fonte
-        tentarProximaFonte();
-      }
-    });
-
-    // Volume control
-    volumeControl.addEventListener("input", (e) => {
+    // Volume
+    document.getElementById('volumeControl').oninput = function(e) {
       player.volume = e.target.value;
+      console.log('🔊 Volume:', e.target.value);
       gtag('event', 'volume_change', { 
         'event_category': 'Player', 
         'event_label': 'Volume', 
         'value': e.target.value 
       });
-    });
+    };
 
     // Programação
     function horaEntre(hora, inicio, fim) {
@@ -841,6 +816,7 @@
         this.isDetecting = true;
 
         this.updateLocationUI('Detectando cidade...', 'loading');
+        console.log('📍 Detectando localização...');
 
         try {
           let city = await this.getCityByGPS();
@@ -849,9 +825,11 @@
           }
 
           this.updateLocationUI(city, 'success');
+          console.log('📍 Localização detectada:', city);
           this.trackToAnalytics(city, 'location_detected');
         } catch (error) {
           this.updateLocationUI('Localização indisponível', 'error');
+          console.error('📍 Erro na localização:', error);
         } finally {
           this.isDetecting = false;
         }
@@ -935,7 +913,7 @@
       }
     }
 
-    // ================= CARROSSEL DE NOTÍCIAS CORRIGIDO =================
+    // ================= CARROSSEL DE NOTÍCIAS =================
     class CarrosselNoticias {
       constructor() {
         this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
@@ -967,6 +945,7 @@
       async carregarDoGoogleSheets() {
         try {
           this.mostrarCarregando('Carregando notícias...');
+          console.log('📰 Carregando notícias do Google Sheets...');
           const response = await fetch(this.sheetURL);
           if (!response.ok) throw new Error(`Erro HTTP! status: ${response.status}`);
           
@@ -1002,6 +981,7 @@
             }
           }
           
+          console.log('📰 Notícias carregadas:', this.slides.length);
           return this.slides.length > 0;
         } catch (error) {
           console.error('Erro ao carregar do Google Sheets:', error);
@@ -1078,6 +1058,7 @@
             linkValido: true
           }
         ];
+        console.log('📰 Usando dados de exemplo para notícias');
       }
       
       mostrarCarregando(mensagem) {
@@ -1187,14 +1168,17 @@
       const locationTracker = new LocationTracker();
       locationTracker.init();
       
-      console.log('🎧 Player Paraíso FM carregado com', sources.length, 'fontes de streaming');
+      console.log('🚀 Player Paraíso FM - SOLUÇÃO FINAL CARREGADA');
+      console.log('🎧 Fontes disponíveis:', fontes);
+      console.log('📍 Sistema de fallback ativo');
+      console.log('📊 Analytics configurado');
     });
 
     // Service Worker
     if ("serviceWorker" in navigator) {
       navigator.serviceWorker.register("service-worker.js")
-        .then(() => console.log("Service Worker registrado."))
-        .catch((err) => console.error("Erro no Service Worker:", err));
+        .then(() => console.log("✅ Service Worker registrado."))
+        .catch((err) => console.error("❌ Erro no Service Worker:", err));
     }
 
     // ================= HEARTBEAT PARA ANALYTICS =================
@@ -1205,7 +1189,7 @@
           'event_label': 'Ouvindo ativo',
           'value': 1
         });
-        console.log('Heartbeat enviado - Sessão mantida ativa');
+        console.log('💓 Heartbeat - Sessão ativa');
       }
     }, 5 * 60 * 1000);
 
@@ -1215,7 +1199,7 @@
           'event_category': 'Engajamento', 
           'event_label': 'Retornou à sessão'
         });
-        console.log('Usuário retornou à sessão');
+        console.log('👤 Usuário retornou à sessão');
       }
     });
   </script>
