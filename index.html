@@ -580,7 +580,7 @@
         <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
       </div>
       <div style="min-width:120px; text-align:center;">
-        <div class="status" id="status">Conectando...</div>
+        <div class="status" id="status">Clique para iniciar</div>
       </div>
     </div>
 
@@ -621,8 +621,23 @@
     <footer>© 2025 Paraíso FM 101,1 - Todos os direitos reservados</footer>
   </div>
 
-  <audio id="player" crossorigin="anonymous">
-    <source src="https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
+  <!-- MÚLTIPLAS FONTES DE STREAMING COM PROXIES HTTPS -->
+  <audio id="player" crossorigin="anonymous" preload="none">
+    <!-- Proxy 1 - Servidor principal via CORS proxy -->
+    <source src="https://corsproxy.io/?http://192.95.18.87:21599/stream" type="audio/mpeg">
+    
+    <!-- Proxy 2 - Servidor alternativo via CORS proxy -->
+    <source src="https://corsproxy.io/?https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
+    
+    <!-- Proxy 3 - Servidor principal via outro proxy -->
+    <source src="https://api.allorigins.win/raw?url=http://192.95.18.87:21599/stream" type="audio/mpeg">
+    
+    <!-- Proxy 4 - Servidor alternativo via outro proxy -->
+    <source src="https://api.allorigins.win/raw?url=https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
+    
+    <!-- Proxy 5 - Servidor principal via mais um proxy -->
+    <source src="https://cors-anywhere.herokuapp.com/http://192.95.18.87:21599/stream" type="audio/mpeg">
+    
     Seu navegador não suporta o player de áudio.
   </audio>
 
@@ -633,6 +648,11 @@
     const statusText = document.getElementById("status");
     const volumeControl = document.getElementById("volumeControl");
     const programacaoEl = document.getElementById("programacao");
+
+    // Configuração inicial
+    player.volume = 0.7;
+    let currentSourceIndex = 0;
+    const sources = Array.from(player.querySelectorAll('source'));
 
     // Grade de programação
     const grade = [
@@ -662,6 +682,9 @@
 
     // Event listeners CORRETOS para o player
     player.addEventListener('playing', () => {
+      const currentSource = player.currentSrc;
+      console.log('🎵 Tocando da fonte:', currentSource);
+      
       statusText.textContent = "▶️ Tocando Agora";
       statusText.style.color = "#4CAF50";
       playPause.textContent = "⏸️";
@@ -676,25 +699,67 @@
     });
     
     player.addEventListener('waiting', () => {
-      statusText.textContent = "⏳ Conectando...";
+      statusText.textContent = "⏳ Buffering...";
       statusText.style.color = "#fff";
     });
     
-    player.addEventListener('error', () => {
-      statusText.textContent = "⚠️ Erro na transmissão";
-      statusText.style.color = "#ff6b6b";
-      gtag('event', 'player_error', { 'event_category': 'Player', 'event_label': 'Erro streaming' });
+    player.addEventListener('error', (e) => {
+      console.error('❌ Erro no player:', player.error);
+      console.error('📊 Código do erro:', player.error?.code);
+      console.error('📝 Mensagem:', player.error?.message);
+      console.error('🔗 Fonte atual:', player.currentSrc);
+      
+      // Tentar próxima fonte automaticamente
+      setTimeout(() => tentarProximaFonte(), 500);
     });
 
-    // Play/Pause function
-    playPause.addEventListener("click", () => {
-      if (player.paused) {
-        player.play().catch(() => { 
-          statusText.textContent = "▶️ Toque para iniciar";
-          statusText.style.color = "#ff6b6b";
-        });
+    // Função para tentar próxima fonte
+    function tentarProximaFonte() {
+      currentSourceIndex++;
+      
+      if (currentSourceIndex < sources.length) {
+        statusText.textContent = `🔄 Tentando fonte ${currentSourceIndex + 1} de ${sources.length}...`;
+        console.log(`🔄 Tentando fonte ${currentSourceIndex + 1}:`, sources[currentSourceIndex].src);
+        
+        player.src = sources[currentSourceIndex].src;
+        setTimeout(() => {
+          player.play().catch(error => {
+            console.error(`❌ Falha na fonte ${currentSourceIndex + 1}:`, error);
+            tentarProximaFonte();
+          });
+        }, 1000);
       } else {
-        player.pause();
+        statusText.textContent = "❌ Todas as fontes falharam";
+        statusText.style.color = "#ff6b6b";
+        console.error('❌ Todas as fontes de streaming falharam');
+        playPause.disabled = false;
+      }
+    }
+
+    // Play/Pause function com tratamento melhorado
+    playPause.addEventListener("click", async () => {
+      try {
+        if (player.paused) {
+          statusText.textContent = "🔄 Conectando...";
+          statusText.style.color = "#fff";
+          
+          // Se é a primeira vez ou houve erro anterior, reinicia das fontes
+          if (!player.currentSrc || player.error) {
+            currentSourceIndex = 0;
+            player.src = sources[0].src;
+          }
+          
+          await player.play();
+        } else {
+          player.pause();
+        }
+      } catch (error) {
+        console.error("❌ Erro ao reproduzir:", error);
+        statusText.textContent = "❌ Erro ao conectar";
+        statusText.style.color = "#ff6b6b";
+        
+        // Tentar próxima fonte
+        tentarProximaFonte();
       }
     });
 
@@ -1122,8 +1187,7 @@
       const locationTracker = new LocationTracker();
       locationTracker.init();
       
-      // Debug
-      window.locationTracker = locationTracker;
+      console.log('🎧 Player Paraíso FM carregado com', sources.length, 'fontes de streaming');
     });
 
     // Service Worker
@@ -1132,76 +1196,28 @@
         .then(() => console.log("Service Worker registrado."))
         .catch((err) => console.error("Erro no Service Worker:", err));
     }
-   // ================= HEARTBEAT PARA ANALYTICS =================
-// Mantém a sessão ativa mesmo com tela desligada
-setInterval(() => {
-  if (!document.hidden && !player.paused) {
-    gtag('event', 'heartbeat', {
-      'event_category': 'Engajamento',
-      'event_label': 'Ouvindo ativo',
-      'value': 1
-    });
-    console.log('Heartbeat enviado - Sessão mantida ativa');
-  }
-}, 5 * 60 * 1000); // 5 minutos
 
-// Detecta quando usuário volta ao app após tela escurecer
-document.addEventListener('visibilitychange', function() {
-  if (!document.hidden && !player.paused) {
-    gtag('event', 'user_returned', {
-      'event_category': 'Engajamento', 
-      'event_label': 'Retornou à sessão'
-    });
-    console.log('Usuário retornou à sessão');
-  }
-});
-    // ===== Inicialização dos sistemas =====
-    document.addEventListener('DOMContentLoaded', () => {
-      const localizador = new LocationTracker();
-      localizador.init();
+    // ================= HEARTBEAT PARA ANALYTICS =================
+    setInterval(() => {
+      if (!document.hidden && !player.paused) {
+        gtag('event', 'heartbeat', {
+          'event_category': 'Engajamento',
+          'event_label': 'Ouvindo ativo',
+          'value': 1
+        });
+        console.log('Heartbeat enviado - Sessão mantida ativa');
+      }
+    }, 5 * 60 * 1000);
 
-      const carrossel = new CarrosselNoticias();
-    });
-
-    /* ============================================
-       SISTEMA DE STREAMING COM URL ALTERNATIVA
-       ============================================ */
-    document.addEventListener("DOMContentLoaded", () => {
-      const player = document.getElementById("player");
-
-      // ✅ URLs oficiais da Rádio Paraíso FM de Sobral
-      const streamPrincipal = "https://stm28.xcast.com.br:11582/stream";
-      const streamAlternativo = "http://192.95.18.87:21599/stream";
-
-      // Tenta iniciar o stream principal
-      player.src = streamPrincipal;
-      player.play().catch(() => {});
-
-      // Se a principal falhar, troca automaticamente para o backup
-      player.addEventListener("error", () => {
-        if (player.src !== streamAlternativo) {
-          console.warn("⚠️ Stream principal indisponível. Alternando para o backup...");
-          player.src = streamAlternativo;
-          player.play().catch(() => {});
-        } else {
-          console.error("❌ Nenhum streaming disponível no momento.");
-        }
-      });
-
-      // Se travar, tenta reconectar automaticamente
-      player.addEventListener("stalled", () => {
-        console.log("🔄 Tentando reconectar...");
-        player.load();
-        player.play().catch(() => {});
-      });
+    document.addEventListener('visibilitychange', function() {
+      if (!document.hidden && !player.paused) {
+        gtag('event', 'user_returned', {
+          'event_category': 'Engajamento', 
+          'event_label': 'Retornou à sessão'
+        });
+        console.log('Usuário retornou à sessão');
+      }
     });
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
