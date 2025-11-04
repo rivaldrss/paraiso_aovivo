@@ -1,10 +1,12 @@
 {
   "name": "Paraíso FM 101,1 - Sobral",
   "short_name": "Paraíso FM",
+  "description": "Rádio Paraíso FM 101,1 - Sobral",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#1e90ff",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "icone-192.png",
@@ -15,6 +17,14 @@
       "src": "icone-512.png",
       "sizes": "512x512",
       "type": "image/png"
+    },
+    {
+      "src": "icone-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "categories": ["music", "entertainment", "radio"],
+  "prefer_related_applications": false
 }
