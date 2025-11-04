@@ -34,24 +34,20 @@
   <meta property="og:url" content="https://rivaldrss.github.io/paraiso_aovivo/">
 
   <!-- Meta Tags para iOS -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Paraíso FM">
-<meta name="format-detection" content="telephone=no">
-<meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Paraíso FM">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="mobile-web-app-capable" content="yes">
 
-<!-- Ícones para iOS -->
-<link rel="apple-touch-icon" href="icone-180.png">
-<link rel="apple-touch-startup-image" href="turbinal_paraiso.png">
+  <!-- Ícones para iOS -->
+  <link rel="apple-touch-icon" href="icone-180.png">
 
-<!-- Cores -->
-<meta name="theme-color" content="#1e90ff">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Cores -->
+  <meta name="theme-color" content="#1e90ff">
 
   <!-- PWA -->
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1e90ff">
-  <meta name="apple-mobile-web-app-capable" content="yes">
 
   <style>
     * {
@@ -1218,202 +1214,200 @@
       }
     });
   </script>
-<script>
-// Controle de atualizações - Versão Mobile Otimizada
-if ('serviceWorker' in navigator) {
-  let newServiceWorker;
-  
-  // Registra o Service Worker
-  navigator.serviceWorker.register('/service-worker.js')
-    .then(registration => {
-      console.log('Service Worker registrado para mobile');
-      
-      // Verifica atualizações imediatamente
-      registration.update();
-      
-      // Escuta por novas versões
-      registration.addEventListener('updatefound', () => {
-        newServiceWorker = registration.installing;
-        console.log('📱 Nova versão detectada no mobile!');
-        
-        newServiceWorker.addEventListener('statechange', () => {
-          if (newServiceWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            showMobileUpdateNotification();
-          }
-        });
-      });
-    });
 
-  // Notificação otimizada para mobile
-  function showMobileUpdateNotification() {
-    // Cria banner mobile-friendly
-    const updateBanner = document.createElement('div');
-    updateBanner.style.cssText = `
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 20px 15px;
-      text-align: center;
-      z-index: 10000;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      font-size: 16px;
-    `;
-    
-    updateBanner.innerHTML = `
-      <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px;">
-        <span style="font-weight: 600;">✨ Nova versão disponível!</span>
-        <button onclick="applyUpdate()" style="
-          background: #FFD700;
-          color: #333;
-          border: none;
-          padding: 10px 20px;
-          border-radius: 25px;
-          cursor: pointer;
-          font-weight: bold;
-          font-size: 14px;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-        ">ATUALIZAR AGORA</button>
-      </div>
-    `;
-    
-    document.body.appendChild(updateBanner);
-    
-    // Auto-close após 30 segundos (mobile behavior)
-    setTimeout(() => {
-      if (updateBanner.parentNode) {
-        updateBanner.style.transition = 'opacity 0.5s';
-        updateBanner.style.opacity = '0';
+  <script>
+    // ================= AUTO-UPDATE PWA MOBILE =================
+    if ('serviceWorker' in navigator) {
+      let newServiceWorker;
+      
+      // Registra o Service Worker
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registrado para mobile');
+          
+          // Verifica atualizações imediatamente
+          registration.update();
+          
+          // Escuta por novas versões
+          registration.addEventListener('updatefound', () => {
+            newServiceWorker = registration.installing;
+            console.log('📱 Nova versão detectada no mobile!');
+            
+            newServiceWorker.addEventListener('statechange', () => {
+              if (newServiceWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                showMobileUpdateNotification();
+              }
+            });
+          });
+        });
+
+      // Notificação otimizada para mobile
+      function showMobileUpdateNotification() {
+        // Cria banner mobile-friendly
+        const updateBanner = document.createElement('div');
+        updateBanner.style.cssText = `
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          color: white;
+          padding: 20px 15px;
+          text-align: center;
+          z-index: 10000;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          font-size: 16px;
+        `;
+        
+        updateBanner.innerHTML = `
+          <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px;">
+            <span style="font-weight: 600;">✨ Nova versão disponível!</span>
+            <button onclick="applyUpdate()" style="
+              background: #FFD700;
+              color: #333;
+              border: none;
+              padding: 10px 20px;
+              border-radius: 25px;
+              cursor: pointer;
+              font-weight: bold;
+              font-size: 14px;
+              box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            ">ATUALIZAR AGORA</button>
+          </div>
+        `;
+        
+        document.body.appendChild(updateBanner);
+        
+        // Auto-close após 30 segundos (mobile behavior)
         setTimeout(() => {
           if (updateBanner.parentNode) {
-            updateBanner.parentNode.removeChild(updateBanner);
+            updateBanner.style.transition = 'opacity 0.5s';
+            updateBanner.style.opacity = '0';
+            setTimeout(() => {
+              if (updateBanner.parentNode) {
+                updateBanner.parentNode.removeChild(updateBanner);
+              }
+            }, 500);
           }
-        }, 500);
-      }
-    }, 30000);
-  }
-  
-  // Função global para mobile
-  window.applyUpdate = function() {
-    if (newServiceWorker) {
-      // Feedback visual para mobile
-      const button = document.querySelector('button[onclick="applyUpdate()"]');
-      if (button) {
-        button.textContent = '🔄 ATUALIZANDO...';
-        button.disabled = true;
+        }, 30000);
       }
       
-      newServiceWorker.postMessage({ action: 'SKIP_WAITING' });
+      // Função global para mobile
+      window.applyUpdate = function() {
+        if (newServiceWorker) {
+          // Feedback visual para mobile
+          const button = document.querySelector('button[onclick="applyUpdate()"]');
+          if (button) {
+            button.textContent = '🔄 ATUALIZANDO...';
+            button.disabled = true;
+          }
+          
+          newServiceWorker.postMessage({ action: 'SKIP_WAITING' });
+        }
+      };
+      
+      // Escuta mudança de controller
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          console.log('📱 Nova versão no mobile - recarregando...');
+          window.location.reload();
+        }
+      });
+      
+      // Verifica atualizações a cada 2 horas (mobile-friendly)
+      setInterval(() => {
+        navigator.serviceWorker.ready.then(registration => {
+          registration.update();
+        });
+      }, 2 * 60 * 60 * 1000);
     }
-  };
-  
-  // Escuta mudança de controller
-  let refreshing = false;
-  navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!refreshing) {
-      refreshing = true;
-      console.log('📱 Nova versão no mobile - recarregando...');
-      window.location.reload();
+
+    // Detecta se é mobile
+    function isMobile() {
+      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     }
-  });
-  
-  // Verifica atualizações a cada 2 horas (mobile-friendly)
-  setInterval(() => {
-    navigator.serviceWorker.ready.then(registration => {
-      registration.update();
-    });
-  }, 2 * 60 * 60 * 1000);
-}
 
-// Detecta se é mobile
-function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
+    // Comportamento específico para mobile
+    if (isMobile()) {
+      // Otimizações para touch
+      document.addEventListener('touchstart', function() {}, { passive: true });
+    }
+  </script>
 
-// Comportamento específico para mobile
-if (isMobile()) {
-  // Otimizações para touch
-  document.addEventListener('touchstart', function() {}, { passive: true });
-}
-</script>
   <script>
-// Detectar iPhone e mostrar instruções de instalação
-function showIphoneInstallInstructions() {
-  const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
-  const isSafari = /Safari/i.test(navigator.userAgent) && !/Chrome|CriOS|Firefox|FxiOS/.test(navigator.userAgent);
-  
-  if ((isIphone && isSafari) || (isIphone && !navigator.userAgent.match(/Chrome|CriOS|Firefox|FxiOS/))) {
-    setTimeout(createIphoneInstallBanner, 5000);
-  }
-}
+    // ================= INSTRUÇÕES INSTALAÇÃO IPHONE =================
+    function showIphoneInstallInstructions() {
+      const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
+      const isSafari = /Safari/i.test(navigator.userAgent) && !/Chrome|CriOS|Firefox|FxiOS/.test(navigator.userAgent);
+      
+      if ((isIphone && isSafari) || (isIphone && !navigator.userAgent.match(/Chrome|CriOS|Firefox|FxiOS/))) {
+        setTimeout(createIphoneInstallBanner, 5000);
+      }
+    }
 
-// Criar banner de instruções
-function createIphoneInstallBanner() {
-  if (document.getElementById('iphone-install-banner')) return;
-  
-  const banner = document.createElement('div');
-  banner.id = 'iphone-install-banner';
-  banner.style.cssText = `
-    position: fixed;
-    bottom: 20px;
-    left: 10px;
-    right: 10px;
-    background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
-    color: white;
-    padding: 18px;
-    border-radius: 14px;
-    text-align: center;
-    z-index: 10001;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: 14px;
-    line-height: 1.5;
-  `;
-  
-  banner.innerHTML = `
-    <div style="margin-bottom: 10px; font-weight: 600; font-size: 16px;">
-      🎧 Instalar Paraíso FM
-    </div>
-    <div style="margin-bottom: 15px;">
-      1. Toque no <strong>📤 Compartilhar</strong><br>
-      2. Role para baixo<br>
-      3. Toque em <strong>"Adicionar à Tela de Início"</strong>
-    </div>
-    <button onclick="closeIphoneBanner()" style="
-      background: rgba(255,255,255,0.2);
-      color: white;
-      border: 1px solid rgba(255,255,255,0.4);
-      padding: 8px 20px;
-      border-radius: 18px;
-      cursor: pointer;
-      font-size: 14px;
-      backdrop-filter: blur(8px);
-    ">Entendi</button>
-  `;
-  
-  document.body.appendChild(banner);
-}
+    // Criar banner de instruções
+    function createIphoneInstallBanner() {
+      if (document.getElementById('iphone-install-banner')) return;
+      
+      const banner = document.createElement('div');
+      banner.id = 'iphone-install-banner';
+      banner.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 10px;
+        right: 10px;
+        background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
+        color: white;
+        padding: 18px;
+        border-radius: 14px;
+        text-align: center;
+        z-index: 10001;
+        box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        font-size: 14px;
+        line-height: 1.5;
+      `;
+      
+      banner.innerHTML = `
+        <div style="margin-bottom: 10px; font-weight: 600; font-size: 16px;">
+          🎧 Instalar Paraíso FM
+        </div>
+        <div style="margin-bottom: 15px;">
+          1. Toque no <strong>📤 Compartilhar</strong><br>
+          2. Role para baixo<br>
+          3. Toque em <strong>"Adicionar à Tela de Início"</strong>
+        </div>
+        <button onclick="closeIphoneBanner()" style="
+          background: rgba(255,255,255,0.2);
+          color: white;
+          border: 1px solid rgba(255,255,255,0.4);
+          padding: 8px 20px;
+          border-radius: 18px;
+          cursor: pointer;
+          font-size: 14px;
+          backdrop-filter: blur(8px);
+        ">Entendi</button>
+      `;
+      
+      document.body.appendChild(banner);
+    }
 
-// Fechar banner
-function closeIphoneBanner() {
-  const banner = document.getElementById('iphone-install-banner');
-  if (banner) {
-    banner.style.opacity = '0';
-    banner.style.transition = 'opacity 0.3s';
-    setTimeout(() => banner.remove(), 300);
-  }
-}
+    // Fechar banner
+    function closeIphoneBanner() {
+      const banner = document.getElementById('iphone-install-banner');
+      if (banner) {
+        banner.style.opacity = '0';
+        banner.style.transition = 'opacity 0.3s';
+        setTimeout(() => banner.remove(), 300);
+      }
+    }
 
-// Iniciar
-document.addEventListener('DOMContentLoaded', showIphoneInstallInstructions);
-setTimeout(showIphoneInstallInstructions, 10000);
-</script>
+    // Iniciar
+    document.addEventListener('DOMContentLoaded', showIphoneInstallInstructions);
+    setTimeout(showIphoneInstallInstructions, 10000);
+  </script>
 </body>
 </html>
-
-
-
-
