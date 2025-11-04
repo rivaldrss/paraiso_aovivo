@@ -5,6 +5,7 @@ const urlsToCache = [
   '/index.html',
   '/manifest.json',
   '/service-worker.js',
+  '/icone-180.png',
   '/icone-192.png',
   '/icone-512.png',
   '/turbinal_paraiso.png'
@@ -72,3 +73,4 @@ self.addEventListener('message', (event) => {
     self.skipWaiting();
   }
 });
+
