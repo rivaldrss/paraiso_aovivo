@@ -1339,8 +1339,81 @@ if (isMobile()) {
   document.addEventListener('touchstart', function() {}, { passive: true });
 }
 </script>
+  <script>
+// Detectar iPhone e mostrar instruções de instalação
+function showIphoneInstallInstructions() {
+  const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
+  const isSafari = /Safari/i.test(navigator.userAgent) && !/Chrome|CriOS|Firefox|FxiOS/.test(navigator.userAgent);
+  
+  if ((isIphone && isSafari) || (isIphone && !navigator.userAgent.match(/Chrome|CriOS|Firefox|FxiOS/))) {
+    setTimeout(createIphoneInstallBanner, 5000);
+  }
+}
+
+// Criar banner de instruções
+function createIphoneInstallBanner() {
+  if (document.getElementById('iphone-install-banner')) return;
+  
+  const banner = document.createElement('div');
+  banner.id = 'iphone-install-banner';
+  banner.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    right: 10px;
+    background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
+    color: white;
+    padding: 18px;
+    border-radius: 14px;
+    text-align: center;
+    z-index: 10001;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+  `;
+  
+  banner.innerHTML = `
+    <div style="margin-bottom: 10px; font-weight: 600; font-size: 16px;">
+      🎧 Instalar Paraíso FM
+    </div>
+    <div style="margin-bottom: 15px;">
+      1. Toque no <strong>📤 Compartilhar</strong><br>
+      2. Role para baixo<br>
+      3. Toque em <strong>"Adicionar à Tela de Início"</strong>
+    </div>
+    <button onclick="closeIphoneBanner()" style="
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 8px 20px;
+      border-radius: 18px;
+      cursor: pointer;
+      font-size: 14px;
+      backdrop-filter: blur(8px);
+    ">Entendi</button>
+  `;
+  
+  document.body.appendChild(banner);
+}
+
+// Fechar banner
+function closeIphoneBanner() {
+  const banner = document.getElementById('iphone-install-banner');
+  if (banner) {
+    banner.style.opacity = '0';
+    banner.style.transition = 'opacity 0.3s';
+    setTimeout(() => banner.remove(), 300);
+  }
+}
+
+// Iniciar
+document.addEventListener('DOMContentLoaded', showIphoneInstallInstructions);
+setTimeout(showIphoneInstallInstructions, 10000);
+</script>
 </body>
 </html>
+
 
 
 
