@@ -1,76 +1,82 @@
-// Configurações
-const CACHE_NAME = 'turbinal-paraiso-v2'; // MUDE ESTE NOME A CADA ATUALIZAÇÃO
-const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/service-worker.js',
-  '/icone-180.png',
-  '/icone-192.png',
-  '/icone-512.png',
-  '/turbinal_paraiso.png'
+const CACHE_NAME = 'paraiso-fm-v2';
+const STATIC_ASSETS = [
+  './',
+  './index.html',
+  './manifest.json'
 ];
 
-// Instalação - cache dos arquivos
-self.addEventListener('install', event => {
-  console.log('Service Worker instalando...');
-  self.skipWaiting(); // IMPORTANTE: Ativa imediatamente
-  
+// Instalação do Service Worker
+self.addEventListener('install', (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => {
-        console.log('Cache aberto');
-        return cache.addAll(urlsToCache);
-      })
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(STATIC_ASSETS).catch(err => {
+        console.warn('Falha parcial ao pré-armazenar assets:', err);
+      });
+    })
   );
+  self.skipWaiting();
 });
 
-// Ativação - limpa caches antigos
-self.addEventListener('activate', event => {
-  console.log('Service Worker ativado!');
+// Ativação e limpeza de caches antigos
+self.addEventListener('activate', (event) => {
   event.waitUntil(
-    caches.keys().then(cacheNames => {
+    caches.keys().then((keys) => {
       return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheName !== CACHE_NAME) {
-            console.log('Deletando cache antigo:', cacheName);
-            return caches.delete(cacheName);
+        keys.map((key) => {
+          if (key !== CACHE_NAME) {
+            return caches.delete(key);
           }
         })
       );
-    }).then(() => {
-      // Assume controle imediato de todas as abas
-      return self.clients.claim();
     })
   );
+  self.clients.claim();
 });
 
-// Estratégia de Cache: Cache First, com fallback para network
-self.addEventListener('fetch', event => {
+// Interceptação de requisições
+self.addEventListener('fetch', (event) => {
+  const requestUrl = new URL(event.request.url);
+
+  // Não interceptar nem tentar cachear streams de áudio ou chamadas externas dinâmicas
+  if (
+    requestUrl.protocol.startsWith('chrome-extension') ||
+    event.request.method !== 'GET' ||
+    event.request.headers.get('range') ||
+    requestUrl.pathname.includes('/stream') ||
+    requestUrl.hostname.includes('fastcast4u.com') ||
+    requestUrl.hostname.includes('xcast.com.br') ||
+    requestUrl.hostname.includes('ipapi.co') ||
+    requestUrl.hostname.includes('google-analytics.com')
+  ) {
+    return;
+  }
+
+  // Network First para a página e scripts, com fallback para o cache
   event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        // Retorna do cache se encontrou
-        if (response) {
-          return response;
-        }
-        
-        // Se não encontrou no cache, busca na rede
-        return fetch(event.request).then(networkResponse => {
-          // Opcional: cache da nova resposta
-          return caches.open(CACHE_NAME).then(cache => {
-            cache.put(event.request, networkResponse.clone());
-            return networkResponse;
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200 && networkResponse.type === 'basic') {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
           });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request).then((cachedResponse) => {
+          if (cachedResponse) return cachedResponse;
+          if (event.request.mode === 'navigate') {
+            return caches.match('./index.html');
+          }
         });
       })
   );
 });
 
-// Escuta mensagens para pular a espera
+// Mensagem para forçar atualização
 self.addEventListener('message', (event) => {
   if (event.data && event.data.action === 'SKIP_WAITING') {
     self.skipWaiting();
   }
 });
-

@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Paraíso FM 101,1 - Sobral | Rádio Online</title>
 
   <!-- Google Analytics -->
@@ -20,644 +20,1834 @@
     });
   </script>
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <!-- Fontes & Ícones -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Meta Tags -->
-  <meta name="description" content="Ouça a Rádio Paraíso FM 101.1 de Sobral ao vivo. Programação variada, notícias locais e os melhores sucessos da região.">
-  
-  <!-- Open Graph -->
+  <!-- SEO & Open Graph -->
+  <meta name="description" content="Ouça a Rádio Paraíso FM 101.1 de Sobral ao vivo. A melhor programação, notícias locais e grandes sucessos.">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="📻 Paraíso FM 101,1 - Sobral">
-  <meta property="og:description" content="Paraíso FM de Sobral Ao vivo - Informação e entretenimento em um só lugar.">
-  <meta property="og:image" content="https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png">
-  <meta property="og:url" content="https://rivaldrss.github.io/paraiso_aovivo/">
+  <meta property="og:title" content="📻 Paraíso FM 101,1 - Sobral | Ao Vivo">
+  <meta property="og:description" content="Informação, música e entretenimento em tempo real direto de Sobral/CE.">
+  <meta property="og:image" content="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg">
+  <meta property="og:url" content="https://appradio.sistemaparaiso.com/">
 
-  <!-- Meta Tags para iOS -->
+  <!-- PWA & Mobile Web Tags -->
+  <meta name="theme-color" content="#070a12">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Paraíso FM">
-  <meta name="format-detection" content="telephone=no">
-  <meta name="mobile-web-app-capable" content="yes">
-
-  <!-- Ícones para iOS -->
   <link rel="apple-touch-icon" href="icone-180.png">
-
-  <!-- Cores -->
-  <meta name="theme-color" content="#1e90ff">
-
-  <!-- PWA -->
   <link rel="manifest" href="manifest.json">
 
   <style>
+    :root {
+      --primary: #2563eb;
+      --primary-light: #60a5fa;
+      --primary-glow: rgba(37, 99, 235, 0.4);
+      --accent: #06b6d4;
+      --bg-dark: #070a12;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --card-border: rgba(255, 255, 255, 0.12);
+      --card-border-hover: rgba(96, 165, 250, 0.35);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --radius-xl: 28px;
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --radius-sm: 8px;
+      --bottom-nav-height: 64px;
+      --mini-player-height: 62px;
+    }
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: url('https://rivaldrss.github.io/paraiso_aovivo/turbinal_paraiso.png') no-repeat center center fixed;
+    html, body {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--text-main);
+      background-color: var(--bg-dark);
+    }
+
+    /* Fundo Nítido com Imagem Oficial da Rádio */
+    .bg-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .bg-backdrop-image {
+      position: absolute;
+      inset: 0;
+      background: url('turbinal_paraiso.png') no-repeat center center;
       background-size: cover;
+      transform: scale(1);
+      transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    body.is-playing .bg-backdrop-image {
+      transform: scale(1.03);
+    }
+
+    .bg-backdrop-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.35);
+    }
+
+    /* Container Principal */
+    .app-viewport {
+      width: 100%;
+      height: 100dvh;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
       position: relative;
-      color: #fff;
+      z-index: 1;
     }
 
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
+    /* ===================================================
+       ESTRUTURA MOBILE (PADRÃO PARA TELAS < 900px)
+       =================================================== */
+    .mobile-app-shell {
       width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.3);
-      z-index: 0;
-    }
-    
-    .player-card {
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      background: rgba(11, 15, 25, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       position: relative;
-      z-index: 2;
-      background: rgba(0,0,0,0.70);
-      border-radius: 25px;
-      padding: 30px 25px;
-      max-width: 500px;
-      width: 95%;
-      text-align: center;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.8);
-      margin: 20px 10px;
+      overflow: hidden;
     }
-    
-    .player-card header img {
-      width: 110px;
-      border-radius: 50%;
-      border: 3px solid #fff;
-      margin-bottom: 15px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-    }
-    
-    .player-card header h1 {
-      font-size: 24px;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-      font-weight: bold;
-    }
-    
-    .player-container {
-      background: rgba(255,255,255,0.08);
-      border: 2px solid rgba(255,255,255,0.15);
-      border-radius: 15px;
-      padding: 20px;
+
+    /* Header Mobile */
+    .mobile-top-bar {
+      padding: max(12px, env(safe-area-inset-top)) 18px 12px;
       display: flex;
       align-items: center;
-      gap: 15px;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-      margin-bottom: 20px;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--card-border);
+      background: rgba(15, 23, 42, 0.6);
+      flex-shrink: 0;
+      z-index: 10;
     }
-    
-    .btn {
-      background: rgba(255,255,255,0.15);
-      border: none;
-      color: #fff;
-      font-size: 22px;
-      border-radius: 12px;
-      width: 65px;
-      height: 50px;
-      cursor: pointer;
-      transition: transform .2s, background .2s;
+
+    .station-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .station-brand img {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .station-brand-text h1 {
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -0.2px;
+    }
+
+    .station-brand-text span {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--primary-light);
+    }
+
+    .location-chip {
       display: inline-flex;
       align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      gap: 5px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
     }
-    
-    .btn:hover {
-      transform: scale(1.08);
-      background: rgba(255,255,255,0.22);
+
+    .location-chip i {
+      color: var(--primary-light);
+      font-size: 10px;
     }
-    
-    .btn:active {
-      transform: scale(0.98);
-    }
-    
-    .volume {
+
+    /* Área de Conteúdo / Telas */
+    .mobile-content-area {
       flex: 1;
+      overflow-y: auto;
+      overflow-x: hidden;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+
+    .view-screen {
+      display: none;
+      min-height: 100%;
+      padding: 20px 18px;
+    }
+
+    .view-screen.active {
+      display: block;
+      animation: fadeInView 0.25s ease-out;
+    }
+
+    @keyframes fadeInView {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* TELA 1: AO VIVO */
+    .screen-live {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding-bottom: 24px;
+    }
+
+    .studio-artwork-container {
+      position: relative;
+      width: min(230px, 55vw);
+      aspect-ratio: 1/1;
+      margin: 10px auto;
+    }
+
+    .studio-artwork {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.7);
+      transition: transform 0.5s ease;
+    }
+
+    .studio-glow {
+      position: absolute;
+      inset: -6px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      opacity: 0;
+      filter: blur(14px);
+      z-index: -1;
+      transition: opacity 0.5s ease;
+    }
+
+    body.is-playing .studio-glow {
+      opacity: 0.75;
+      animation: pulseStudio 3s infinite alternate;
+    }
+
+    @keyframes pulseStudio {
+      0% { opacity: 0.5; transform: scale(0.96); }
+      100% { opacity: 0.85; transform: scale(1.04); }
+    }
+
+    .live-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .badge-onair {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .dot-pulse {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
+
+    .show-info-box {
+      text-align: center;
+      width: 100%;
+      max-width: 380px;
+    }
+
+    .show-main-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+
+    .show-schedule-hours {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
+
+    .live-progress-bar {
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin-top: 10px;
+      overflow: hidden;
+    }
+
+    .live-progress-fill {
+      height: 100%;
+      width: 45%;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 4px;
+      transition: width 1s linear;
+    }
+
+    /* Equalizador de Áudio */
+    .audio-waveform {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      height: 24px;
+      margin-top: 4px;
+    }
+
+    .wave-line {
+      width: 3.5px;
+      background: linear-gradient(to top, var(--primary), var(--accent));
+      border-radius: 3px;
+      height: 3px;
+      transition: height 0.2s ease;
+    }
+
+    body.is-playing .wave-line:nth-child(1) { animation: waveM 1.1s ease-in-out infinite alternate; }
+    body.is-playing .wave-line:nth-child(2) { animation: waveM 1.4s ease-in-out 0.2s infinite alternate; }
+    body.is-playing .wave-line:nth-child(3) { animation: waveM 0.9s ease-in-out 0.4s infinite alternate; }
+    body.is-playing .wave-line:nth-child(4) { animation: waveM 1.5s ease-in-out 0.1s infinite alternate; }
+    body.is-playing .wave-line:nth-child(5) { animation: waveM 1.0s ease-in-out 0.3s infinite alternate; }
+
+    @keyframes waveM {
+      0% { height: 3px; }
+      100% { height: 22px; }
+    }
+
+    /* Master Play Button */
+    .master-play-btn {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border: none;
+      color: #fff;
+      font-size: 26px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 12px 30px var(--primary-glow);
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+    }
+
+    .master-play-btn:hover {
+      transform: scale(1.05);
+    }
+
+    .master-play-btn:active {
+      transform: scale(0.95);
+    }
+
+    .master-play-btn .fa-play {
+      margin-left: 3px;
+    }
+
+    .stream-status-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    /* Volume Slider */
+    .volume-control-row {
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-    
-    .volume input[type="range"] {
       width: 100%;
-      height: 8px;
-      cursor: pointer;
-      border-radius: 4px;
-      background: rgba(255,255,255,0.1);
-      -webkit-appearance: none;
+      max-width: 280px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      padding: 8px 14px;
+      border-radius: var(--radius-sm);
     }
-    
-    .volume input[type="range"]::-webkit-slider-thumb {
+
+    .volume-range {
+      flex: 1;
+      height: 5px;
       -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: #1E90FF;
-      cursor: pointer;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 3px;
+      outline: none;
     }
-    
-    .volume input[type="range"]::-moz-range-thumb {
-      width: 20px;
-      height: 20px;
+
+    .volume-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 14px;
+      height: 14px;
       border-radius: 50%;
-      background: #1E90FF;
+      background: var(--primary-light);
       cursor: pointer;
+    }
+
+    /* Quick Action Pills */
+    .live-actions-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 360px;
+      margin-top: 6px;
+    }
+
+    .btn-quick-pill {
+      flex: 1;
+      padding: 11px 14px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      font-weight: 700;
       border: none;
-    }
-    
-    .volume-icons {
-      display: flex;
-      gap: 5px;
-      color: rgba(255,255,255,0.7);
-      font-size: 16px;
-    }
-    
-    .status, .programacao {
-      font-size: 15px;
-      opacity: 0.95;
-      margin-top: 8px;
-      text-align: left;
-      font-weight: 500;
-    }
-    
-    .programacao {
-      background: rgba(30, 144, 255, 0.2);
-      padding: 12px 15px;
-      border-radius: 10px;
-      margin: 15px 0;
-      border-left: 4px solid #1E90FF;
-      font-size: 14px;
-    }
-    
-    .social {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin: 20px 0 15px;
-      align-items: center;
-    }
-    
-    .social a {
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 50px;
-      height: 50px;
-      border-radius: 12px;
-      background: rgba(255,255,255,0.05);
+      gap: 8px;
       text-decoration: none;
-      transition: transform .2s, background .2s;
-      z-index: 3;
-      color: inherit;
-      border: 2px solid rgba(255,255,255,0.08);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    
-    .social a:hover {
-      transform: translateY(-4px);
-      background: rgba(255,255,255,0.1);
-    }
-    
-    .social a.instagram { color: #E1306C; }
-    .social a.whatsapp { color: #25D366; }
-    .social a.youtube { color: #FF0000; }
-    .social a.site { color: #1E90FF; }
-    
-    .social i {
-      font-size: 24px;
-      display: block;
-    }
-    
-    footer {
-      font-size: 13px;
-      opacity: 0.8;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(255,255,255,0.1);
+      transition: all 0.2s;
     }
 
-    /* Carrossel */
-    .carrossel-container {
-      margin: 20px 0;
-      position: relative;
-      overflow: hidden;
-      border-radius: 15px;
-      background: rgba(255,255,255,0.07);
-      border: 2px solid rgba(255,255,255,0.12);
-      min-height: 140px;
-    }
-
-    .carrossel {
-      display: flex;
-      transition: transform 0.5s ease-in-out;
-    }
-
-    .slide {
-      min-width: 100%;
-      background: rgba(255,255,255,0.07);
-      padding: 25px;
-    }
-
-    .slide h3 {
-      font-size: 18px;
-      margin-bottom: 12px;
+    .btn-quick-whatsapp {
+      background: linear-gradient(135deg, #10b981, #059669);
       color: #fff;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-      border-bottom: 2px solid rgba(30, 144, 255, 0.6);
-      padding-bottom: 10px;
-      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
     }
 
-    .slide p {
-      font-size: 15px;
-      line-height: 1.6;
-      margin-bottom: 18px;
-      opacity: 0.9;
+    .btn-quick-timer {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
     }
 
-    .slide a {
-      display: inline-block;
-      background: rgba(30, 144, 255, 0.8);
-      color: white;
-      padding: 12px 24px;
-      text-decoration: none;
-      border-radius: 8px;
-      font-size: 15px;
-      font-weight: bold;
-      transition: all 0.3s ease;
-      border: 2px solid rgba(255,255,255,0.3);
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+    .btn-quick-timer.active {
+      background: rgba(37, 99, 235, 0.25);
+      border-color: var(--primary);
+      color: var(--primary-light);
     }
 
-    .slide a:hover {
-      background: rgba(30, 144, 255, 0.95);
-      transform: translateY(-3px);
-      box-shadow: 0 6px 18px rgba(30, 144, 255, 0.4);
+    .btn-quick-share {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
     }
 
-    .controles {
-      position: absolute;
-      top: 50%;
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-      transform: translateY(-50%);
-      padding: 0 15px;
+    .btn-quick-share:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--card-border-hover);
     }
 
-    .controles button {
-      background: rgba(0,0,0,0.6);
-      color: white;
-      border: none;
-      width: 40px;
-      height: 40px;
+    /* Botão compartilhar no header mobile */
+    .btn-header-share {
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
-      cursor: pointer;
-      font-size: 18px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-
-    .controles button:hover {
-      background: rgba(0,0,0,0.8);
-      transform: scale(1.15);
-    }
-
-    .indicadores {
-      display: flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 18px;
-    }
-
-    .indicador {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.3);
+      font-size: 14px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      flex-shrink: 0;
+      transition: all 0.2s;
     }
 
-    .indicador.ativo {
-      background: #1E90FF;
-      transform: scale(1.3);
-      box-shadow: 0 2px 6px rgba(30, 144, 255, 0.5);
+    .btn-header-share:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--card-border-hover);
     }
 
-    .carregando {
-      text-align: center;
-      padding: 50px 25px;
-      color: rgba(255,255,255,0.7);
-      font-size: 16px;
+    /* Modal Compartilhar */
+    .share-modal-card .share-options-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 16px;
     }
 
-    .erro {
-      text-align: center;
-      padding: 35px 25px;
-      color: #ff6b6b;
-      font-size: 15px;
-      background: rgba(255,107,107,0.1);
-      border-radius: 10px;
-      margin: 15px;
-      border: 1px solid rgba(255,107,107,0.3);
+    .share-option-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 16px 12px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      color: var(--text-main);
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
     }
 
-    .data-noticia {
-      font-size: 13px;
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 15px;
-      font-style: italic;
-      background: rgba(255,255,255,0.05);
-      padding: 6px 12px;
+    .share-option-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+    }
+
+    .share-option-btn i {
+      font-size: 22px;
+    }
+
+    .share-option-btn.whats i { color: #25D366; }
+    .share-option-btn.telegram i { color: #2CA5E0; }
+    .share-option-btn.copy i { color: var(--primary-light); }
+    .share-option-btn.native i { color: var(--accent); }
+
+    .share-link-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 14px;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+
+    .share-link-box input {
+      flex: 1;
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text-muted);
+      font-size: 12px;
+      font-family: inherit;
+    }
+
+    .share-link-box button {
+      background: var(--primary);
+      border: none;
+      color: #fff;
       border-radius: 6px;
-      display: inline-block;
-    }
-
-    /* Location Badge */
-    .location-badge {
-      position: absolute;
-      top: 15px;
-      left: 15px;
-      background: rgba(0,0,0,0.8);
-      color: white;
-      padding: 8px 15px;
-      border-radius: 20px;
-      font-size: 13px;
-      z-index: 1000;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255,255,255,0.2);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: all 0.3s ease;
-      max-width: 200px;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
       white-space: nowrap;
     }
 
-    .location-info {
+    /* Card de compartilhar na aba Participe */
+    .share-cta-card {
+      background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(37, 99, 235, 0.12));
+      border: 1px solid rgba(6, 182, 212, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 20px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .share-cta-card h3 {
+      font-size: 16px;
+      font-weight: 800;
+    }
+
+    .share-cta-card p {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .share-cta-card .btn-share-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 20px;
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+      border: none;
+      border-radius: var(--radius-md);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .share-cta-card .btn-share-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    /* Rodapé de créditos */
+    .app-credits-footer {
+      text-align: center;
+      padding: 10px 16px 6px;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      flex-shrink: 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+    }
+
+    .app-credits-footer a {
+      color: rgba(96, 165, 250, 0.35);
+      text-decoration: none;
+    }
+
+    .app-credits-footer a:hover {
+      color: rgba(96, 165, 250, 0.65);
+    }
+
+    /* TELA 2: PROGRAMAÇÃO COMPLETA */
+    .screen-header-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 14px;
       display: flex;
       align-items: center;
       gap: 8px;
     }
 
-    .location-icon {
+    .schedule-day-chips {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .chip-day {
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .chip-day.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .schedule-items-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-bottom: 80px; /* espaço para miniplayer */
+    }
+
+    .schedule-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .schedule-card.is-now {
+      background: rgba(37, 99, 235, 0.16);
+      border-color: var(--primary);
+      box-shadow: 0 4px 18px rgba(37, 99, 235, 0.2);
+    }
+
+    .schedule-time-tag {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--primary-light);
+      min-width: 100px;
+    }
+
+    .schedule-show-name {
       font-size: 14px;
+      font-weight: 700;
+      flex: 1;
+    }
+
+    .badge-current-show {
+      background: #10b981;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 8px;
+      text-transform: uppercase;
+    }
+
+    /* TELA 3: NOTÍCIAS */
+    .news-cards-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 80px;
+    }
+
+    .news-feed-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .news-feed-card:hover {
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+    }
+
+    .news-feed-img-box {
+      width: 100%;
+      height: 150px;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.4);
+      position: relative;
+    }
+
+    .news-feed-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+
+    .news-feed-card:hover .news-feed-img {
+      transform: scale(1.05);
+    }
+
+    .news-feed-body {
+      padding: 16px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .news-feed-date {
+      font-size: 11px;
+      color: var(--primary-light);
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .news-feed-title {
+      font-size: 15px;
+      font-weight: 800;
+      line-height: 1.4;
+      color: #fff;
+    }
+
+    .news-feed-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .news-feed-link {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--primary-light);
+      text-decoration: none;
+      align-self: flex-start;
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* TELA 4: PARTICIPE / CONTATO */
+    .contact-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 80px;
+    }
+
+    .contact-hero-card {
+      background: linear-gradient(135deg, rgba(37, 99, 235, 0.2), rgba(6, 182, 212, 0.15));
+      border: 1px solid rgba(96, 165, 250, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .contact-hero-card h3 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .contact-hero-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .social-links-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .social-channel-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: all 0.2s;
+    }
+
+    .social-channel-card:hover {
+      background: rgba(255, 255, 255, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .social-channel-card i {
+      font-size: 22px;
+    }
+
+    .social-channel-card.insta i { color: #E1306C; }
+    .social-channel-card.whats i { color: #25D366; }
+    .social-channel-card.yt i { color: #FF0000; }
+    .social-channel-card.web i { color: var(--primary-light); }
+
+    .social-channel-text div:first-child {
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .social-channel-text div:last-child {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* MINI-PLAYER PERSISTENTE (ESTILO SPOTIFY) */
+    .mini-player-bar {
+      position: absolute;
+      bottom: calc(var(--bottom-nav-height) + 8px);
+      left: 12px;
+      right: 12px;
+      height: var(--mini-player-height);
+      background: rgba(15, 23, 42, 0.94);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: var(--radius-md);
+      display: none;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+      z-index: 95;
+      cursor: pointer;
+      animation: slideUpMini 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes slideUpMini {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    .mini-player-bar.visible {
+      display: flex;
+    }
+
+    .mini-info-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      overflow: hidden;
+    }
+
+    .mini-thumb {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      object-fit: cover;
       flex-shrink: 0;
     }
 
-    .location-text {
-      font-weight: 500;
+    .mini-text-box {
+      overflow: hidden;
+      white-space: nowrap;
     }
 
-    .location-badge.success {
-      background: rgba(34, 197, 94, 0.9);
+    .mini-show-title {
+      font-size: 13px;
+      font-weight: 800;
+      color: #fff;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
-    .location-badge.error {
-      background: rgba(239, 68, 68, 0.9);
+    .mini-subtext {
+      font-size: 11px;
+      color: #34d399;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
 
-    .location-badge.loading {
-      background: rgba(59, 130, 246, 0.9);
+    .mini-play-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+      cursor: pointer;
     }
 
-    /* Responsividade */
-    @media (max-width: 768px) {
-      .player-card {
-        padding: 25px 20px;
-        margin: 15px 10px;
-      }
-      
-      .player-card header img {
-        width: 100px;
-      }
-      
-      .player-card header h1 {
-        font-size: 22px;
-      }
-      
-      .player-container {
-        padding: 18px;
-        gap: 12px;
-      }
-      
-      .btn {
-        width: 60px;
-        height: 48px;
-        font-size: 20px;
-      }
-      
-      .social a {
-        width: 48px;
-        height: 48px;
-      }
-      
-      .social i {
-        font-size: 22px;
-      }
-      
-      .location-badge {
-        max-width: 160px;
-      }
+    /* BARRA DE NAVEGAÇÃO NO RODAPÉ (BOTTOM NAV) */
+    .mobile-bottom-nav {
+      height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
+      padding-bottom: env(safe-area-inset-bottom);
+      background: rgba(11, 15, 25, 0.95);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-top: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-shrink: 0;
+      z-index: 100;
     }
 
-    @media (max-width: 480px) {
-      .player-card {
-        padding: 20px 15px;
-        margin: 10px 5px;
+    .nav-tab-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      flex: 1;
+      height: 100%;
+      transition: color 0.2s;
+    }
+
+    .nav-tab-item i {
+      font-size: 18px;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-tab-item.active {
+      color: var(--primary-light);
+    }
+
+    .nav-tab-item.active i {
+      transform: translateY(-2px);
+    }
+
+    /* ===================================================
+       ESTRUTURA DESKTOP / TABLET (TELAS >= 900px)
+       STUDIO CONSOLE EM 2 COLUNAS
+       =================================================== */
+    @media (min-width: 900px) {
+      .app-viewport {
+        padding: 30px;
       }
-      
-      .player-card header img {
-        width: 90px;
+
+      .mobile-app-shell {
+        max-width: 1040px;
+        height: min(720px, 90vh);
+        border-radius: var(--radius-xl);
+        border: 1px solid var(--card-border);
+        box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.85), 0 0 50px rgba(37, 99, 235, 0.15);
+        display: grid;
+        grid-template-columns: 420px 1fr;
+        grid-template-rows: 1fr;
+        overflow: hidden;
       }
-      
-      .player-card header h1 {
-        font-size: 20px;
+
+      /* Oculta header mobile, bottom nav e mini player no Desktop */
+      .mobile-top-bar,
+      .mobile-bottom-nav,
+      .mini-player-bar {
+        display: none !important;
       }
-      
-      .player-container {
-        padding: 15px;
-        gap: 10px;
+
+      /* COLUNA ESQUERDA: MASTER PLAYER FIXO */
+      .desktop-player-column {
+        display: flex !important;
         flex-direction: column;
+        justify-content: space-between;
+        padding: 32px 28px;
+        background: rgba(15, 23, 42, 0.7);
+        border-right: 1px solid var(--card-border);
+        position: relative;
+        overflow-y: auto;
       }
-      
-      .btn {
-        width: 70px;
-        height: 55px;
-        font-size: 24px;
-        order: -1;
-        margin-bottom: 10px;
+
+      /* COLUNA DIREITA: CONTEÚDO MULTI-ABAS */
+      .desktop-content-column {
+        display: flex !important;
+        flex-direction: column;
+        background: rgba(11, 15, 25, 0.5);
+        overflow: hidden;
       }
-      
-      .volume {
-        width: 100%;
-      }
-      
-      .status, .programacao {
-        text-align: center;
-        font-size: 14px;
-      }
-      
-      .programacao {
-        padding: 10px 12px;
-        font-size: 13px;
-      }
-      
-      .social {
+
+      .desktop-tab-header {
+        display: flex;
+        align-items: center;
         gap: 12px;
-        margin: 18px 0 12px;
+        padding: 24px 28px 16px;
+        border-bottom: 1px solid var(--card-border);
+        background: rgba(15, 23, 42, 0.4);
       }
-      
-      .social a {
-        width: 45px;
-        height: 45px;
-      }
-      
-      .social i {
-        font-size: 20px;
-      }
-      
-      .slide {
-        padding: 20px;
-      }
-      
-      .slide h3 {
-        font-size: 17px;
-      }
-      
-      .slide p {
+
+      .desktop-tab-btn {
+        background: none;
+        border: none;
+        color: var(--text-muted);
         font-size: 14px;
+        font-weight: 700;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: all 0.2s;
       }
-      
-      .slide a {
-        padding: 10px 20px;
-        font-size: 14px;
-        width: 100%;
-        text-align: center;
+
+      .desktop-tab-btn:hover {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
       }
-      
-      .controles button {
-        width: 35px;
-        height: 35px;
-        font-size: 16px;
+
+      .desktop-tab-btn.active {
+        background: var(--primary);
+        color: #fff;
       }
-      
-      footer {
-        font-size: 12px;
+
+      .desktop-tab-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 24px 28px;
       }
-      
-      .location-badge {
-        max-width: 140px;
+
+      /* No Desktop, a tela Live não fica na coluna direita */
+      .mobile-content-area {
+        display: none;
       }
+    }
+
+    /* Esconde elementos desktop quando em mobile */
+    @media (max-width: 899px) {
+      .desktop-player-column,
+      .desktop-content-column {
+        display: none !important;
+      }
+    }
+
+    /* MODAL: SLEEP TIMER */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .modal-card {
+      width: 100%;
+      max-width: 400px;
+      background: #0f172a;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    }
+
+    .modal-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .modal-header-row h3 {
+      font-size: 17px;
+      font-weight: 800;
+    }
+
+    .btn-modal-close {
+      background: rgba(255, 255, 255, 0.1);
+      border: none;
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .timer-grid-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .btn-timer-choice {
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--card-border);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-timer-choice:hover {
+      background: rgba(37, 99, 235, 0.2);
+      border-color: var(--primary);
+    }
+
+    .btn-timer-choice.cancel-btn {
+      grid-column: span 2;
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.3);
+      color: #fca5a5;
     }
   </style>
 </head>
 <body>
-  <div class="player-card">
-    <header>
-      <img src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo da Rádio">
-      <h1>Paraíso FM 101,1 - Sobral</h1>
-    </header>
 
-    <div class="player-container">
-      <button class="btn" id="playPause">▶️</button>
-      <div class="volume">
-        <div class="volume-icons">
-          <span>🔈</span>
-          <span>🔊</span>
-        </div>
-        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="0.7" aria-label="Volume">
-      </div>
-      <div style="min-width:120px; text-align:center;">
-        <div class="status" id="status">Clique para iniciar</div>
-      </div>
-    </div>
-
-    <div class="programacao" id="programacao">🎙️ Programa atual: Carregando...</div>
-
-    <!-- Carrossel de Notícias -->
-    <div class="carrossel-container">
-      <div class="carrossel" id="carrossel">
-        <div class="carregando">Carregando notícias...</div>
-      </div>
-      
-      <div class="controles">
-        <button id="prevBtn">&#10094;</button>
-        <button id="nextBtn">&#10095;</button>
-      </div>
-      
-      <div class="indicadores" id="indicadores">
-        <!-- Indicadores serão inseridos aqui -->
-      </div>
-    </div>
-
-    <!-- Redes Sociais -->
-    <div class="social">
-      <a class="instagram" href="https://www.instagram.com/sistemaparaiso" target="_blank" aria-label="Instagram">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a class="whatsapp" href="https://wa.me/5588999834349" target="_blank" aria-label="WhatsApp">
-        <i class="fab fa-whatsapp"></i>
-      </a>
-      <a class="youtube" href="https://www.youtube.com/@paraisofmsobral" target="_blank" aria-label="YouTube">
-        <i class="fab fa-youtube"></i>
-      </a>
-      <a class="site" href="https://sistemaparaiso.com.br" target="_blank" aria-label="Site">
-        <i class="fas fa-globe"></i>
-      </a>
-    </div>
-
-    <footer>© 2025 Paraíso FM 101,1 - Todos os direitos reservados</footer>
+  <!-- Fundo Nítido da Rádio (turbinal_paraiso.png) -->
+  <div class="bg-backdrop" aria-hidden="true">
+    <div class="bg-backdrop-image"></div>
+    <div class="bg-backdrop-overlay"></div>
   </div>
 
-  <!-- SOLUÇÃO FINAL - 2 URLs FUNCIONAIS -->
-  <audio id="player" crossorigin="anonymous" preload="none">
-    <!-- 01 - XCast -->
+  <div class="app-viewport">
+    <div class="mobile-app-shell">
+
+      <!-- ==================== HEADER MOBILE ==================== -->
+      <header class="mobile-top-bar">
+        <div class="station-brand">
+          <img src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Paraíso FM">
+          <div class="station-brand-text">
+            <h1>Paraíso FM</h1>
+            <span>101,1 MHz</span>
+          </div>
+        </div>
+
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <div class="location-chip" id="locationChipMobile">
+            <i class="fas fa-location-dot"></i>
+            <span class="user-city-text">Sobral, CE</span>
+          </div>
+          <button class="btn-header-share btnOpenShareModal" aria-label="Compartilhar app">
+            <i class="fas fa-share-nodes"></i>
+          </button>
+        </div>
+      </header>
+
+      <!-- ==================== ÁREA DE CONTEÚDO MOBILE ==================== -->
+      <main class="mobile-content-area">
+        
+        <!-- ABA 1: AO VIVO -->
+        <section class="view-screen screen-live active" id="view-live">
+          <div class="studio-artwork-container">
+            <div class="studio-glow"></div>
+            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM">
+          </div>
+
+          <div class="live-badge-row">
+            <span class="badge-onair">
+              <span class="dot-pulse"></span> AO VIVO
+            </span>
+          </div>
+
+          <div class="show-info-box">
+            <h2 class="show-main-title currentShowTitle">Carregando...</h2>
+            <div class="show-schedule-hours currentShowHours">Ao vivo de Sobral/CE</div>
+            <div class="live-progress-bar">
+              <div class="live-progress-fill showProgressFill"></div>
+            </div>
+          </div>
+
+          <!-- Equalizador de Ondas -->
+          <div class="audio-waveform">
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+          </div>
+
+          <!-- Botão Master Play -->
+          <button class="master-play-btn mainPlayBtn" aria-label="Tocar ou Pausar">
+            <i class="fas fa-play mainPlayIcon"></i>
+          </button>
+
+          <div class="stream-status-text mainStatusText">Clique para ouvir</div>
+
+          <!-- Volume -->
+          <div class="volume-control-row volumeBoxEl">
+            <button class="btn-mute-toggle" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><i class="fas fa-volume-high muteIcon"></i></button>
+            <input type="range" class="volume-range volumeSliderEl" min="0" max="1" step="0.01" value="0.8">
+          </div>
+
+          <!-- Ações Rápidas -->
+          <div class="live-actions-row">
+            <a class="btn-quick-pill btn-quick-whatsapp" href="https://wa.me/5588999834349?text=Ol%C3%A1%2C%20estou%20ouvindo%20pelo%20App%20da%20Para%C3%ADso%20FM%20e%20gostaria%20de%20pedir%20uma%20m%C3%BAsica%3A" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-whatsapp"></i> Pedir Música
+            </a>
+            <button class="btn-quick-pill btn-quick-timer btnOpenSleepTimer">
+              <i class="fas fa-moon"></i> <span class="sleepTimerStatusText">Modo Sono</span>
+            </button>
+            <button class="btn-quick-pill btn-quick-share btnOpenShareModal">
+              <i class="fas fa-share-nodes"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ABA 2: PROGRAMAÇÃO -->
+        <section class="view-screen" id="view-schedule">
+          <div class="screen-header-title">
+            <i class="far fa-calendar-alt" style="color: var(--primary-light);"></i> Grade de Programação
+          </div>
+
+          <div class="schedule-day-chips">
+            <button class="chip-day active" data-day="weekday">Seg a Sex</button>
+            <button class="chip-day" data-day="saturday">Sábado</button>
+            <button class="chip-day" data-day="sunday">Domingo</button>
+          </div>
+
+          <div class="schedule-items-list scheduleContainerEl"></div>
+        </section>
+
+        <!-- ABA 3: NOTÍCIAS -->
+        <section class="view-screen" id="view-news">
+          <div class="screen-header-title">
+            <i class="far fa-newspaper" style="color: var(--primary-light);"></i> Notícias da Região
+          </div>
+
+          <div class="news-cards-feed newsContainerEl">
+            <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+              Carregando as últimas notícias...
+            </div>
+          </div>
+        </section>
+
+        <!-- ABA 4: PARTICIPE / CONTATO -->
+        <section class="view-screen" id="view-contact">
+          <div class="screen-header-title">
+            <i class="far fa-comments" style="color: var(--primary-light);"></i> Central do Ouvinte
+          </div>
+
+          <div class="contact-container">
+            <div class="contact-hero-card">
+              <i class="fab fa-whatsapp" style="font-size: 38px; color: #25D366;"></i>
+              <h3>Participe da Programação!</h3>
+              <p>Envie seu recado, mande um abraço ou peça a sua música favorita direto para o estúdio da Paraíso FM.</p>
+              <a class="btn-quick-pill btn-quick-whatsapp" style="width: 100%;" href="https://wa.me/5588999834349?text=Ol%C3%A1%20Para%C3%ADso%20FM%2C%20estou%20ligado%20no%20app%20e%20quero%20participar%3A" target="_blank" rel="noopener noreferrer">
+                Mandar Mensagem no WhatsApp
+              </a>
+            </div>
+
+            <div class="social-links-grid">
+              <a class="social-channel-card insta" href="https://www.instagram.com/sistemaparaiso" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-instagram"></i>
+                <div class="social-channel-text">
+                  <div>Instagram</div>
+                  <div>@sistemaparaiso</div>
+                </div>
+              </a>
+
+              <a class="social-channel-card yt" href="https://www.youtube.com/@paraisofmsobral" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-youtube"></i>
+                <div class="social-channel-text">
+                  <div>YouTube</div>
+                  <div>Vídeos & Cortes</div>
+                </div>
+              </a>
+
+              <a class="social-channel-card web" href="https://sistemaparaiso.com.br" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-globe"></i>
+                <div class="social-channel-text">
+                  <div>Portal Web</div>
+                  <div>Notícias completas</div>
+                </div>
+              </a>
+
+              <a class="social-channel-card whats" href="https://wa.me/5588999834349" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-whatsapp"></i>
+                <div class="social-channel-text">
+                  <div>(88) 99983-4349</div>
+                  <div>WhatsApp Estúdio</div>
+                </div>
+              </a>
+            </div>
+
+            <!-- Card Compartilhar App -->
+            <div class="share-cta-card">
+              <i class="fas fa-share-nodes" style="font-size: 30px; color: var(--accent);"></i>
+              <h3>Compartilhe o App!</h3>
+              <p>Indique a Paraíso FM para amigos e família. Quanto mais ouvintes, mais forte fica nossa voz!</p>
+              <button class="btn-share-cta btnOpenShareModal">
+                <i class="fas fa-share-nodes"></i> Compartilhar Agora
+              </button>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+
+      <!-- MINI-PLAYER PERSISTENTE (ESTILO SPOTIFY) -->
+      <div class="mini-player-bar" id="miniPlayerBar">
+        <div class="mini-info-group" id="miniPlayerOpenLive">
+          <img class="mini-thumb" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Paraíso FM">
+          <div class="mini-text-box">
+            <div class="mini-show-title currentShowTitle">Paraíso FM</div>
+            <div class="mini-subtext">
+              <span class="dot-pulse" style="width: 5px; height: 5px;"></span> Ao Vivo
+            </div>
+          </div>
+        </div>
+        <button class="mini-play-btn miniPlayBtn" aria-label="Tocar ou Pausar">
+          <i class="fas fa-play miniPlayIcon"></i>
+        </button>
+      </div>
+
+      <!-- BOTTOM NAVIGATION BAR (MOBILE) -->
+      <nav class="mobile-bottom-nav">
+        <button class="nav-tab-item active" data-target="view-live">
+          <i class="fas fa-radio"></i>
+          <span>Ao Vivo</span>
+        </button>
+        <button class="nav-tab-item" data-target="view-schedule">
+          <i class="far fa-calendar-alt"></i>
+          <span>Grade</span>
+        </button>
+        <button class="nav-tab-item" data-target="view-news">
+          <i class="far fa-newspaper"></i>
+          <span>Notícias</span>
+        </button>
+        <button class="nav-tab-item" data-target="view-contact">
+          <i class="far fa-comments"></i>
+          <span>Participe</span>
+        </button>
+      </nav>
+
+      <!-- ===================================================
+           LAYOUT DESKTOP / TABLET (STUDIO CONSOLE EM 2 COLUNAS)
+           =================================================== -->
+      <!-- COLUNA ESQUERDA: MASTER PLAYER -->
+      <div class="desktop-player-column">
+        <div class="station-brand" style="margin-bottom: 18px;">
+          <img src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Paraíso FM" style="width: 44px; height: 44px;">
+          <div class="station-brand-text">
+            <h1 style="font-size: 17px;">Paraíso FM</h1>
+            <span style="font-size: 12px;">101,1 MHz • Sobral/CE</span>
+          </div>
+        </div>
+
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; margin: auto 0;">
+          <div class="studio-artwork-container" style="width: 200px;">
+            <div class="studio-glow"></div>
+            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM">
+          </div>
+
+          <span class="badge-onair">
+            <span class="dot-pulse"></span> AO VIVO
+          </span>
+
+          <div class="show-info-box">
+            <h2 class="show-main-title currentShowTitle">Carregando...</h2>
+            <div class="show-schedule-hours currentShowHours">Sobral e região noroeste</div>
+            <div class="live-progress-bar">
+              <div class="live-progress-fill showProgressFill"></div>
+            </div>
+          </div>
+
+          <!-- Waveform -->
+          <div class="audio-waveform">
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+          </div>
+
+          <!-- Play Button Desktop -->
+          <button class="master-play-btn mainPlayBtn" aria-label="Tocar ou Pausar">
+            <i class="fas fa-play mainPlayIcon"></i>
+          </button>
+
+          <div class="stream-status-text mainStatusText">Clique para ouvir</div>
+
+          <!-- Volume Desktop -->
+          <div class="volume-control-row">
+            <button class="btn-mute-toggle" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><i class="fas fa-volume-high muteIcon"></i></button>
+            <input type="range" class="volume-range volumeSliderEl" min="0" max="1" step="0.01" value="0.8">
+          </div>
+        </div>
+
+        <div class="live-actions-row" style="margin-top: 20px;">
+          <a class="btn-quick-pill btn-quick-whatsapp" href="https://wa.me/5588999834349?text=Ol%C3%A1%2C%20estou%20ouvindo%20pelo%20App%20da%20Para%C3%ADso%20FM%20e%20gostaria%20de%20pedir%20uma%20m%C3%BAsica%3A" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i> Pedir Música
+          </a>
+          <button class="btn-quick-pill btn-quick-timer btnOpenSleepTimer">
+            <i class="fas fa-moon"></i> <span class="sleepTimerStatusText">Modo Sono</span>
+          </button>
+          <button class="btn-quick-pill btn-quick-share btnOpenShareModal">
+            <i class="fas fa-share-nodes"></i>
+          </button>
+        </div>
+
+        <!-- Créditos Desktop -->
+        <div style="margin-top: 16px; text-align: center; font-size: 10px; color: rgba(255,255,255,0.15); font-weight: 600; letter-spacing: 0.3px;">
+          Desenvolvido por <span style="color: rgba(96,165,250,0.3);">Rivaldo Santos</span>
+        </div>
+      </div>
+
+      <!-- COLUNA DIREITA: CONTEÚDO (GRADE, NOTÍCIAS, PARTICIPE) -->
+      <div class="desktop-content-column">
+        <div class="desktop-tab-header">
+          <button class="desktop-tab-btn active" data-target="desktop-schedule-view">
+            <i class="far fa-calendar-alt"></i> Programação 24h
+          </button>
+          <button class="desktop-tab-btn" data-target="desktop-news-view">
+            <i class="far fa-newspaper"></i> Notícias
+          </button>
+          <button class="desktop-tab-btn" data-target="desktop-contact-view">
+            <i class="far fa-comments"></i> Participe
+          </button>
+        </div>
+
+        <div class="desktop-tab-body">
+          <!-- Grade Desktop -->
+          <div class="desktop-tab-pane" id="desktop-schedule-view">
+            <div class="schedule-day-chips" style="margin-bottom: 18px;">
+              <button class="chip-day active" data-day="weekday">Seg a Sex</button>
+              <button class="chip-day" data-day="saturday">Sábado</button>
+              <button class="chip-day" data-day="sunday">Domingo</button>
+            </div>
+            <div class="schedule-items-list scheduleContainerEl"></div>
+          </div>
+
+          <!-- Notícias Desktop -->
+          <div class="desktop-tab-pane" id="desktop-news-view" style="display: none;">
+            <div class="news-cards-feed newsContainerEl"></div>
+          </div>
+
+          <!-- Participe Desktop -->
+          <div class="desktop-tab-pane" id="desktop-contact-view" style="display: none;">
+            <div class="contact-container">
+              <div class="contact-hero-card">
+                <i class="fab fa-whatsapp" style="font-size: 36px; color: #25D366;"></i>
+                <h3>Participe ao Vivo</h3>
+                <p>Mande sua mensagem de áudio ou texto para a equipe da Rádio Paraíso FM.</p>
+                <a class="btn-quick-pill btn-quick-whatsapp" style="max-width: 320px;" href="https://wa.me/5588999834349" target="_blank" rel="noopener noreferrer">
+                  Conversar no WhatsApp
+                </a>
+              </div>
+
+              <div class="social-links-grid">
+                <a class="social-channel-card insta" href="https://www.instagram.com/sistemaparaiso" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-instagram"></i>
+                  <div class="social-channel-text"><div>Instagram</div><div>@sistemaparaiso</div></div>
+                </a>
+                <a class="social-channel-card yt" href="https://www.youtube.com/@paraisofmsobral" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-youtube"></i>
+                  <div class="social-channel-text"><div>YouTube</div><div>Canal Oficial</div></div>
+                </a>
+                <a class="social-channel-card web" href="https://sistemaparaiso.com.br" target="_blank" rel="noopener noreferrer">
+                  <i class="fas fa-globe"></i>
+                  <div class="social-channel-text"><div>Portal de Notícias</div><div>sistemaparaiso.com.br</div></div>
+                </a>
+                <a class="social-channel-card whats" href="https://wa.me/5588999834349" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-whatsapp"></i>
+                  <div class="social-channel-text"><div>Estúdio FM</div><div>(88) 99983-4349</div></div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL: SLEEP TIMER -->
+  <div class="modal-backdrop" id="timerModalBackdrop">
+    <div class="modal-card">
+      <div class="modal-header-row">
+        <h3>🌙 Modo Sono (Desligamento)</h3>
+        <button class="btn-modal-close" id="btnCloseSleepTimer"><i class="fas fa-times"></i></button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        A rádio pausará a transmissão automaticamente após o período selecionado:
+      </p>
+      <div class="timer-grid-buttons">
+        <button class="btn-timer-choice" data-min="15">15 minutos</button>
+        <button class="btn-timer-choice" data-min="30">30 minutos</button>
+        <button class="btn-timer-choice" data-min="45">45 minutos</button>
+        <button class="btn-timer-choice" data-min="60">60 minutos</button>
+        <button class="btn-timer-choice cancel-btn" id="btnCancelSleepTimer">Desativar Temporizador</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: COMPARTILHAR APP -->
+  <div class="modal-backdrop" id="shareModalBackdrop">
+    <div class="modal-card share-modal-card">
+      <div class="modal-header-row">
+        <h3>📡 Compartilhar Paraíso FM</h3>
+        <button class="btn-modal-close" id="btnCloseShareModal"><i class="fas fa-times"></i></button>
+      </div>
+      <p style="font-size: 13px; color: var(--text-muted); line-height: 1.5;">
+        Compartilhe o app da Paraíso FM 101,1 com amigos e ouçam juntos!
+      </p>
+      <div class="share-options-grid">
+        <a class="share-option-btn whats" id="shareWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-whatsapp"></i>
+          WhatsApp
+        </a>
+        <a class="share-option-btn telegram" id="shareTelegram" href="#" target="_blank" rel="noopener noreferrer">
+          <i class="fab fa-telegram"></i>
+          Telegram
+        </a>
+        <button class="share-option-btn copy" id="shareCopyLink">
+          <i class="fas fa-link"></i>
+          Copiar Link
+        </button>
+        <button class="share-option-btn native" id="shareNative">
+          <i class="fas fa-share-nodes"></i>
+          Mais opções
+        </button>
+      </div>
+      <div class="share-link-box">
+        <input type="text" id="shareLinkInput" value="https://appradio.sistemaparaiso.com" readonly>
+        <button id="shareLinkCopyBtn">Copiar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Áudio HTML5 -->
+  <audio id="radioCoreAudio" crossorigin="anonymous" preload="none">
     <source src="https://stm28.xcast.com.br:11582/stream" type="audio/mpeg">
-    
-    <!-- 02 - FastCast4U -->
     <source src="https://usa16.fastcast4u.com/proxy/paraisofm101?mp=/1" type="audio/mpeg">
-    
-    Seu navegador não suporta o player de áudio.
   </audio>
 
+  <!-- JAVASCRIPT GLOBAL -->
   <script>
-    // ================= SOLUÇÃO FINAL - PLAYER =================
-    const player = document.getElementById("player");
-    const playPause = document.getElementById("playPause");
-    const statusText = document.getElementById("status");
-    const programacaoEl = document.getElementById("programacao");
-
-    let fonteAtual = 1;
-    const fontes = [
+    // ================= CONFIGURAÇÃO DO STREAM =================
+    const STREAMS = [
       "https://stm28.xcast.com.br:11582/stream",
       "https://usa16.fastcast4u.com/proxy/paraisofm101?mp=/1"
     ];
 
-    // Grade de programação
-    const grade = [
+    const audio = document.getElementById("radioCoreAudio");
+    const mainPlayBtns = document.querySelectorAll(".mainPlayBtn");
+    const mainPlayIcons = document.querySelectorAll(".mainPlayIcon");
+    const miniPlayBtn = document.querySelector(".miniPlayBtn");
+    const miniPlayIcon = document.querySelector(".miniPlayIcon");
+    const mainStatusTexts = document.querySelectorAll(".mainStatusText");
+    const miniPlayerBar = document.getElementById("miniPlayerBar");
+    const volumeSliders = document.querySelectorAll(".volumeSliderEl");
+    const muteToggles = document.querySelectorAll(".btn-mute-toggle");
+    const muteIcons = document.querySelectorAll(".muteIcon");
+
+    let currentStreamIdx = 0;
+    let reconnectTimer = null;
+    let currentVolume = 0.8;
+    let isRadioStarted = false;
+
+    // ================= NAVEGAÇÃO MOBILE (TABS & MINI-PLAYER) =================
+    const navTabs = document.querySelectorAll(".nav-tab-item");
+    const viewScreens = document.querySelectorAll(".view-screen");
+    let currentActiveTab = "view-live";
+
+    navTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const targetId = tab.getAttribute("data-target");
+        switchMobileTab(targetId);
+      });
+    });
+
+    document.getElementById("miniPlayerOpenLive").addEventListener("click", () => {
+      switchMobileTab("view-live");
+    });
+
+    function switchMobileTab(targetId) {
+      currentActiveTab = targetId;
+
+      navTabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-target") === targetId));
+      viewScreens.forEach(s => s.classList.toggle("active", s.id === targetId));
+
+      // Se não estiver na tela Ao Vivo e a rádio já tiver sido iniciada ou estiver tocando, exibe o Mini-Player
+      if (targetId !== "view-live" && isRadioStarted) {
+        miniPlayerBar.classList.add("visible");
+      } else {
+        miniPlayerBar.classList.remove("visible");
+      }
+    }
+
+    // ================= NAVEGAÇÃO DESKTOP (TABS) =================
+    const desktopTabs = document.querySelectorAll(".desktop-tab-btn");
+    const desktopPanes = document.querySelectorAll(".desktop-tab-pane");
+
+    desktopTabs.forEach(tab => {
+      tab.addEventListener("click", () => {
+        const targetId = tab.getAttribute("data-target");
+        desktopTabs.forEach(t => t.classList.remove("active"));
+        tab.classList.add("active");
+        desktopPanes.forEach(p => {
+          p.style.display = p.id === targetId ? "block" : "none";
+        });
+      });
+    });
+
+    // ================= REPRODUÇÃO & STREAMING =================
+    function toggleAudio() {
+      if (audio.paused) {
+        startStreaming();
+      } else {
+        pauseStreaming();
+      }
+    }
+
+    function startStreaming() {
+      isRadioStarted = true;
+      updatePlayIcons(true, true);
+      updateStatusDisplay("Conectando...", "loading");
+
+      const streamUrl = STREAMS[currentStreamIdx] + (STREAMS[currentStreamIdx].includes('?') ? '&' : '?') + 'nocache=' + Date.now();
+      audio.src = streamUrl;
+      audio.load();
+
+      audio.play().then(() => {
+        document.body.classList.add("is-playing");
+        updatePlayIcons(false, true);
+        updateStatusDisplay("Ao Vivo", "online");
+
+        // Atualizar miniplayer se estiver fora da aba live
+        if (currentActiveTab !== "view-live") {
+          miniPlayerBar.classList.add("visible");
+        }
+
+        if (typeof gtag !== 'undefined') {
+          gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao Vivo' });
+        }
+      }).catch(err => {
+        console.warn("Erro ao iniciar áudio:", err);
+        tryNextStreamSource();
+      });
+    }
+
+    function pauseStreaming() {
+      audio.pause();
+      document.body.classList.remove("is-playing");
+      updatePlayIcons(false, false);
+      updateStatusDisplay("Pausado", "");
+      if (typeof gtag !== 'undefined') {
+        gtag('event', 'pause', { 'event_category': 'Player', 'event_label': 'Ao Vivo' });
+      }
+    }
+
+    function tryNextStreamSource() {
+      currentStreamIdx = (currentStreamIdx + 1) % STREAMS.length;
+      updateStatusDisplay(`Reconectando (${currentStreamIdx + 1})...`, "loading");
+      updatePlayIcons(true, true);
+
+      clearTimeout(reconnectTimer);
+      reconnectTimer = setTimeout(() => {
+        audio.src = STREAMS[currentStreamIdx];
+        audio.load();
+        audio.play().then(() => {
+          document.body.classList.add("is-playing");
+          updatePlayIcons(false, true);
+          updateStatusDisplay("Ao Vivo", "online");
+        }).catch(() => {
+          updateStatusDisplay("Sem sinal no momento", "error");
+          updatePlayIcons(false, false);
+          document.body.classList.remove("is-playing");
+        });
+      }, 1500);
+    }
+
+    function updatePlayIcons(isLoading, isPlaying) {
+      mainPlayIcons.forEach(icon => {
+        if (isLoading) {
+          icon.className = "fas fa-spinner fa-spin mainPlayIcon";
+        } else if (isPlaying) {
+          icon.className = "fas fa-pause mainPlayIcon";
+        } else {
+          icon.className = "fas fa-play mainPlayIcon";
+        }
+      });
+
+      if (miniPlayIcon) {
+        if (isLoading) {
+          miniPlayIcon.className = "fas fa-spinner fa-spin miniPlayIcon";
+        } else if (isPlaying) {
+          miniPlayIcon.className = "fas fa-pause miniPlayIcon";
+        } else {
+          miniPlayIcon.className = "fas fa-play miniPlayIcon";
+        }
+      }
+    }
+
+    function updateStatusDisplay(msg, styleClass) {
+      mainStatusTexts.forEach(el => {
+        el.textContent = msg;
+        el.style.color = styleClass === "online" ? "#34d399" : styleClass === "loading" ? "#f59e0b" : styleClass === "error" ? "#ef4444" : "var(--text-muted)";
+      });
+    }
+
+    mainPlayBtns.forEach(btn => btn.addEventListener("click", toggleAudio));
+    if (miniPlayBtn) miniPlayBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleAudio();
+    });
+
+    audio.addEventListener("waiting", () => updatePlayIcons(true, true));
+    audio.addEventListener("playing", () => {
+      document.body.classList.add("is-playing");
+      updatePlayIcons(false, true);
+      updateStatusDisplay("Ao Vivo", "online");
+    });
+    audio.addEventListener("error", () => tryNextStreamSource());
+
+    // ================= VOLUME & MUTE =================
+    volumeSliders.forEach(slider => {
+      slider.addEventListener("input", (e) => {
+        const val = parseFloat(e.target.value);
+        audio.volume = val;
+        currentVolume = val;
+        volumeSliders.forEach(s => s.value = val);
+        updateMuteIcons(val);
+      });
+    });
+
+    muteToggles.forEach(btn => {
+      btn.addEventListener("click", () => {
+        if (audio.volume > 0) {
+          currentVolume = audio.volume;
+          audio.volume = 0;
+          volumeSliders.forEach(s => s.value = 0);
+        } else {
+          audio.volume = currentVolume || 0.8;
+          volumeSliders.forEach(s => s.value = currentVolume || 0.8);
+        }
+        updateMuteIcons(audio.volume);
+      });
+    });
+
+    function updateMuteIcons(val) {
+      muteIcons.forEach(icon => {
+        if (val === 0) icon.className = "fas fa-volume-xmark muteIcon";
+        else if (val < 0.5) icon.className = "fas fa-volume-low muteIcon";
+        else icon.className = "fas fa-volume-high muteIcon";
+      });
+    }
+
+    // Ocultar slider no iOS
+    const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    if (isIOSDevice) {
+      document.querySelectorAll(".volumeBoxEl").forEach(el => el.style.display = "none");
+    }
+
+    // ================= GRADE DE PROGRAMAÇÃO =================
+    const GRADE = [
       { dias: [1,2,3,4,5], inicio: "04:00", fim: "06:00", programa: "De Olho na Cidade" },
       { dias: [1,2,3,4,5], inicio: "06:00", fim: "08:00", programa: "Chama a Paraíso" },
       { dias: [1,2,3,4,5], inicio: "08:00", fim: "09:00", programa: "Variedades" },
@@ -666,12 +1856,12 @@
       { dias: [1,2,3,4,5], inicio: "13:00", fim: "15:00", programa: "Tribuna & Plenário" },
       { dias: [1,2,3,4,5], inicio: "15:00", fim: "17:00", programa: "Forronejo" },
       { dias: [1,2,3,4,5], inicio: "17:00", fim: "19:00", programa: "Sucessos & Saudades" },
-      { dias: [1,2,3,4,5], inicio: "19:00", fim: "20:00", programa: "A voz do Brasil" },
+      { dias: [1,2,3,4,5], inicio: "19:00", fim: "20:00", programa: "A Voz do Brasil" },
       { dias: [1,2,3,4,5], inicio: "20:00", fim: "22:00", programa: "Diário Policial" },
       { dias: [1,2,3,4,5], inicio: "22:00", fim: "23:30", programa: "Plantão Alerta" },
-      { dias: [1,2,3,4,5], inicio: "23:30", fim: "1:00", programa: "Paraíso By Night" },
-      { dias: [1,2,3,4,5], inicio: "1:00", fim: "2:00", programa: "Novo Tempo" },
-      { dias: [1,2,3,4,5], inicio: "2:00", fim: "4:00", programa: "Madrugada 101" },
+      { dias: [1,2,3,4,5], inicio: "23:30", fim: "01:00", programa: "Paraíso By Night" },
+      { dias: [1,2,3,4,5], inicio: "01:00", fim: "02:00", programa: "Novo Tempo" },
+      { dias: [1,2,3,4,5], inicio: "02:00", fim: "04:00", programa: "Madrugada 101" },
       { dias: [6], inicio: "06:00", fim: "09:00", programa: "Manhã Sertaneja" },
       { dias: [6], inicio: "09:00", fim: "12:00", programa: "Top Hits Paraíso" },
       { dias: [6], inicio: "12:00", fim: "15:00", programa: "Sábado Esportivo" },
@@ -682,732 +1872,355 @@
       { dias: [0], inicio: "15:00", fim: "18:00", programa: "Especial Samba & Pagode" }
     ];
 
-    // Play/Pause
-    playPause.onclick = function() {
-      if (player.paused) {
-        statusText.textContent = "🔄 Conectando...";
-        console.log('🎧 Iniciando player...');
-        
-        player.play().catch(error => {
-          console.error('❌ Erro na fonte', fonteAtual, error);
-          statusText.textContent = "❌ Tentando outra fonte...";
-          trocarFonte();
-        });
-      } else {
-        player.pause();
-        console.log('⏸️ Player pausado');
-      }
-    };
-
-    // Eventos do player
-    player.onplaying = function() {
-      statusText.textContent = "▶️ Tocando Agora";
-      statusText.style.color = "#4CAF50";
-      playPause.textContent = "⏸️";
-      console.log('🎵 Tocando da fonte', fonteAtual, '-', fontes[fonteAtual - 1]);
-      gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
-    };
-
-    player.onpause = function() {
-      statusText.textContent = "⏸️ Pausado";
-      statusText.style.color = "#ff9800";
-      playPause.textContent = "▶️";
-      gtag('event', 'pause', { 'event_category': 'Player', 'event_label': 'Ao vivo' });
-    };
-
-    player.onwaiting = function() {
-      statusText.textContent = "⏳ Buffering...";
-      console.log('⏳ Buffering...');
-    };
-
-    player.onerror = function() {
-      console.error('❌ Erro na fonte', fonteAtual, player.error);
-      trocarFonte();
-    };
-
-    // Função para trocar de fonte
-    function trocarFonte() {
-      fonteAtual++;
-      
-      if (fonteAtual <= fontes.length) {
-        statusText.textContent = `🔄 Tentando fonte ${fonteAtual}...`;
-        console.log(`🔄 Tentando fonte ${fonteAtual}: ${fontes[fonteAtual - 1]}`);
-        
-        player.src = fontes[fonteAtual - 1];
-        setTimeout(() => {
-          player.play().catch(error => {
-            console.error(`❌ Falha na fonte ${fonteAtual}:`, error);
-            trocarFonte();
-          });
-        }, 500);
-      } else {
-        statusText.textContent = "❌ Ambas as fontes falharam";
-        statusText.style.color = "#ff6b6b";
-        console.error('❌ Todas as fontes falharam');
-        gtag('event', 'player_error', { 'event_category': 'Player', 'event_label': 'Erro streaming' });
-      }
+    function horaParaMin(str) {
+      const [h, m] = str.split(':').map(Number);
+      return h * 60 + m;
     }
 
-    // Volume
-    document.getElementById('volumeControl').oninput = function(e) {
-      player.volume = e.target.value;
-      console.log('🔊 Volume:', e.target.value);
-      gtag('event', 'volume_change', { 
-        'event_category': 'Player', 
-        'event_label': 'Volume', 
-        'value': e.target.value 
-      });
-    };
-
-    // Programação
-    function horaEntre(hora, inicio, fim) {
-      return (inicio <= fim) ? (hora >= inicio && hora < fim) : (hora >= inicio || hora < fim);
+    function isHoraNoIntervalo(minAtual, inicioStr, fimStr) {
+      const minInicio = horaParaMin(inicioStr);
+      let minFim = horaParaMin(fimStr);
+      if (minFim < minInicio) minFim += 24 * 60;
+      let comp = minAtual;
+      if (comp < minInicio && minFim > 24 * 60) comp += 24 * 60;
+      return comp >= minInicio && comp < minFim;
     }
 
-    function atualizarProgramacao() {
+    function atualizarProgramaNoAr() {
       const agora = new Date();
       const diaSemana = agora.getDay();
-      const horaAtual = agora.getHours().toString().padStart(2,"0") + ":" +
-                        agora.getMinutes().toString().padStart(2,"0");
+      const minAtual = agora.getHours() * 60 + agora.getMinutes();
 
-      const programaAtual = grade.find(p => p.dias.includes(diaSemana) && horaEntre(horaAtual, p.inicio, p.fim));
+      const prog = GRADE.find(p => p.dias.includes(diaSemana) && isHoraNoIntervalo(minAtual, p.inicio, p.fim));
 
-      programacaoEl.textContent = programaAtual 
-        ? `🎙️ ${programaAtual.programa} (${programaAtual.inicio}-${programaAtual.fim})`
-        : "🎙️ Fora do ar - Programação especial";
+      const titleEls = document.querySelectorAll(".currentShowTitle");
+      const hourEls = document.querySelectorAll(".currentShowHours");
+      const fills = document.querySelectorAll(".showProgressFill");
+
+      if (prog) {
+        titleEls.forEach(el => el.textContent = prog.programa);
+        hourEls.forEach(el => el.textContent = `${prog.inicio} às ${prog.fim}`);
+
+        const ini = horaParaMin(prog.inicio);
+        let fim = horaParaMin(prog.fim);
+        if (fim < ini) fim += 24 * 60;
+        let c = minAtual;
+        if (c < ini && fim > 24 * 60) c += 24 * 60;
+        const pct = Math.min(100, Math.max(5, ((c - ini) / (fim - ini)) * 100));
+        fills.forEach(f => f.style.width = pct + "%");
+
+        atualizarMediaSession(prog.programa);
+      } else {
+        titleEls.forEach(el => el.textContent = "Programação Especial");
+        hourEls.forEach(el => el.textContent = "24 horas com você");
+        fills.forEach(f => f.style.width = "100%");
+        atualizarMediaSession("Programação Especial");
+      }
     }
 
-    atualizarProgramacao();
-    setInterval(atualizarProgramacao, 60000);
-
-    // ================= SISTEMA DE DETECÇÃO DE CIDADE =================
-    class LocationTracker {
-      constructor() {
-        this.city = 'Detectando...';
-        this.isDetecting = false;
-        this.locationElement = null;
+    function atualizarMediaSession(progNome) {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: "Paraíso FM 101,1",
+          artist: progNome || "Ao Vivo • Sobral/CE",
+          album: "Sistema Paraíso de Comunicação",
+          artwork: [
+            { src: "https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg", sizes: "512x512", type: "image/jpeg" }
+          ]
+        });
+        navigator.mediaSession.setActionHandler('play', toggleAudio);
+        navigator.mediaSession.setActionHandler('pause', toggleAudio);
       }
+    }
 
-      init() {
-        this.createLocationUI();
-        this.detectUserCity();
-      }
+    // Renderizar lista da grade nos containers (mobile e desktop)
+    let selectedDayFilter = 'weekday';
 
-      createLocationUI() {
-        const locationBadge = document.createElement('div');
-        locationBadge.className = 'location-badge loading';
-        locationBadge.innerHTML = `
-          <div class="location-info">
-            <span class="location-icon">📍</span>
-            <span class="location-text">${this.city}</span>
+    function renderizarListaGrade() {
+      let dias = [1,2,3,4,5];
+      if (selectedDayFilter === 'saturday') dias = [6];
+      if (selectedDayFilter === 'sunday') dias = [0];
+
+      const agora = new Date();
+      const hoje = agora.getDay();
+      const minAtual = agora.getHours() * 60 + agora.getMinutes();
+
+      const items = GRADE.filter(p => p.dias.some(d => dias.includes(d)));
+
+      const html = items.map(p => {
+        const isCurrent = dias.includes(hoje) && isHoraNoIntervalo(minAtual, p.inicio, p.fim);
+        return `
+          <div class="schedule-card ${isCurrent ? 'is-now' : ''}">
+            <div class="schedule-time-tag">${p.inicio} - ${p.fim}</div>
+            <div class="schedule-show-name">${p.programa}</div>
+            ${isCurrent ? '<span class="badge-current-show">No Ar</span>' : ''}
           </div>
         `;
+      }).join('');
 
-        const playerCard = document.querySelector('.player-card');
-        if (playerCard) {
-          playerCard.style.position = 'relative';
-          playerCard.appendChild(locationBadge);
-          this.locationElement = locationBadge;
-        }
-      }
-
-      updateLocationUI(city, status = 'success') {
-        this.city = city;
-        if (this.locationElement) {
-          const locationText = this.locationElement.querySelector('.location-text');
-          if (locationText) {
-            locationText.textContent = city;
-          }
-          this.locationElement.className = 'location-badge ' + status;
-        }
-      }
-
-      async detectUserCity() {
-        if (this.isDetecting) return;
-        this.isDetecting = true;
-
-        this.updateLocationUI('Detectando cidade...', 'loading');
-        console.log('📍 Detectando localização...');
-
-        try {
-          let city = await this.getCityByGPS();
-          if (!city || city === 'Desconhecida') {
-            city = await this.getCityByIP();
-          }
-
-          this.updateLocationUI(city, 'success');
-          console.log('📍 Localização detectada:', city);
-          this.trackToAnalytics(city, 'location_detected');
-        } catch (error) {
-          this.updateLocationUI('Localização indisponível', 'error');
-          console.error('📍 Erro na localização:', error);
-        } finally {
-          this.isDetecting = false;
-        }
-      }
-
-      async getCityByGPS() {
-        return new Promise((resolve) => {
-          if (!navigator.geolocation) {
-            resolve('Desconhecida');
-            return;
-          }
-
-          navigator.geolocation.getCurrentPosition(
-            async (position) => {
-              try {
-                const city = await this.reverseGeocode(
-                  position.coords.latitude, 
-                  position.coords.longitude
-                );
-                resolve(city);
-              } catch (error) {
-                resolve('Desconhecida');
-              }
-            },
-            () => resolve('Desconhecida'),
-            { 
-              enableHighAccuracy: false,
-              timeout: 8000,
-              maximumAge: 300000
-            }
-          );
-        });
-      }
-
-      async getCityByIP() {
-        try {
-          const response = await fetch('https://ipapi.co/json/');
-          const data = await response.json();
-          if (data.city) {
-            return data.city + ', ' + data.region;
-          }
-          throw new Error('Sem dados de cidade');
-        } catch {
-          try {
-            const response = await fetch('https://ip-api.com/json/?fields=status,message,city,regionName,country');
-            const data = await response.json();
-            if (data.status === 'success') {
-              return data.city + ', ' + data.regionName;
-            }
-            throw new Error('Sem dados de cidade');
-          } catch {
-            return 'Desconhecida';
-          }
-        }
-      }
-
-      async reverseGeocode(lat, lon) {
-        try {
-          const response = await fetch(
-            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&accept-language=pt`
-          );
-          const data = await response.json();
-          return data.address.city || data.address.town || data.address.village || 'Desconhecida';
-        } catch {
-          return 'Desconhecida';
-        }
-      }
-
-      trackToAnalytics(city, eventType = 'location_detected') {
-        if (typeof gtag !== 'undefined') {
-          gtag('event', eventType, {
-            'city': city,
-            'radio_station': 'Paraíso FM 101.1 Sobral',
-            'event_category': 'Location'
-          });
-        }
-      }
-
-      getCurrentCity() {
-        return this.city;
-      }
+      document.querySelectorAll(".scheduleContainerEl").forEach(el => el.innerHTML = html);
     }
 
-    // ================= CARROSSEL DE NOTÍCIAS =================
-    class CarrosselNoticias {
-      constructor() {
-        this.sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwXtYyj6SoIq-YJiID4-CRGsL8yiJQhYSgLUjXympNQB92yDo52evawpFLQYSwG6J9P3XjWcfa7lSm/pub?output=csv';
-        this.carrossel = document.getElementById('carrossel');
-        this.indicadores = document.getElementById('indicadores');
-        this.slides = [];
-        this.slideAtual = 0;
-        this.autoPlayInterval = null;
-        
-        this.inicializar();
-      }
-      
-      async carregarNoticias() {
-        try {
-          const sucesso = await this.carregarDoGoogleSheets();
-          if (!sucesso) {
-            this.usarDadosExemplo();
-          }
-          this.renderizarCarrossel();
-          this.inicializarEventos();
-        } catch (error) {
-          this.mostrarErro('Erro ao carregar notícias. Usando dados de exemplo.');
-          this.usarDadosExemplo();
-          this.renderizarCarrossel();
-          this.inicializarEventos();
-        }
-      }
-      
-      async carregarDoGoogleSheets() {
-        try {
-          this.mostrarCarregando('Carregando notícias...');
-          console.log('📰 Carregando notícias do Google Sheets...');
-          const response = await fetch(this.sheetURL);
-          if (!response.ok) throw new Error(`Erro HTTP! status: ${response.status}`);
-          
-          const csvData = await response.text();
-          if (!csvData || csvData.trim().length === 0) {
-            throw new Error('Planilha vazia');
-          }
-          
-          const linhas = csvData.split('\n').filter(linha => linha.trim().length > 0);
-          if (linhas.length <= 1) throw new Error('Sem dados');
-          
-          this.slides = [];
-          for (let i = 1; i < linhas.length; i++) {
-            const linha = linhas[i].trim();
-            if (!linha) continue;
-            
-            const colunas = this.processarCSVCorretamente(linha);
-            const noticia = {
-              titulo: colunas[0] || 'Sem título',
-              descricao: colunas[1] || 'Sem descrição',
-              link: colunas[2] || '',
-              data: colunas[3] || ''
-            };
-            
-            if (noticia.link) {
-              noticia.linkValido = this.validarLink(noticia.link);
-            } else {
-              noticia.linkValido = false;
-            }
-            
-            if (noticia.titulo && noticia.titulo !== 'Sem título') {
-              this.slides.push(noticia);
-            }
-          }
-          
-          console.log('📰 Notícias carregadas:', this.slides.length);
-          return this.slides.length > 0;
-        } catch (error) {
-          console.error('Erro ao carregar do Google Sheets:', error);
-          return false;
-        }
-      }
-      
-      validarLink(url) {
-        try {
-          if (!url || url.trim() === '') return false;
-          let urlCorrigida = url.trim();
-          if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
-            urlCorrigida = 'https://' + urlCorrigida;
-          }
-          new URL(urlCorrigida);
-          return true;
-        } catch {
-          return false;
-        }
-      }
-      
-      corrigirURL(url) {
-        if (!url || url.trim() === '') return '';
-        let urlCorrigida = url.trim();
-        if (!urlCorrigida.startsWith('http://') && !urlCorrigida.startsWith('https://')) {
-          urlCorrigida = 'https://' + urlCorrigida;
-        }
-        return urlCorrigida;
-      }
-      
-      processarCSVCorretamente(linha) {
-        const resultado = [];
-        let campoAtual = '';
-        let dentroDeAspas = false;
-        
-        for (let i = 0; i < linha.length; i++) {
-          const char = linha[i];
-          if (char === '"') {
-            dentroDeAspas = !dentroDeAspas;
-          } else if (char === ',' && !dentroDeAspas) {
-            let campo = campoAtual.trim();
-            if (campo.startsWith('"') && campo.endsWith('"')) {
-              campo = campo.slice(1, -1);
-            }
-            resultado.push(campo);
-            campoAtual = '';
-          } else {
-            campoAtual += char;
-          }
-        }
-        
-        let ultimoCampo = campoAtual.trim();
-        if (ultimoCampo.startsWith('"') && ultimoCampo.endsWith('"')) {
-          ultimoCampo = ultimoCampo.slice(1, -1);
-        }
-        resultado.push(ultimoCampo);
-        return resultado;
-      }
-      
-      usarDadosExemplo() {
-        this.slides = [
-          {
-            titulo: "Paraíso FM - Sua Rádio em Sobral",
-            descricao: "Acompanhe a programação completa da Paraíso FM 101.1 - A rádio que toca o coração de Sobral e região.",
-            link: "https://sistemaparaiso.com.br",
-            data: new Date().toLocaleDateString('pt-BR'),
-            linkValido: true
-          },
-          {
-            titulo: "Notícias Locais em Destaque", 
-            descricao: "Fique por dentro das principais notícias de Sobral e região noroeste do Ceará.",
-            link: "https://sistemaparaiso.com.br",
-            data: new Date().toLocaleDateString('pt-BR'),
-            linkValido: true
-          }
-        ];
-        console.log('📰 Usando dados de exemplo para notícias');
-      }
-      
-      mostrarCarregando(mensagem) {
-        this.carrossel.innerHTML = `<div class="carregando">${mensagem}</div>`;
-      }
-      
-      mostrarErro(mensagem) {
-        this.carrossel.innerHTML = `<div class="erro">${mensagem}</div>`;
-      }
-      
-      renderizarCarrossel() {
-        if (this.slides.length === 0) {
-          this.mostrarErro('Nenhuma notícia disponível no momento.');
-          return;
-        }
-        
-        this.carrossel.innerHTML = this.slides.map((slide, index) => {
-          const linkCorrigido = slide.linkValido ? this.corrigirURL(slide.link) : '';
-          const temLinkValido = slide.linkValido && linkCorrigido;
-          
-          return `
-            <div class="slide">
-              <h3>${this.escapeHtml(slide.titulo)}</h3>
-              ${slide.data ? `<div class="data-noticia">📅 ${this.escapeHtml(slide.data)}</div>` : ''}
-              <p>${this.escapeHtml(slide.descricao)}</p>
-              ${temLinkValido ? 
-                `<a href="${this.escapeHtml(linkCorrigido)}" target="_blank" rel="noopener noreferrer">📖 Leia mais</a>` : 
-                '<span style="color: #ff6b6b; font-size: 12px;">🔗 Link indisponível</span>'
-              }
-            </div>
-          `;
-        }).join('');
-        
-        this.indicadores.innerHTML = this.slides.map((_, index) => `
-          <div class="indicador ${index === 0 ? 'ativo' : ''}" data-index="${index}"></div>
-        `).join('');
-      }
-      
-      escapeHtml(text) {
-        if (!text) return '';
-        const div = document.createElement('div');
-        div.textContent = text;
-        return div.innerHTML;
-      }
-      
-      inicializarEventos() {
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-        
-        prevBtn.addEventListener('click', () => this.mudarSlide(-1));
-        nextBtn.addEventListener('click', () => this.mudarSlide(1));
-        
-        this.indicadores.querySelectorAll('.indicador').forEach(indicador => {
-          indicador.addEventListener('click', (e) => {
-            const index = parseInt(e.target.getAttribute('data-index'));
-            this.irParaSlide(index);
-          });
-        });
-        
-        this.iniciarAutoPlay();
-      }
-      
-      mudarSlide(direcao) {
-        if (this.slides.length <= 1) return;
-        this.slideAtual += direcao;
-        if (this.slideAtual < 0) {
-          this.slideAtual = this.slides.length - 1;
-        } else if (this.slideAtual >= this.slides.length) {
-          this.slideAtual = 0;
-        }
-        this.atualizarCarrossel();
-      }
-      
-      irParaSlide(index) {
-        if (index >= 0 && index < this.slides.length) {
-          this.slideAtual = index;
-          this.atualizarCarrossel();
-        }
-      }
-      
-      atualizarCarrossel() {
-        const translateX = -this.slideAtual * 100;
-        this.carrossel.style.transform = `translateX(${translateX}%)`;
-        this.indicadores.querySelectorAll('.indicador').forEach((indicador, index) => {
-          indicador.classList.toggle('ativo', index === this.slideAtual);
-        });
-      }
-      
-      iniciarAutoPlay() {
-        if (this.autoPlayInterval) clearInterval(this.autoPlayInterval);
-        if (this.slides.length > 1) {
-          this.autoPlayInterval = setInterval(() => this.mudarSlide(1), 6000);
-        }
-      }
-      
-      inicializar() {
-        this.carregarNoticias();
-      }
-    }
-
-    // ================= INICIALIZAÇÃO GERAL =================
-    document.addEventListener('DOMContentLoaded', function() {
-      // Inicializar carrossel
-      new CarrosselNoticias();
-      
-      // Inicializar location tracker
-      const locationTracker = new LocationTracker();
-      locationTracker.init();
-      
-      console.log('🚀 Player Paraíso FM - SOLUÇÃO FINAL CARREGADA');
-      console.log('🎧 Fontes disponíveis:', fontes);
-      console.log('📍 Sistema de fallback ativo');
-      console.log('📊 Analytics configurado');
-    });
-
-    // Service Worker
-    if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("service-worker.js")
-        .then(() => console.log("✅ Service Worker registrado."))
-        .catch((err) => console.error("❌ Erro no Service Worker:", err));
-    }
-
-    // ================= HEARTBEAT PARA ANALYTICS =================
-    setInterval(() => {
-      if (!document.hidden && !player.paused) {
-        gtag('event', 'heartbeat', {
-          'event_category': 'Engajamento',
-          'event_label': 'Ouvindo ativo',
-          'value': 1
-        });
-        console.log('💓 Heartbeat - Sessão ativa');
-      }
-    }, 5 * 60 * 1000);
-
-    document.addEventListener('visibilitychange', function() {
-      if (!document.hidden && !player.paused) {
-        gtag('event', 'user_returned', {
-          'event_category': 'Engajamento', 
-          'event_label': 'Retornou à sessão'
-        });
-        console.log('👤 Usuário retornou à sessão');
-      }
-    });
-  </script>
-
-  <script>
-    // ================= AUTO-UPDATE PWA MOBILE =================
-    if ('serviceWorker' in navigator) {
-      let newServiceWorker;
-      
-      // Registra o Service Worker
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(registration => {
-          console.log('Service Worker registrado para mobile');
-          
-          // Verifica atualizações imediatamente
-          registration.update();
-          
-          // Escuta por novas versões
-          registration.addEventListener('updatefound', () => {
-            newServiceWorker = registration.installing;
-            console.log('📱 Nova versão detectada no mobile!');
-            
-            newServiceWorker.addEventListener('statechange', () => {
-              if (newServiceWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                showMobileUpdateNotification();
-              }
-            });
-          });
-        });
-
-      // Notificação otimizada para mobile
-      function showMobileUpdateNotification() {
-        // Cria banner mobile-friendly
-        const updateBanner = document.createElement('div');
-        updateBanner.style.cssText = `
-          position: fixed;
-          top: 0;
-          left: 0;
-          right: 0;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-          color: white;
-          padding: 20px 15px;
-          text-align: center;
-          z-index: 10000;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-          font-size: 16px;
-        `;
-        
-        updateBanner.innerHTML = `
-          <div style="display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 12px;">
-            <span style="font-weight: 600;">✨ Nova versão disponível!</span>
-            <button onclick="applyUpdate()" style="
-              background: #FFD700;
-              color: #333;
-              border: none;
-              padding: 10px 20px;
-              border-radius: 25px;
-              cursor: pointer;
-              font-weight: bold;
-              font-size: 14px;
-              box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            ">ATUALIZAR AGORA</button>
-          </div>
-        `;
-        
-        document.body.appendChild(updateBanner);
-        
-        // Auto-close após 30 segundos (mobile behavior)
-        setTimeout(() => {
-          if (updateBanner.parentNode) {
-            updateBanner.style.transition = 'opacity 0.5s';
-            updateBanner.style.opacity = '0';
-            setTimeout(() => {
-              if (updateBanner.parentNode) {
-                updateBanner.parentNode.removeChild(updateBanner);
-              }
-            }, 500);
-          }
-        }, 30000);
-      }
-      
-      // Função global para mobile
-      window.applyUpdate = function() {
-        if (newServiceWorker) {
-          // Feedback visual para mobile
-          const button = document.querySelector('button[onclick="applyUpdate()"]');
-          if (button) {
-            button.textContent = '🔄 ATUALIZANDO...';
-            button.disabled = true;
-          }
-          
-          newServiceWorker.postMessage({ action: 'SKIP_WAITING' });
-        }
-      };
-      
-      // Escuta mudança de controller
-      let refreshing = false;
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (!refreshing) {
-          refreshing = true;
-          console.log('📱 Nova versão no mobile - recarregando...');
-          window.location.reload();
-        }
+    document.querySelectorAll(".chip-day").forEach(chip => {
+      chip.addEventListener("click", (e) => {
+        selectedDayFilter = e.target.getAttribute("data-day");
+        document.querySelectorAll(".chip-day").forEach(c => c.classList.toggle("active", c.getAttribute("data-day") === selectedDayFilter));
+        renderizarListaGrade();
       });
-      
-      // Verifica atualizações a cada 2 horas (mobile-friendly)
-      setInterval(() => {
-        navigator.serviceWorker.ready.then(registration => {
-          registration.update();
+    });
+
+    // ================= NOTÍCIAS AUTOMÁTICAS (FEED WORDPRESS DO SISTEMAPARAISO.COM.BR) =================
+    const WP_API_URL = 'https://sistemaparaiso.com.br/wp-json/wp/v2/posts?_embed&per_page=12';
+
+    async function carregarFeedNoticias() {
+      try {
+        const res = await fetch(WP_API_URL, {
+          headers: { 'Accept': 'application/json' }
         });
-      }, 2 * 60 * 60 * 1000);
-    }
+        if (!res.ok) throw new Error("Erro WP API: " + res.status);
+        const posts = await res.json();
 
-    // Detecta se é mobile
-    function isMobile() {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    }
+        const noticias = posts.map(p => {
+          // Extrair foto destacada da matéria
+          let imgUrl = null;
+          try {
+            imgUrl = p._embedded['wp:featuredmedia'][0].source_url;
+          } catch (e) {
+            imgUrl = null;
+          }
 
-    // Comportamento específico para mobile
-    if (isMobile()) {
-      // Otimizações para touch
-      document.addEventListener('touchstart', function() {}, { passive: true });
-    }
-  </script>
+          // Limpar entidades e tags HTML do título
+          const divTemp = document.createElement("div");
+          divTemp.innerHTML = p.title?.rendered || "Sem título";
+          const tituloLimpo = divTemp.textContent || divTemp.innerText || "";
 
-  <script>
-    // ================= INSTRUÇÕES INSTALAÇÃO IPHONE =================
-    function showIphoneInstallInstructions() {
-      const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
-      const isSafari = /Safari/i.test(navigator.userAgent) && !/Chrome|CriOS|Firefox|FxiOS/.test(navigator.userAgent);
-      
-      if ((isIphone && isSafari) || (isIphone && !navigator.userAgent.match(/Chrome|CriOS|Firefox|FxiOS/))) {
-        setTimeout(createIphoneInstallBanner, 5000);
+          // Limpar e resumir o texto
+          divTemp.innerHTML = p.excerpt?.rendered || "";
+          let descLimpa = divTemp.textContent || divTemp.innerText || "";
+          if (descLimpa.length > 130) {
+            descLimpa = descLimpa.slice(0, 130).trim() + "...";
+          }
+
+          // Formatar data em português
+          let dataFormatada = "Recente";
+          try {
+            const d = new Date(p.date);
+            dataFormatada = d.toLocaleDateString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+          } catch (e) {}
+
+          return {
+            titulo: tituloLimpo,
+            desc: descLimpa,
+            link: p.link || 'https://sistemaparaiso.com.br',
+            img: imgUrl,
+            data: dataFormatada
+          };
+        });
+
+        renderizarNoticiasFeed(noticias.length > 0 ? noticias : getNoticiasPadrao());
+      } catch (e) {
+        console.warn("Falha ao buscar feed do site sistemaparaiso.com.br, usando fallback:", e);
+        renderizarNoticiasFeed(getNoticiasPadrao());
       }
     }
 
-    // Criar banner de instruções
-    function createIphoneInstallBanner() {
-      if (document.getElementById('iphone-install-banner')) return;
-      
-      const banner = document.createElement('div');
-      banner.id = 'iphone-install-banner';
-      banner.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 10px;
-        right: 10px;
-        background: linear-gradient(135deg, #1e90ff 0%, #0066cc 100%);
-        color: white;
-        padding: 18px;
-        border-radius: 14px;
-        text-align: center;
-        z-index: 10001;
-        box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        font-size: 14px;
-        line-height: 1.5;
-      `;
-      
-      banner.innerHTML = `
-        <div style="margin-bottom: 10px; font-weight: 600; font-size: 16px;">
-          🎧 Instalar Paraíso FM
-        </div>
-        <div style="margin-bottom: 15px;">
-          1. Toque no <strong>📤 Compartilhar</strong><br>
-          2. Role para baixo<br>
-          3. Toque em <strong>"Adicionar à Tela de Início"</strong>
-        </div>
-        <button onclick="closeIphoneBanner()" style="
-          background: rgba(255,255,255,0.2);
-          color: white;
-          border: 1px solid rgba(255,255,255,0.4);
-          padding: 8px 20px;
-          border-radius: 18px;
-          cursor: pointer;
-          font-size: 14px;
-          backdrop-filter: blur(8px);
-        ">Entendi</button>
-      `;
-      
-      document.body.appendChild(banner);
+    function getNoticiasPadrao() {
+      return [
+        {
+          titulo: "Paraíso FM 101,1: A voz e o coração de Sobral",
+          desc: "Acompanhe nossa programação líder em audiência com jornalismo sério e os melhores sucessos.",
+          link: "https://sistemaparaiso.com.br",
+          img: null,
+          data: "Destaque"
+        },
+        {
+          titulo: "Notícias de Sobral e Região Noroeste do Ceará",
+          desc: "Fique por dentro das principais notícias locais, política, utilidade pública e acontecimentos.",
+          link: "https://sistemaparaiso.com.br",
+          img: null,
+          data: "Plantão"
+        }
+      ];
     }
 
-    // Fechar banner
-    function closeIphoneBanner() {
-      const banner = document.getElementById('iphone-install-banner');
-      if (banner) {
-        banner.style.opacity = '0';
-        banner.style.transition = 'opacity 0.3s';
-        setTimeout(() => banner.remove(), 300);
+    function renderizarNoticiasFeed(lista) {
+      const html = lista.map(item => `
+        <article class="news-feed-card">
+          ${item.img ? `
+            <div class="news-feed-img-box">
+              <img src="${item.img}" alt="${item.titulo}" class="news-feed-img" loading="lazy" onerror="this.parentElement.style.display='none'">
+            </div>
+          ` : ''}
+          <div class="news-feed-body">
+            <div class="news-feed-date"><i class="far fa-calendar"></i> ${item.data}</div>
+            <h3 class="news-feed-title">${item.titulo}</h3>
+            <p class="news-feed-desc">${item.desc}</p>
+            <a class="news-feed-link" href="${item.link}" target="_blank" rel="noopener noreferrer">
+              Ler matéria completa <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </article>
+      `).join('');
+
+      document.querySelectorAll(".newsContainerEl").forEach(el => el.innerHTML = html);
+    }
+
+    // ================= SLEEP TIMER (MODO SONO) =================
+    let sleepInterval = null;
+    let sleepRemainingSec = 0;
+    const timerBackdrop = document.getElementById("timerModalBackdrop");
+    const timerStatusTexts = document.querySelectorAll(".sleepTimerStatusText");
+
+    document.querySelectorAll(".btnOpenSleepTimer").forEach(btn => {
+      btn.addEventListener("click", () => timerBackdrop.classList.add("open"));
+    });
+
+    document.getElementById("btnCloseSleepTimer").addEventListener("click", () => {
+      timerBackdrop.classList.remove("open");
+    });
+
+    timerBackdrop.addEventListener("click", (e) => {
+      if (e.target === timerBackdrop) timerBackdrop.classList.remove("open");
+    });
+
+    document.querySelectorAll(".btn-timer-choice[data-min]").forEach(btn => {
+      btn.addEventListener("click", (e) => {
+        const mins = parseInt(e.target.getAttribute("data-min"));
+        ativarSleepTimer(mins);
+        timerBackdrop.classList.remove("open");
+      });
+    });
+
+    document.getElementById("btnCancelSleepTimer").addEventListener("click", () => {
+      cancelarSleepTimer();
+      timerBackdrop.classList.remove("open");
+    });
+
+    function ativarSleepTimer(minutos) {
+      cancelarSleepTimer();
+      sleepRemainingSec = minutos * 60;
+      document.querySelectorAll(".btn-quick-timer").forEach(b => b.classList.add("active"));
+
+      sleepInterval = setInterval(() => {
+        sleepRemainingSec--;
+        const m = Math.floor(sleepRemainingSec / 60);
+        const s = sleepRemainingSec % 60;
+        const txt = `${m}:${s < 10 ? '0' : ''}${s}`;
+        timerStatusTexts.forEach(el => el.textContent = txt);
+
+        if (sleepRemainingSec <= 0) {
+          cancelarSleepTimer();
+          pauseStreaming();
+          updateStatusDisplay("Modo Sono ativado (Pausado)", "");
+        }
+      }, 1000);
+    }
+
+    function cancelarSleepTimer() {
+      if (sleepInterval) clearInterval(sleepInterval);
+      sleepInterval = null;
+      document.querySelectorAll(".btn-quick-timer").forEach(b => b.classList.remove("active"));
+      timerStatusTexts.forEach(el => el.textContent = "Modo Sono");
+    }
+
+    // ================= LOCALIZAÇÃO SILENCIOSA POR IP =================
+    async function detectarCidadePorIP() {
+      try {
+        const res = await fetch("https://ipapi.co/json/");
+        const data = await res.json();
+        if (data.city && data.region_code) {
+          document.querySelectorAll(".user-city-text").forEach(el => el.textContent = `${data.city}, ${data.region_code}`);
+        }
+      } catch (e) {
+        document.querySelectorAll(".user-city-text").forEach(el => el.textContent = "Sobral, CE");
       }
     }
 
-    // Iniciar
-    document.addEventListener('DOMContentLoaded', showIphoneInstallInstructions);
-    setTimeout(showIphoneInstallInstructions, 10000);
+    // ================= PWA: SERVICE WORKER =================
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn(err));
+    }
+
+    // ================= MODAL: COMPARTILHAR =================
+    const SHARE_URL  = 'https://appradio.sistemaparaiso.com';
+    const SHARE_TEXT = '📻 Ouça a Paraíso FM 101,1 ao vivo! A melhor rádio de Sobral e região. Acesse o app:';
+    const shareModalBackdrop = document.getElementById('shareModalBackdrop');
+
+    // Configurar links de compartilhamento
+    document.getElementById('shareWhatsApp').href =
+      `https://wa.me/?text=${encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL)}`;
+    document.getElementById('shareTelegram').href =
+      `https://t.me/share/url?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(SHARE_TEXT)}`;
+
+    // Abrir modal
+    document.querySelectorAll('.btnOpenShareModal').forEach(btn => {
+      btn.addEventListener('click', () => {
+        shareModalBackdrop.classList.add('open');
+      });
+    });
+
+    // Fechar modal
+    document.getElementById('btnCloseShareModal').addEventListener('click', () => {
+      shareModalBackdrop.classList.remove('open');
+    });
+    shareModalBackdrop.addEventListener('click', (e) => {
+      if (e.target === shareModalBackdrop) shareModalBackdrop.classList.remove('open');
+    });
+
+    // Copiar link (botão da grid)
+    document.getElementById('shareCopyLink').addEventListener('click', () => {
+      copiarLink('shareCopyLink');
+    });
+
+    // Copiar link (botão da caixa)
+    document.getElementById('shareLinkCopyBtn').addEventListener('click', () => {
+      copiarLink('shareLinkCopyBtn');
+    });
+
+    function copiarLink(btnId) {
+      navigator.clipboard.writeText(SHARE_URL).then(() => {
+        const btn = document.getElementById(btnId);
+        const textoOriginal = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Copiado!';
+        btn.style.color = '#10b981';
+        setTimeout(() => {
+          btn.innerHTML = textoOriginal;
+          btn.style.color = '';
+        }, 2000);
+      }).catch(() => {
+        // Fallback para navegadores antigos
+        const input = document.getElementById('shareLinkInput');
+        input.select();
+        document.execCommand('copy');
+      });
+    }
+
+    // Web Share API (botão "Mais opções")
+    document.getElementById('shareNative').addEventListener('click', async () => {
+      if (navigator.share) {
+        try {
+          await navigator.share({
+            title: 'Paraíso FM 101,1 - Sobral',
+            text: SHARE_TEXT,
+            url: SHARE_URL
+          });
+        } catch (e) {
+          // Usuário cancelou ou erro — não fazer nada
+        }
+      } else {
+        // Fallback: copiar link
+        copiarLink('shareNative');
+      }
+    });
+
+    // ================= INICIALIZAÇÃO =================
+    document.addEventListener("DOMContentLoaded", () => {
+      atualizarProgramaNoAr();
+      setInterval(atualizarProgramaNoAr, 15000);
+      renderizarListaGrade();
+      carregarFeedNoticias();
+      detectarCidadePorIP();
+    });
   </script>
 </body>
 </html>
