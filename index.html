@@ -94,7 +94,7 @@
       position: absolute;
       inset: 0;
       /* NOVO FUNDO DESFOCADO - única alteração */
-      background: url('BG_Jornal.jpg') no-repeat center center;
+      background: url('BG_Jornal.jpg?v=3') no-repeat center center;
       background-size: cover;
       filter: blur(24px) brightness(0.9) saturate(1.15);
       transform: scale(1.18);
@@ -1210,6 +1210,22 @@
   </style>
 </head>
 <body>
+  <script>
+    // FORÇA LIMPEZA DE CACHE ANTIGO (fundo preto)
+    if ('caches' in window) {
+      caches.keys().then(names => names.forEach(n => caches.delete(n)));
+    }
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
+    }
+    // Força reload se ?v=3 não estiver na URL
+    if (!location.search.includes('v=3')) {
+      const u = new URL(location.href);
+      u.searchParams.set('v', '3');
+      location.replace(u.toString());
+    }
+  </script>
+
 
   <!-- Fundo Nítido da Rádio (turbinal_paraiso.png) -->
   <div class="bg-backdrop" aria-hidden="true">
