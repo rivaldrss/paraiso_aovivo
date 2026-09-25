@@ -93,20 +93,24 @@
     .bg-backdrop-image {
       position: absolute;
       inset: 0;
-      background: url('turbinal_paraiso.png') no-repeat center center;
+      /* NOVO FUNDO DESFOCADO - única alteração */
+      background: url('BG_Jornal.jpg') no-repeat center center;
       background-size: cover;
-      transform: scale(1);
+      filter: blur(24px) brightness(0.9) saturate(1.15);
+      transform: scale(1.18);
       transition: transform 1.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     body.is-playing .bg-backdrop-image {
-      transform: scale(1.03);
+      transform: scale(1.20);
     }
 
     .bg-backdrop-overlay {
       position: absolute;
       inset: 0;
-      background: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
     }
 
     /* Container Principal */
