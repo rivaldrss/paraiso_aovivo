@@ -223,6 +223,103 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
+    /* TELA AO VIVO (MOBILE) */
+    .screen-live {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding-bottom: 24px;
+    }
+
+    .studio-artwork-container {
+      position: relative;
+      width: min(230px, 55vw);
+      aspect-ratio: 1/1;
+      margin: 10px auto;
+    }
+
+    .studio-artwork {
+      width: 100%;
+      height: 100%;
+      border-radius: var(--radius-lg);
+      object-fit: cover;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.7);
+      transition: transform 0.5s ease;
+    }
+
+    .studio-glow {
+      position: absolute;
+      inset: -6px;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      opacity: 0;
+      filter: blur(14px);
+      z-index: -1;
+      transition: opacity 0.5s ease;
+    }
+
+    body.is-playing .studio-glow {
+      opacity: 0.75;
+      animation: pulseStudio 3s infinite alternate;
+    }
+
+    @keyframes pulseStudio {
+      0% { opacity: 0.5; transform: scale(0.96); }
+      100% { opacity: 0.85; transform: scale(1.04); }
+    }
+
+    .live-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .badge-onair {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-onair.is-live {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .badge-onair.is-offline {
+      background: rgba(148, 163, 184, 0.15);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: #94a3b8;
+    }
+
+    .dot-pulse {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: blink 1.5s infinite;
+    }
+
+    .badge-onair.is-live .dot-pulse { background: #ef4444; }
+    .badge-onair.is-offline .dot-pulse { background: #94a3b8; animation: none; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
+
     .show-info-box {
       text-align: center;
       width: 100%;
@@ -230,7 +327,7 @@
     }
 
     .show-main-title {
-      font-size: 18px;
+      font-size: 20px;
       font-weight: 800;
       color: #fff;
       margin-bottom: 4px;
@@ -342,6 +439,14 @@
       border-radius: 50%;
       background: var(--primary-light);
       cursor: pointer;
+    }
+
+    .live-actions-row {
+      display: flex;
+      gap: 10px;
+      width: 100%;
+      max-width: 360px;
+      margin-top: 6px;
     }
 
     .btn-quick-pill {
@@ -848,7 +953,7 @@
     }
 
     .nav-tab-item i {
-      font-size: 18px;
+      font-size: 17px;
       transition: transform 0.2s ease;
     }
 
@@ -1077,48 +1182,6 @@
       display: block;
     }
 
-    .badge-onair {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      color: #34d399;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .badge-onair.is-live {
-      background: rgba(239, 68, 68, 0.15);
-      border-color: rgba(239, 68, 68, 0.4);
-      color: #fca5a5;
-    }
-
-    .badge-onair.is-offline {
-      background: rgba(148, 163, 184, 0.15);
-      border-color: rgba(148, 163, 184, 0.3);
-      color: #94a3b8;
-    }
-
-    .dot-pulse {
-      width: 7px;
-      height: 7px;
-      background: #10b981;
-      border-radius: 50%;
-      animation: blink 1.5s infinite;
-    }
-
-    .badge-onair.is-live .dot-pulse { background: #ef4444; }
-    .badge-onair.is-offline .dot-pulse { background: #94a3b8; animation: none; }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(0.8); }
-    }
-
     .btn-quick-youtube {
       background: linear-gradient(135deg, #FF0000, #cc0000);
       color: #fff;
@@ -1251,7 +1314,60 @@
       <!-- ==================== ÁREA DE CONTEÚDO MOBILE ==================== -->
       <main class="mobile-content-area">
 
-        <!-- ABA 1: VÍDEO LIVE -->
+        <!-- ABA 1: AO VIVO -->
+        <section class="view-screen screen-live active" id="view-live">
+          <div class="studio-artwork-container">
+            <div class="studio-glow"></div>
+            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM">
+          </div>
+
+          <div class="live-badge-row">
+            <span class="badge-onair">
+              <span class="dot-pulse"></span> AO VIVO
+            </span>
+          </div>
+
+          <div class="show-info-box">
+            <h2 class="show-main-title currentShowTitle">Carregando...</h2>
+            <div class="show-schedule-hours currentShowHours">Ao vivo de Sobral/CE</div>
+            <div class="live-progress-bar">
+              <div class="live-progress-fill showProgressFill"></div>
+            </div>
+          </div>
+
+          <div class="audio-waveform">
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+            <div class="wave-line"></div>
+          </div>
+
+          <button class="master-play-btn mainPlayBtn" aria-label="Tocar ou Pausar">
+            <i class="fas fa-play mainPlayIcon"></i>
+          </button>
+
+          <div class="stream-status-text mainStatusText">Clique para ouvir</div>
+
+          <div class="volume-control-row volumeBoxEl">
+            <button class="btn-mute-toggle" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><i class="fas fa-volume-high muteIcon"></i></button>
+            <input type="range" class="volume-range volumeSliderEl" min="0" max="1" step="0.01" value="0.8">
+          </div>
+
+          <div class="live-actions-row">
+            <a class="btn-quick-pill btn-quick-whatsapp" href="https://wa.me/5588999834349?text=Ol%C3%A1%2C%20estou%20ouvindo%20pelo%20App%20da%20Para%C3%ADso%20FM%20e%20gostaria%20de%20pedir%20uma%20m%C3%BAsica%3A" target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-whatsapp"></i> Pedir Música
+            </a>
+            <button class="btn-quick-pill btn-quick-timer btnOpenSleepTimer">
+              <i class="fas fa-moon"></i> <span class="sleepTimerStatusText">Modo Sono</span>
+            </button>
+            <button class="btn-quick-pill btn-quick-share btnOpenShareModal">
+              <i class="fas fa-share-nodes"></i>
+            </button>
+          </div>
+        </section>
+
+        <!-- ABA 2: VÍDEO LIVE -->
         <section class="view-screen" id="view-videolive">
           <div class="screen-header-title">
             <i class="fab fa-youtube" style="color: #FF0000;"></i> Vídeo Live
@@ -1284,8 +1400,8 @@
           </div>
         </section>
 
-        <!-- ABA 2: NOTÍCIAS -->
-        <section class="view-screen active" id="view-news">
+        <!-- ABA 3: NOTÍCIAS -->
+        <section class="view-screen" id="view-news">
           <div class="screen-header-title">
             <i class="far fa-newspaper" style="color: var(--primary-light);"></i> Notícias da Região
           </div>
@@ -1297,7 +1413,7 @@
           </div>
         </section>
 
-        <!-- ABA 3: PROGRAMAÇÃO -->
+        <!-- ABA 4: PROGRAMAÇÃO -->
         <section class="view-screen" id="view-schedule">
           <div class="screen-header-title">
             <i class="far fa-calendar-alt" style="color: var(--primary-light);"></i> Grade de Programação
@@ -1312,7 +1428,7 @@
           <div class="schedule-items-list scheduleContainerEl"></div>
         </section>
 
-        <!-- ABA 4: PARTICIPE -->
+        <!-- ABA 5: PARTICIPE -->
         <section class="view-screen" id="view-contact">
           <div class="screen-header-title">
             <i class="far fa-comments" style="color: var(--primary-light);"></i> Central do Ouvinte
@@ -1391,13 +1507,17 @@
         </button>
       </div>
 
-      <!-- BOTTOM NAVIGATION BAR (MOBILE) -->
+      <!-- BOTTOM NAVIGATION BAR (MOBILE - 5 ABAS) -->
       <nav class="mobile-bottom-nav">
+        <button class="nav-tab-item active" data-target="view-live">
+          <i class="fas fa-radio"></i>
+          <span>Ao Vivo</span>
+        </button>
         <button class="nav-tab-item" data-target="view-videolive">
           <i class="fab fa-youtube"></i>
           <span>Vídeo Live</span>
         </button>
-        <button class="nav-tab-item active" data-target="view-news">
+        <button class="nav-tab-item" data-target="view-news">
           <i class="far fa-newspaper"></i>
           <span>Notícias</span>
         </button>
@@ -1421,9 +1541,9 @@
         </div>
 
         <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; margin: auto 0;">
-          <div style="position: relative; width: 200px; aspect-ratio: 1/1; margin: 10px auto;">
-            <div class="studio-glow" style="position:absolute; inset:-6px; border-radius:20px; background: linear-gradient(135deg, var(--primary), var(--accent)); opacity:0; filter:blur(14px); z-index:-1; transition: opacity 0.5s;"></div>
-            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM" style="width:100%; height:100%; border-radius:20px; object-fit:cover; border:2px solid rgba(255,255,255,0.2); box-shadow: 0 15px 35px -5px rgba(0,0,0,0.7);">
+          <div class="studio-artwork-container" style="width: 200px;">
+            <div class="studio-glow"></div>
+            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM">
           </div>
 
           <span class="badge-onair">
@@ -1664,7 +1784,7 @@
     // ================= NAVEGAÇÃO MOBILE =================
     const navTabs = document.querySelectorAll(".nav-tab-item");
     const viewScreens = document.querySelectorAll(".view-screen");
-    let currentActiveTab = "view-news"; // Aba inicial = Notícias
+    let currentActiveTab = "view-live"; // Aba inicial = Ao Vivo
 
     navTabs.forEach(tab => {
       tab.addEventListener("click", () => {
@@ -1674,7 +1794,6 @@
     });
 
     document.getElementById("miniPlayerOpenLive").addEventListener("click", () => {
-      // Ao clicar no mini-player, apenas alterna o play/pause (não muda de aba)
       toggleAudio();
     });
 
@@ -1683,8 +1802,8 @@
       navTabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-target") === targetId));
       viewScreens.forEach(s => s.classList.toggle("active", s.id === targetId));
 
-      // Mostra mini-player sempre que já iniciou a rádio
-      if (isRadioStarted) {
+      // Mini-player aparece só quando NÃO estiver na aba Ao Vivo E já tiver iniciado a rádio
+      if (isRadioStarted && targetId !== "view-live") {
         miniPlayerBar.classList.add("visible");
       } else {
         miniPlayerBar.classList.remove("visible");
@@ -1725,7 +1844,11 @@
         document.body.classList.add("is-playing");
         updatePlayIcons(false, true);
         updateStatusDisplay("Ao Vivo", "online");
-        miniPlayerBar.classList.add("visible");
+
+        // Mostra mini-player se estiver fora da aba Ao Vivo
+        if (currentActiveTab !== "view-live") {
+          miniPlayerBar.classList.add("visible");
+        }
 
         if (typeof gtag !== 'undefined') {
           gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao Vivo' });
@@ -2165,12 +2288,11 @@
       }
     });
 
-        // ================= VÍDEO LIVE / YOUTUBE (DATA API v3) =================
+    // ================= VÍDEO LIVE / YOUTUBE (DATA API v3) =================
     const YT_API_KEY = 'AIzaSyDQez4w2dwlg8ej3y9rHFbAddjekRgJlWc';
     const YT_API_BASE = 'https://www.googleapis.com/youtube/v3';
     const YT_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
 
-    // Busca live ativa via API v3
     async function buscarLiveAtiva() {
       try {
         const url = `${YT_API_BASE}/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&eventType=live&type=video&key=${YT_API_KEY}`;
@@ -2187,7 +2309,6 @@
       }
     }
 
-    // Busca vídeos recentes via API v3
     async function buscarVideosRecentes(maxResults = 6) {
       try {
         const url = `${YT_API_BASE}/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&order=date&maxResults=${maxResults}&type=video&key=${YT_API_KEY}`;
@@ -2207,7 +2328,6 @@
       }
     }
 
-    // Fallback: RSS (caso a API falhe)
     async function buscarVideosViaRSS(maxResults = 6) {
       try {
         const res = await fetch(YT_RSS_URL);
@@ -2235,7 +2355,6 @@
       }
     }
 
-    // Monta o card da live/vídeo na área principal
     async function montarEmbedLive(containerId, statusBadgeId, sectionTitleId, gridId) {
       const container = document.getElementById(containerId);
       const statusBadge = document.getElementById(statusBadgeId);
@@ -2243,18 +2362,15 @@
       const grid = document.getElementById(gridId);
       if (!container) return;
 
-      // Mostra loading
       container.innerHTML = `<div class="yt-loading-msg">Verificando transmissão...</div>`;
       if (statusBadge) {
         statusBadge.className = 'badge-onair is-offline';
         statusBadge.innerHTML = '<span class="dot-pulse"></span> VERIFICANDO...';
       }
 
-      // 1. Tenta achar live ativa
       const liveVideoId = await buscarLiveAtiva();
 
       if (liveVideoId) {
-        // 🔴 TEM LIVE
         if (statusBadge) {
           statusBadge.className = 'badge-onair is-live';
           statusBadge.innerHTML = '<span class="dot-pulse"></span> AO VIVO';
@@ -2268,13 +2384,11 @@
             loading="lazy">
           </iframe>
         `;
-        // Esconde a seção "Vídeos recentes" e a grade (não precisa mostrar quando tem live)
         if (sectionTitle) sectionTitle.style.display = 'none';
         if (grid) grid.style.display = 'none';
         return;
       }
 
-      // 2. Sem live → mostra vídeo mais recente no player + grade completa
       if (statusBadge) {
         statusBadge.className = 'badge-onair is-offline';
         statusBadge.innerHTML = '<span class="dot-pulse"></span> OFFLINE';
@@ -2294,7 +2408,6 @@
         return;
       }
 
-      // Vídeo mais recente no player
       container.innerHTML = `
         <iframe
           src="https://www.youtube.com/embed/${videos[0].videoId}?autoplay=0&rel=0"
@@ -2306,7 +2419,6 @@
       `;
     }
 
-    // Renderiza a grade de vídeos recentes
     async function carregarVideosRecentes(containerId) {
       const container = document.getElementById(containerId);
       if (!container) return;
@@ -2339,22 +2451,19 @@
       }).join('');
     }
 
-    // Inicializa tudo
     function inicializarVideoLive() {
-      // Mobile
       montarEmbedLive('liveEmbedWrapper', 'liveStatusBadge', 'ytSectionTitle', 'ytVideosGrid');
       carregarVideosRecentes('ytVideosGrid');
 
-      // Desktop
       montarEmbedLive('liveEmbedWrapperDesktop', 'liveStatusBadgeDesktop', 'ytSectionTitleDesktop', 'ytVideosGridDesktop');
       carregarVideosRecentes('ytVideosGridDesktop');
 
-      // Atualiza a cada 3 minutos (detecta início/fim de live automaticamente)
       setInterval(() => {
         montarEmbedLive('liveEmbedWrapper', 'liveStatusBadge', 'ytSectionTitle', 'ytVideosGrid');
         montarEmbedLive('liveEmbedWrapperDesktop', 'liveStatusBadgeDesktop', 'ytSectionTitleDesktop', 'ytVideosGridDesktop');
       }, 180000);
     }
+
     // ================= INICIALIZAÇÃO =================
     document.addEventListener("DOMContentLoaded", () => {
       atualizarProgramaNoAr();
