@@ -2288,70 +2288,124 @@
       }
     });
 
-    // ================= VÍDEO LIVE / YOUTUBE (DATA API v3) =================
+        // ================= VÍDEO LIVE / YOUTUBE (OTIMIZADO) =================
     const YT_API_KEY = 'AIzaSyDQez4w2dwlg8ej3y9rHFbAddjekRgJlWc';
     const YT_API_BASE = 'https://www.googleapis.com/youtube/v3';
-    const YT_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
 
+    // Cache para economizar cota da API
+    const YT_CACHE_KEY = 'yt_cache_v1';
+    const YT_CACHE_TTL = 5 * 60 * 1000; // 5 minutos
+
+    function getYoutubeCache() {
+      try {
+        const raw = localStorage.getItem(YT_CACHE_KEY);
+        if (!raw) return null;
+        const obj = JSON.parse(raw);
+        if (Date.now() - obj.timestamp > YT_CACHE_TTL) return null;
+        return obj.data;
+      } catch (e) { return null; }
+    }
+
+    function setYoutubeCache(data) {
+      try {
+        localStorage.setItem(YT_CACHE_KEY, JSON.stringify({
+          timestamp: Date.now(),
+          data
+        }));
+      } catch (e) {}
+    }
+
+    // 1. Descobrir a playlist "uploads" do canal (custa 1 unidade)
+    let _cachedUploadsPlaylistId = null;
+    async function getUploadsPlaylistId() {
+      if (_cachedUploadsPlaylistId) return _cachedUploadsPlaylistId;
+      const cacheKey = 'yt_uploads_playlist_id';
+      const cached = localStorage.getItem(cacheKey);
+      if (cached) {
+        _cachedUploadsPlaylistId = cached;
+        return cached;
+      }
+      try {
+        const url = `${YT_API_BASE}/channels?part=contentDetails&id=${YOUTUBE_CHANNEL_ID}&key=${YT_API_KEY}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('API erro ' + res.status);
+        const data = await res.json();
+        const playlistId = data.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
+        if (playlistId) {
+          _cachedUploadsPlaylistId = playlistId;
+          localStorage.setItem(cacheKey, playlistId);
+          return playlistId;
+        }
+        throw new Error('Playlist uploads não encontrada');
+      } catch (e) {
+        console.warn('Falha ao buscar playlist do canal:', e);
+        return null;
+      }
+    }
+
+    // 2. Buscar os últimos vídeos da playlist (custa 1 unidade)
+    async function buscarUltimosVideos(maxResults = 6) {
+      const cached = getYoutubeCache();
+      if (cached) return cached;
+
+      try {
+        const playlistId = await getUploadsPlaylistId();
+        if (!playlistId) throw new Error('Sem playlist');
+
+        const url = `${YT_API_BASE}/playlistItems?part=snippet,contentDetails&playlistId=${playlistId}&maxResults=${maxResults}&key=${YT_API_KEY}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('API erro ' + res.status);
+        const data = await res.json();
+
+        const videos = (data.items || []).map(item => ({
+          videoId: item.contentDetails?.videoId || item.snippet?.resourceId?.videoId,
+          title: item.snippet?.title || 'Vídeo',
+          published: item.contentDetails?.videoPublishedAt || item.snippet?.publishedAt || '',
+          thumb: item.snippet?.thumbnails?.medium?.url
+              || item.snippet?.thumbnails?.high?.url
+              || item.snippet?.thumbnails?.default?.url
+              || `https://i.ytimg.com/vi/${item.contentDetails?.videoId}/mqdefault.jpg`,
+          // Detecta live pelo título (o campo liveBroadcastContent não vem nesse endpoint)
+          isLive: /ao vivo|🔴|\blive\b/i.test(item.snippet?.title || '')
+        }));
+
+        setYoutubeCache(videos);
+        return videos;
+      } catch (e) {
+        console.warn('Falha ao buscar vídeos:', e);
+        return [];
+      }
+    }
+
+    // 3. Verificar se algum vídeo recente é uma live (checando detalhes)
     async function buscarLiveAtiva() {
       try {
-        const url = `${YT_API_BASE}/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&eventType=live&type=video&key=${YT_API_KEY}`;
+        // Pega os últimos vídeos (com cache)
+        const videos = await buscarUltimosVideos(6);
+        if (!videos.length) return null;
+
+        // Pega os detalhes dos vídeos para saber quais estão ao vivo (custa 1 unidade)
+        const ids = videos.map(v => v.videoId).filter(Boolean).join(',');
+        if (!ids) return null;
+
+        const url = `${YT_API_BASE}/videos?part=snippet,liveStreamingDetails&id=${ids}&key=${YT_API_KEY}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('API erro ' + res.status);
         const data = await res.json();
-        if (data.items && data.items.length > 0) {
-          return data.items[0].id.videoId;
-        }
+
+        // Procura algum com liveBroadcastContent === 'live'
+        const liveItem = (data.items || []).find(item =>
+          item.snippet?.liveBroadcastContent === 'live'
+        );
+
+        if (liveItem) return liveItem.id;
+
+        // Fallback: procura por título com "AO VIVO"
+        const liveByTitle = videos.find(v => v.isLive);
+        return liveByTitle ? liveByTitle.videoId : null;
+      } catch (e) {
+        console.warn('Falha ao verificar live:', e);
         return null;
-      } catch (e) {
-        console.warn('Falha API live, tentando RSS:', e);
-        return null;
-      }
-    }
-
-    async function buscarVideosRecentes(maxResults = 6) {
-      try {
-        const url = `${YT_API_BASE}/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&order=date&maxResults=${maxResults}&type=video&key=${YT_API_KEY}`;
-        const res = await fetch(url);
-        if (!res.ok) throw new Error('API erro ' + res.status);
-        const data = await res.json();
-        return (data.items || []).map(item => ({
-          videoId: item.id.videoId,
-          title: item.snippet.title,
-          published: item.snippet.publishedAt,
-          thumb: item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url,
-          isLive: item.snippet.liveBroadcastContent === 'live'
-        }));
-      } catch (e) {
-        console.warn('Falha API vídeos, tentando RSS:', e);
-        return buscarVideosViaRSS(maxResults);
-      }
-    }
-
-    async function buscarVideosViaRSS(maxResults = 6) {
-      try {
-        const res = await fetch(YT_RSS_URL);
-        const xml = await res.text();
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(xml, 'text/xml');
-        const entries = Array.from(doc.querySelectorAll('entry')).slice(0, maxResults);
-
-        return entries.map(entry => {
-          const videoId = entry.getElementsByTagName('yt:videoId')[0]?.textContent
-                       || entry.getElementsByTagName('videoId')[0]?.textContent;
-          const title = entry.querySelector('title')?.textContent || 'Vídeo';
-          const published = entry.querySelector('published')?.textContent || '';
-          return {
-            videoId,
-            title,
-            published,
-            thumb: `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
-            isLive: entry.getElementsByTagName('media:live').length > 0
-                 || /ao vivo|🔴|\blive\b/i.test(title)
-          };
-        });
-      } catch (e) {
-        return [];
       }
     }
 
@@ -2396,7 +2450,7 @@
       if (sectionTitle) sectionTitle.style.display = 'flex';
       if (grid) grid.style.display = 'grid';
 
-      const videos = await buscarVideosRecentes(6);
+      const videos = await buscarUltimosVideos(6);
 
       if (videos.length === 0) {
         container.innerHTML = `
@@ -2423,7 +2477,7 @@
       const container = document.getElementById(containerId);
       if (!container) return;
 
-      const videos = await buscarVideosRecentes(6);
+      const videos = await buscarUltimosVideos(6);
 
       if (videos.length === 0) {
         container.innerHTML = `<div class="yt-loading-msg" style="grid-column: 1/-1;">Nenhum vídeo encontrado.</div>`;
@@ -2458,10 +2512,11 @@
       montarEmbedLive('liveEmbedWrapperDesktop', 'liveStatusBadgeDesktop', 'ytSectionTitleDesktop', 'ytVideosGridDesktop');
       carregarVideosRecentes('ytVideosGridDesktop');
 
+      // Atualiza a cada 10 minutos (economiza cota)
       setInterval(() => {
         montarEmbedLive('liveEmbedWrapper', 'liveStatusBadge', 'ytSectionTitle', 'ytVideosGrid');
         montarEmbedLive('liveEmbedWrapperDesktop', 'liveStatusBadgeDesktop', 'ytSectionTitleDesktop', 'ytVideosGridDesktop');
-      }, 180000);
+      }, 600000);
     }
 
     // ================= INICIALIZAÇÃO =================
