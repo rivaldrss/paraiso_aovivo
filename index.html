@@ -78,10 +78,9 @@
       overflow: hidden;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       color: var(--text-main);
-      background-color: #d00000 !important; /* GRADIENTE VERMELHO -> LARANJA */
+      background-color: #d00000 !important;
     }
 
-    /* Fundo Nítido com Imagem Oficial da Rádio */
     .bg-backdrop {
       position: fixed;
       inset: 0;
@@ -124,7 +123,6 @@
       background-color: #d00000 !important;
     }
 
-    /* Container Principal */
     .app-viewport {
       width: 100%;
       height: 100dvh;
@@ -135,9 +133,6 @@
       z-index: 1;
     }
 
-    /* ===================================================
-       ESTRUTURA MOBILE (PADRÃO PARA TELAS < 900px)
-       =================================================== */
     .mobile-app-shell {
       width: 100%;
       height: 100dvh;
@@ -150,7 +145,6 @@
       overflow: hidden;
     }
 
-    /* Header Mobile */
     .mobile-top-bar {
       padding: max(12px, env(safe-area-inset-top)) 18px 12px;
       display: flex;
@@ -205,7 +199,6 @@
       font-size: 10px;
     }
 
-    /* Área de Conteúdo / Telas */
     .mobile-content-area {
       flex: 1;
       overflow-y: auto;
@@ -230,88 +223,6 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    /* TELA 1: AO VIVO */
-    .screen-live {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 16px;
-      padding-bottom: 24px;
-    }
-
-    .studio-artwork-container {
-      position: relative;
-      width: min(230px, 55vw);
-      aspect-ratio: 1/1;
-      margin: 10px auto;
-    }
-
-    .studio-artwork {
-      width: 100%;
-      height: 100%;
-      border-radius: var(--radius-lg);
-      object-fit: cover;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.7);
-      transition: transform 0.5s ease;
-    }
-
-    .studio-glow {
-      position: absolute;
-      inset: -6px;
-      border-radius: var(--radius-lg);
-      background: linear-gradient(135deg, var(--primary), var(--accent));
-      opacity: 0;
-      filter: blur(14px);
-      z-index: -1;
-      transition: opacity 0.5s ease;
-    }
-
-    body.is-playing .studio-glow {
-      opacity: 0.75;
-      animation: pulseStudio 3s infinite alternate;
-    }
-
-    @keyframes pulseStudio {
-      0% { opacity: 0.5; transform: scale(0.96); }
-      100% { opacity: 0.85; transform: scale(1.04); }
-    }
-
-    .live-badge-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-top: 4px;
-    }
-
-    .badge-onair {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid rgba(16, 185, 129, 0.4);
-      color: #34d399;
-      font-size: 11px;
-      font-weight: 800;
-      padding: 4px 10px;
-      border-radius: 20px;
-      letter-spacing: 0.5px;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .dot-pulse {
-      width: 7px;
-      height: 7px;
-      background: #10b981;
-      border-radius: 50%;
-      animation: blink 1.5s infinite;
-    }
-
-    @keyframes blink {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.3; transform: scale(0.8); }
-    }
-
     .show-info-box {
       text-align: center;
       width: 100%;
@@ -319,7 +230,7 @@
     }
 
     .show-main-title {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 800;
       color: #fff;
       margin-bottom: 4px;
@@ -349,7 +260,6 @@
       transition: width 1s linear;
     }
 
-    /* Equalizador de Áudio */
     .audio-waveform {
       display: flex;
       align-items: center;
@@ -378,7 +288,6 @@
       100% { height: 22px; }
     }
 
-    /* Master Play Button */
     .master-play-btn {
       width: 78px;
       height: 78px;
@@ -395,17 +304,9 @@
       transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
     }
 
-    .master-play-btn:hover {
-      transform: scale(1.05);
-    }
-
-    .master-play-btn:active {
-      transform: scale(0.95);
-    }
-
-    .master-play-btn .fa-play {
-      margin-left: 3px;
-    }
+    .master-play-btn:hover { transform: scale(1.05); }
+    .master-play-btn:active { transform: scale(0.95); }
+    .master-play-btn .fa-play { margin-left: 3px; }
 
     .stream-status-text {
       font-size: 13px;
@@ -413,7 +314,6 @@
       color: var(--text-muted);
     }
 
-    /* Volume Slider */
     .volume-control-row {
       display: flex;
       align-items: center;
@@ -442,15 +342,6 @@
       border-radius: 50%;
       background: var(--primary-light);
       cursor: pointer;
-    }
-
-    /* Quick Action Pills */
-    .live-actions-row {
-      display: flex;
-      gap: 10px;
-      width: 100%;
-      max-width: 360px;
-      margin-top: 6px;
     }
 
     .btn-quick-pill {
@@ -498,7 +389,6 @@
       border-color: var(--card-border-hover);
     }
 
-    /* Botão compartilhar no header mobile */
     .btn-header-share {
       width: 36px;
       height: 36px;
@@ -520,7 +410,6 @@
       border-color: var(--card-border-hover);
     }
 
-    /* Modal Compartilhar */
     .share-modal-card .share-options-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -552,10 +441,7 @@
       transform: translateY(-2px);
     }
 
-    .share-option-btn i {
-      font-size: 22px;
-    }
-
+    .share-option-btn i { font-size: 22px; }
     .share-option-btn.whats i { color: #25D366; }
     .share-option-btn.telegram i { color: #2CA5E0; }
     .share-option-btn.copy i { color: var(--primary-light); }
@@ -594,7 +480,6 @@
       white-space: nowrap;
     }
 
-    /* Card de compartilhar na aba Participe */
     .share-cta-card {
       background: linear-gradient(135deg, rgba(6, 182, 212, 0.15), rgba(37, 99, 235, 0.12));
       border: 1px solid rgba(6, 182, 212, 0.3);
@@ -607,16 +492,8 @@
       gap: 10px;
     }
 
-    .share-cta-card h3 {
-      font-size: 16px;
-      font-weight: 800;
-    }
-
-    .share-cta-card p {
-      font-size: 12px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
+    .share-cta-card h3 { font-size: 16px; font-weight: 800; }
+    .share-cta-card p { font-size: 12px; color: var(--text-muted); line-height: 1.5; }
 
     .share-cta-card .btn-share-cta {
       display: inline-flex;
@@ -638,28 +515,6 @@
       box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
     }
 
-    /* Rodapé de créditos */
-    .app-credits-footer {
-      text-align: center;
-      padding: 10px 16px 6px;
-      font-size: 10px;
-      color: rgba(255, 255, 255, 0.2);
-      font-weight: 600;
-      letter-spacing: 0.3px;
-      flex-shrink: 0;
-      border-top: 1px solid rgba(255, 255, 255, 0.04);
-    }
-
-    .app-credits-footer a {
-      color: rgba(96, 165, 250, 0.35);
-      text-decoration: none;
-    }
-
-    .app-credits-footer a:hover {
-      color: rgba(96, 165, 250, 0.65);
-    }
-
-    /* TELA 2: PROGRAMAÇÃO COMPLETA */
     .screen-header-title {
       font-size: 18px;
       font-weight: 800;
@@ -700,7 +555,7 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      padding-bottom: 80px; /* espaço para miniplayer */
+      padding-bottom: 80px;
     }
 
     .schedule-card {
@@ -743,7 +598,6 @@
       text-transform: uppercase;
     }
 
-    /* TELA 3: NOTÍCIAS */
     .news-cards-feed {
       display: flex;
       flex-direction: column;
@@ -826,7 +680,6 @@
       gap: 4px;
     }
 
-    /* TELA 4: PARTICIPE / CONTATO */
     .contact-container {
       display: flex;
       flex-direction: column;
@@ -846,16 +699,8 @@
       gap: 12px;
     }
 
-    .contact-hero-card h3 {
-      font-size: 18px;
-      font-weight: 800;
-    }
-
-    .contact-hero-card p {
-      font-size: 13px;
-      color: var(--text-muted);
-      line-height: 1.5;
-    }
+    .contact-hero-card h3 { font-size: 18px; font-weight: 800; }
+    .contact-hero-card p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
 
     .social-links-grid {
       display: grid;
@@ -881,26 +726,15 @@
       transform: translateY(-2px);
     }
 
-    .social-channel-card i {
-      font-size: 22px;
-    }
-
+    .social-channel-card i { font-size: 22px; }
     .social-channel-card.insta i { color: #E1306C; }
     .social-channel-card.whats i { color: #25D366; }
     .social-channel-card.yt i { color: #FF0000; }
     .social-channel-card.web i { color: var(--primary-light); }
 
-    .social-channel-text div:first-child {
-      font-size: 14px;
-      font-weight: 700;
-    }
+    .social-channel-text div:first-child { font-size: 14px; font-weight: 700; }
+    .social-channel-text div:last-child { font-size: 11px; color: var(--text-muted); }
 
-    .social-channel-text div:last-child {
-      font-size: 11px;
-      color: var(--text-muted);
-    }
-
-    /* MINI-PLAYER PERSISTENTE (ESTILO SPOTIFY) */
     .mini-player-bar {
       position: absolute;
       bottom: calc(var(--bottom-nav-height) + 8px);
@@ -927,9 +761,7 @@
       to { transform: translateY(0); opacity: 1; }
     }
 
-    .mini-player-bar.visible {
-      display: flex;
-    }
+    .mini-player-bar.visible { display: flex; }
 
     .mini-info-group {
       display: flex;
@@ -984,7 +816,6 @@
       cursor: pointer;
     }
 
-    /* BARRA DE NAVEGAÇÃO NO RODAPÉ (BOTTOM NAV) */
     .mobile-bottom-nav {
       height: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom));
       padding-bottom: env(safe-area-inset-bottom);
@@ -1008,7 +839,7 @@
       background: none;
       border: none;
       color: var(--text-muted);
-      font-size: 11px;
+      font-size: 10px;
       font-weight: 700;
       cursor: pointer;
       flex: 1;
@@ -1029,14 +860,8 @@
       transform: translateY(-2px);
     }
 
-    /* ===================================================
-       ESTRUTURA DESKTOP / TABLET (TELAS >= 900px)
-       STUDIO CONSOLE EM 2 COLUNAS
-       =================================================== */
     @media (min-width: 900px) {
-      .app-viewport {
-        padding: 30px;
-      }
+      .app-viewport { padding: 30px; }
 
       .mobile-app-shell {
         max-width: 1040px;
@@ -1050,14 +875,12 @@
         overflow: hidden;
       }
 
-      /* Oculta header mobile, bottom nav e mini player no Desktop */
       .mobile-top-bar,
       .mobile-bottom-nav,
       .mini-player-bar {
         display: none !important;
       }
 
-      /* COLUNA ESQUERDA: MASTER PLAYER FIXO */
       .desktop-player-column {
         display: flex !important;
         flex-direction: column;
@@ -1069,7 +892,6 @@
         overflow-y: auto;
       }
 
-      /* COLUNA DIREITA: CONTEÚDO MULTI-ABAS */
       .desktop-content-column {
         display: flex !important;
         flex-direction: column;
@@ -1080,24 +902,25 @@
       .desktop-tab-header {
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 24px 28px 16px;
+        gap: 8px;
+        padding: 20px 24px 14px;
         border-bottom: 1px solid var(--card-border);
         background: rgba(15, 23, 42, 0.4);
+        flex-wrap: wrap;
       }
 
       .desktop-tab-btn {
         background: none;
         border: none;
         color: var(--text-muted);
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 700;
-        padding: 8px 16px;
+        padding: 8px 14px;
         border-radius: 20px;
         cursor: pointer;
         display: inline-flex;
         align-items: center;
-        gap: 8px;
+        gap: 6px;
         transition: all 0.2s;
       }
 
@@ -1117,13 +940,11 @@
         padding: 24px 28px;
       }
 
-      /* No Desktop, a tela Live não fica na coluna direita */
       .mobile-content-area {
         display: none;
       }
     }
 
-    /* Esconde elementos desktop quando em mobile */
     @media (max-width: 899px) {
       .desktop-player-column,
       .desktop-content-column {
@@ -1131,7 +952,6 @@
       }
     }
 
-    /* MODAL: SLEEP TIMER */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -1170,10 +990,7 @@
       margin-bottom: 16px;
     }
 
-    .modal-header-row h3 {
-      font-size: 17px;
-      font-weight: 800;
-    }
+    .modal-header-row h3 { font-size: 17px; font-weight: 800; }
 
     .btn-modal-close {
       background: rgba(255, 255, 255, 0.1);
@@ -1218,11 +1035,190 @@
       border-color: rgba(239, 68, 68, 0.3);
       color: #fca5a5;
     }
+
+    /* ===== SEÇÃO VÍDEO LIVE ===== */
+    .live-video-container {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding-bottom: 80px;
+    }
+
+    .live-embed-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .live-embed-header {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--card-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.25);
+    }
+
+    .live-embed-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+      overflow: hidden;
+    }
+
+    .live-embed-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .badge-onair {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(16, 185, 129, 0.4);
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .badge-onair.is-live {
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.4);
+      color: #fca5a5;
+    }
+
+    .badge-onair.is-offline {
+      background: rgba(148, 163, 184, 0.15);
+      border-color: rgba(148, 163, 184, 0.3);
+      color: #94a3b8;
+    }
+
+    .dot-pulse {
+      width: 7px;
+      height: 7px;
+      background: #10b981;
+      border-radius: 50%;
+      animation: blink 1.5s infinite;
+    }
+
+    .badge-onair.is-live .dot-pulse { background: #ef4444; }
+    .badge-onair.is-offline .dot-pulse { background: #94a3b8; animation: none; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.8); }
+    }
+
+    .btn-quick-youtube {
+      background: linear-gradient(135deg, #FF0000, #cc0000);
+      color: #fff;
+      box-shadow: 0 4px 15px rgba(255, 0, 0, 0.3);
+      text-decoration: none;
+      width: 100%;
+      flex: none;
+      padding: 12px 14px;
+    }
+
+    .yt-section-title {
+      font-size: 15px;
+      font-weight: 800;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .youtube-videos-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .yt-video-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      text-decoration: none;
+      color: var(--text-main);
+      transition: transform 0.2s, border-color 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .yt-video-card:hover {
+      border-color: var(--card-border-hover);
+      transform: translateY(-2px);
+    }
+
+    .yt-video-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: #000;
+    }
+
+    .yt-video-info {
+      padding: 12px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .yt-video-title {
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .yt-video-meta {
+      font-size: 11px;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .yt-live-tag {
+      background: #ef4444;
+      color: #fff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 2px 6px;
+      border-radius: 4px;
+      text-transform: uppercase;
+    }
+
+    .yt-loading-msg {
+      text-align: center;
+      color: var(--text-muted);
+      padding: 30px 0;
+      font-size: 13px;
+    }
+
+    @media (min-width: 600px) {
+      .youtube-videos-grid { grid-template-columns: 1fr 1fr; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- Fundo Nítido da Rádio (turbinal_paraiso.png) -->
+  <!-- Fundo -->
   <div class="bg-backdrop" aria-hidden="true">
     <div class="bg-backdrop-image"></div>
     <div class="bg-backdrop-overlay"></div>
@@ -1254,65 +1250,54 @@
 
       <!-- ==================== ÁREA DE CONTEÚDO MOBILE ==================== -->
       <main class="mobile-content-area">
-        
-        <!-- ABA 1: AO VIVO -->
-        <section class="view-screen screen-live active" id="view-live">
-          <div class="studio-artwork-container">
-            <div class="studio-glow"></div>
-            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM">
+
+        <!-- ABA 1: VÍDEO LIVE -->
+        <section class="view-screen" id="view-videolive">
+          <div class="screen-header-title">
+            <i class="fab fa-youtube" style="color: #FF0000;"></i> Vídeo Live
           </div>
 
-          <div class="live-badge-row">
-            <span class="badge-onair">
-              <span class="dot-pulse"></span> AO VIVO
-            </span>
-          </div>
-
-          <div class="show-info-box">
-            <h2 class="show-main-title currentShowTitle">Carregando...</h2>
-            <div class="show-schedule-hours currentShowHours">Ao vivo de Sobral/CE</div>
-            <div class="live-progress-bar">
-              <div class="live-progress-fill showProgressFill"></div>
+          <div class="live-video-container">
+            <div class="live-embed-card">
+              <div class="live-embed-header">
+                <span class="badge-onair is-offline" id="liveStatusBadge">
+                  <span class="dot-pulse"></span> VERIFICANDO...
+                </span>
+              </div>
+              <div class="live-embed-wrapper" id="liveEmbedWrapper">
+                <div class="yt-loading-msg">Verificando transmissão...</div>
+              </div>
             </div>
-          </div>
 
-          <!-- Equalizador de Ondas -->
-          <div class="audio-waveform">
-            <div class="wave-line"></div>
-            <div class="wave-line"></div>
-            <div class="wave-line"></div>
-            <div class="wave-line"></div>
-            <div class="wave-line"></div>
-          </div>
-
-          <!-- Botão Master Play -->
-          <button class="master-play-btn mainPlayBtn" aria-label="Tocar ou Pausar">
-            <i class="fas fa-play mainPlayIcon"></i>
-          </button>
-
-          <div class="stream-status-text mainStatusText">Clique para ouvir</div>
-
-          <!-- Volume -->
-          <div class="volume-control-row volumeBoxEl">
-            <button class="btn-mute-toggle" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><i class="fas fa-volume-high muteIcon"></i></button>
-            <input type="range" class="volume-range volumeSliderEl" min="0" max="1" step="0.01" value="0.8">
-          </div>
-
-          <!-- Ações Rápidas -->
-          <div class="live-actions-row">
-            <a class="btn-quick-pill btn-quick-whatsapp" href="https://wa.me/5588999834349?text=Ol%C3%A1%2C%20estou%20ouvindo%20pelo%20App%20da%20Para%C3%ADso%20FM%20e%20gostaria%20de%20pedir%20uma%20m%C3%BAsica%3A" target="_blank" rel="noopener noreferrer">
-              <i class="fab fa-whatsapp"></i> Pedir Música
+            <a class="btn-quick-pill btn-quick-youtube"
+               href="https://www.youtube.com/@paraisofmsobral/streams"
+               target="_blank" rel="noopener noreferrer">
+              <i class="fab fa-youtube"></i> Abrir Canal no YouTube
             </a>
-            <button class="btn-quick-pill btn-quick-timer btnOpenSleepTimer">
-              <i class="fas fa-moon"></i> <span class="sleepTimerStatusText">Modo Sono</span>
-            </button>
-            <button class="btn-quick-pill btn-quick-share btnOpenShareModal">
-              <i class="fas fa-share-nodes"></i>
-            </button>
+
+            <div class="yt-section-title" id="ytSectionTitle">
+              <i class="fas fa-video" style="color: var(--primary-light);"></i> Vídeos recentes
+            </div>
+            <div class="youtube-videos-grid" id="ytVideosGrid">
+              <div class="yt-loading-msg" style="grid-column: 1/-1;">Carregando vídeos...</div>
+            </div>
           </div>
         </section>
 
-        <!-- ABA 2: PROGRAMAÇÃO -->
+        <!-- ABA 2: NOTÍCIAS -->
+        <section class="view-screen active" id="view-news">
+          <div class="screen-header-title">
+            <i class="far fa-newspaper" style="color: var(--primary-light);"></i> Notícias da Região
+          </div>
+
+          <div class="news-cards-feed newsContainerEl">
+            <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+              Carregando as últimas notícias...
+            </div>
+          </div>
+        </section>
+
+        <!-- ABA 3: PROGRAMAÇÃO -->
         <section class="view-screen" id="view-schedule">
           <div class="screen-header-title">
             <i class="far fa-calendar-alt" style="color: var(--primary-light);"></i> Grade de Programação
@@ -1327,20 +1312,7 @@
           <div class="schedule-items-list scheduleContainerEl"></div>
         </section>
 
-        <!-- ABA 3: NOTÍCIAS -->
-        <section class="view-screen" id="view-news">
-          <div class="screen-header-title">
-            <i class="far fa-newspaper" style="color: var(--primary-light);"></i> Notícias da Região
-          </div>
-
-          <div class="news-cards-feed newsContainerEl">
-            <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
-              Carregando as últimas notícias...
-            </div>
-          </div>
-        </section>
-
-        <!-- ABA 4: PARTICIPE / CONTATO -->
+        <!-- ABA 4: PARTICIPE -->
         <section class="view-screen" id="view-contact">
           <div class="screen-header-title">
             <i class="far fa-comments" style="color: var(--primary-light);"></i> Central do Ouvinte
@@ -1369,7 +1341,7 @@
                 <i class="fab fa-youtube"></i>
                 <div class="social-channel-text">
                   <div>YouTube</div>
-                  <div>Vídeos & Cortes</div>
+                  <div>Vídeos & Lives</div>
                 </div>
               </a>
 
@@ -1390,7 +1362,6 @@
               </a>
             </div>
 
-            <!-- Card Compartilhar App -->
             <div class="share-cta-card">
               <i class="fas fa-share-nodes" style="font-size: 30px; color: var(--accent);"></i>
               <h3>Compartilhe o App!</h3>
@@ -1399,13 +1370,12 @@
                 <i class="fas fa-share-nodes"></i> Compartilhar Agora
               </button>
             </div>
-
           </div>
         </section>
 
       </main>
 
-      <!-- MINI-PLAYER PERSISTENTE (ESTILO SPOTIFY) -->
+      <!-- MINI-PLAYER -->
       <div class="mini-player-bar" id="miniPlayerBar">
         <div class="mini-info-group" id="miniPlayerOpenLive">
           <img class="mini-thumb" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Paraíso FM">
@@ -1423,28 +1393,24 @@
 
       <!-- BOTTOM NAVIGATION BAR (MOBILE) -->
       <nav class="mobile-bottom-nav">
-        <button class="nav-tab-item active" data-target="view-live">
-          <i class="fas fa-radio"></i>
-          <span>Ao Vivo</span>
+        <button class="nav-tab-item" data-target="view-videolive">
+          <i class="fab fa-youtube"></i>
+          <span>Vídeo Live</span>
+        </button>
+        <button class="nav-tab-item active" data-target="view-news">
+          <i class="far fa-newspaper"></i>
+          <span>Notícias</span>
         </button>
         <button class="nav-tab-item" data-target="view-schedule">
           <i class="far fa-calendar-alt"></i>
-          <span>Grade</span>
-        </button>
-        <button class="nav-tab-item" data-target="view-news">
-          <i class="far fa-newspaper"></i>
-          <span>Notícias</span>
+          <span>Programação</span>
         </button>
         <button class="nav-tab-item" data-target="view-contact">
           <i class="far fa-comments"></i>
           <span>Participe</span>
         </button>
       </nav>
-
-      <!-- ===================================================
-           LAYOUT DESKTOP / TABLET (STUDIO CONSOLE EM 2 COLUNAS)
-           =================================================== -->
-      <!-- COLUNA ESQUERDA: MASTER PLAYER -->
+      <!-- ==================== LAYOUT DESKTOP ==================== -->
       <div class="desktop-player-column">
         <div class="station-brand" style="margin-bottom: 18px;">
           <img src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Paraíso FM" style="width: 44px; height: 44px;">
@@ -1455,9 +1421,9 @@
         </div>
 
         <div style="display: flex; flex-direction: column; align-items: center; gap: 14px; margin: auto 0;">
-          <div class="studio-artwork-container" style="width: 200px;">
-            <div class="studio-glow"></div>
-            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM">
+          <div style="position: relative; width: 200px; aspect-ratio: 1/1; margin: 10px auto;">
+            <div class="studio-glow" style="position:absolute; inset:-6px; border-radius:20px; background: linear-gradient(135deg, var(--primary), var(--accent)); opacity:0; filter:blur(14px); z-index:-1; transition: opacity 0.5s;"></div>
+            <img class="studio-artwork" src="https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg" alt="Logo Paraíso FM" style="width:100%; height:100%; border-radius:20px; object-fit:cover; border:2px solid rgba(255,255,255,0.2); box-shadow: 0 15px 35px -5px rgba(0,0,0,0.7);">
           </div>
 
           <span class="badge-onair">
@@ -1472,7 +1438,6 @@
             </div>
           </div>
 
-          <!-- Waveform -->
           <div class="audio-waveform">
             <div class="wave-line"></div>
             <div class="wave-line"></div>
@@ -1481,21 +1446,19 @@
             <div class="wave-line"></div>
           </div>
 
-          <!-- Play Button Desktop -->
           <button class="master-play-btn mainPlayBtn" aria-label="Tocar ou Pausar">
             <i class="fas fa-play mainPlayIcon"></i>
           </button>
 
           <div class="stream-status-text mainStatusText">Clique para ouvir</div>
 
-          <!-- Volume Desktop -->
           <div class="volume-control-row">
             <button class="btn-mute-toggle" style="background:none; border:none; color:var(--text-muted); cursor:pointer;"><i class="fas fa-volume-high muteIcon"></i></button>
             <input type="range" class="volume-range volumeSliderEl" min="0" max="1" step="0.01" value="0.8">
           </div>
         </div>
 
-        <div class="live-actions-row" style="margin-top: 20px;">
+        <div style="display: flex; gap: 10px; margin-top: 20px; width: 100%;">
           <a class="btn-quick-pill btn-quick-whatsapp" href="https://wa.me/5588999834349?text=Ol%C3%A1%2C%20estou%20ouvindo%20pelo%20App%20da%20Para%C3%ADso%20FM%20e%20gostaria%20de%20pedir%20uma%20m%C3%BAsica%3A" target="_blank" rel="noopener noreferrer">
             <i class="fab fa-whatsapp"></i> Pedir Música
           </a>
@@ -1507,20 +1470,22 @@
           </button>
         </div>
 
-        <!-- Créditos Desktop -->
         <div style="margin-top: 16px; text-align: center; font-size: 10px; color: rgba(255,255,255,0.15); font-weight: 600; letter-spacing: 0.3px;">
           Desenvolvido por <span style="color: rgba(96,165,250,0.3);">Rivaldo Santos</span>
         </div>
       </div>
 
-      <!-- COLUNA DIREITA: CONTEÚDO (GRADE, NOTÍCIAS, PARTICIPE) -->
+      <!-- COLUNA DIREITA: CONTEÚDO -->
       <div class="desktop-content-column">
         <div class="desktop-tab-header">
-          <button class="desktop-tab-btn active" data-target="desktop-schedule-view">
-            <i class="far fa-calendar-alt"></i> Programação 24h
+          <button class="desktop-tab-btn" data-target="desktop-videolive-view">
+            <i class="fab fa-youtube"></i> Vídeo Live
           </button>
-          <button class="desktop-tab-btn" data-target="desktop-news-view">
+          <button class="desktop-tab-btn active" data-target="desktop-news-view">
             <i class="far fa-newspaper"></i> Notícias
+          </button>
+          <button class="desktop-tab-btn" data-target="desktop-schedule-view">
+            <i class="far fa-calendar-alt"></i> Programação
           </button>
           <button class="desktop-tab-btn" data-target="desktop-contact-view">
             <i class="far fa-comments"></i> Participe
@@ -1528,19 +1493,52 @@
         </div>
 
         <div class="desktop-tab-body">
-          <!-- Grade Desktop -->
-          <div class="desktop-tab-pane" id="desktop-schedule-view">
+          <!-- Vídeo Live Desktop -->
+          <div class="desktop-tab-pane" id="desktop-videolive-view" style="display: none;">
+            <div class="live-video-container">
+              <div class="live-embed-card">
+                <div class="live-embed-header">
+                  <span class="badge-onair is-offline" id="liveStatusBadgeDesktop">
+                    <span class="dot-pulse"></span> VERIFICANDO...
+                  </span>
+                </div>
+                <div class="live-embed-wrapper" id="liveEmbedWrapperDesktop">
+                  <div class="yt-loading-msg">Verificando transmissão...</div>
+                </div>
+              </div>
+
+              <a class="btn-quick-pill btn-quick-youtube"
+                 href="https://www.youtube.com/@paraisofmsobral/streams"
+                 target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-youtube"></i> Abrir Canal no YouTube
+              </a>
+
+              <div class="yt-section-title" id="ytSectionTitleDesktop">
+                <i class="fas fa-video" style="color: var(--primary-light);"></i> Vídeos recentes
+              </div>
+              <div class="youtube-videos-grid" id="ytVideosGridDesktop">
+                <div class="yt-loading-msg" style="grid-column: 1/-1;">Carregando vídeos...</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Notícias Desktop -->
+          <div class="desktop-tab-pane" id="desktop-news-view" style="display: block;">
+            <div class="news-cards-feed newsContainerEl">
+              <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+                Carregando as últimas notícias...
+              </div>
+            </div>
+          </div>
+
+          <!-- Programação Desktop -->
+          <div class="desktop-tab-pane" id="desktop-schedule-view" style="display: none;">
             <div class="schedule-day-chips" style="margin-bottom: 18px;">
               <button class="chip-day active" data-day="weekday">Seg a Sex</button>
               <button class="chip-day" data-day="saturday">Sábado</button>
               <button class="chip-day" data-day="sunday">Domingo</button>
             </div>
             <div class="schedule-items-list scheduleContainerEl"></div>
-          </div>
-
-          <!-- Notícias Desktop -->
-          <div class="desktop-tab-pane" id="desktop-news-view" style="display: none;">
-            <div class="news-cards-feed newsContainerEl"></div>
           </div>
 
           <!-- Participe Desktop -->
@@ -1601,7 +1599,7 @@
     </div>
   </div>
 
-  <!-- MODAL: COMPARTILHAR APP -->
+  <!-- MODAL: COMPARTILHAR -->
   <div class="modal-backdrop" id="shareModalBackdrop">
     <div class="modal-card share-modal-card">
       <div class="modal-header-row">
@@ -1613,20 +1611,16 @@
       </p>
       <div class="share-options-grid">
         <a class="share-option-btn whats" id="shareWhatsApp" href="#" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-whatsapp"></i>
-          WhatsApp
+          <i class="fab fa-whatsapp"></i> WhatsApp
         </a>
         <a class="share-option-btn telegram" id="shareTelegram" href="#" target="_blank" rel="noopener noreferrer">
-          <i class="fab fa-telegram"></i>
-          Telegram
+          <i class="fab fa-telegram"></i> Telegram
         </a>
         <button class="share-option-btn copy" id="shareCopyLink">
-          <i class="fas fa-link"></i>
-          Copiar Link
+          <i class="fas fa-link"></i> Copiar Link
         </button>
         <button class="share-option-btn native" id="shareNative">
-          <i class="fas fa-share-nodes"></i>
-          Mais opções
+          <i class="fas fa-share-nodes"></i> Mais opções
         </button>
       </div>
       <div class="share-link-box">
@@ -1642,13 +1636,14 @@
     <source src="https://usa16.fastcast4u.com/proxy/paraisofm101?mp=/1" type="audio/mpeg">
   </audio>
 
-  <!-- JAVASCRIPT GLOBAL -->
   <script>
-    // ================= CONFIGURAÇÃO DO STREAM =================
+    // ================= CONFIG =================
     const STREAMS = [
       "https://stm28.xcast.com.br:11582/stream",
       "https://usa16.fastcast4u.com/proxy/paraisofm101?mp=/1"
     ];
+
+    const YOUTUBE_CHANNEL_ID = 'UCvsbdvsWNWTIhhxCJvEndHg';
 
     const audio = document.getElementById("radioCoreAudio");
     const mainPlayBtns = document.querySelectorAll(".mainPlayBtn");
@@ -1666,10 +1661,10 @@
     let currentVolume = 0.8;
     let isRadioStarted = false;
 
-    // ================= NAVEGAÇÃO MOBILE (TABS & MINI-PLAYER) =================
+    // ================= NAVEGAÇÃO MOBILE =================
     const navTabs = document.querySelectorAll(".nav-tab-item");
     const viewScreens = document.querySelectorAll(".view-screen");
-    let currentActiveTab = "view-live";
+    let currentActiveTab = "view-news"; // Aba inicial = Notícias
 
     navTabs.forEach(tab => {
       tab.addEventListener("click", () => {
@@ -1679,24 +1674,24 @@
     });
 
     document.getElementById("miniPlayerOpenLive").addEventListener("click", () => {
-      switchMobileTab("view-live");
+      // Ao clicar no mini-player, apenas alterna o play/pause (não muda de aba)
+      toggleAudio();
     });
 
     function switchMobileTab(targetId) {
       currentActiveTab = targetId;
-
       navTabs.forEach(t => t.classList.toggle("active", t.getAttribute("data-target") === targetId));
       viewScreens.forEach(s => s.classList.toggle("active", s.id === targetId));
 
-      // Se não estiver na tela Ao Vivo e a rádio já tiver sido iniciada ou estiver tocando, exibe o Mini-Player
-      if (targetId !== "view-live" && isRadioStarted) {
+      // Mostra mini-player sempre que já iniciou a rádio
+      if (isRadioStarted) {
         miniPlayerBar.classList.add("visible");
       } else {
         miniPlayerBar.classList.remove("visible");
       }
     }
 
-    // ================= NAVEGAÇÃO DESKTOP (TABS) =================
+    // ================= NAVEGAÇÃO DESKTOP =================
     const desktopTabs = document.querySelectorAll(".desktop-tab-btn");
     const desktopPanes = document.querySelectorAll(".desktop-tab-pane");
 
@@ -1711,13 +1706,10 @@
       });
     });
 
-    // ================= REPRODUÇÃO & STREAMING =================
+    // ================= REPRODUÇÃO =================
     function toggleAudio() {
-      if (audio.paused) {
-        startStreaming();
-      } else {
-        pauseStreaming();
-      }
+      if (audio.paused) startStreaming();
+      else pauseStreaming();
     }
 
     function startStreaming() {
@@ -1733,11 +1725,7 @@
         document.body.classList.add("is-playing");
         updatePlayIcons(false, true);
         updateStatusDisplay("Ao Vivo", "online");
-
-        // Atualizar miniplayer se estiver fora da aba live
-        if (currentActiveTab !== "view-live") {
-          miniPlayerBar.classList.add("visible");
-        }
+        miniPlayerBar.classList.add("visible");
 
         if (typeof gtag !== 'undefined') {
           gtag('event', 'play', { 'event_category': 'Player', 'event_label': 'Ao Vivo' });
@@ -1781,23 +1769,15 @@
 
     function updatePlayIcons(isLoading, isPlaying) {
       mainPlayIcons.forEach(icon => {
-        if (isLoading) {
-          icon.className = "fas fa-spinner fa-spin mainPlayIcon";
-        } else if (isPlaying) {
-          icon.className = "fas fa-pause mainPlayIcon";
-        } else {
-          icon.className = "fas fa-play mainPlayIcon";
-        }
+        if (isLoading) icon.className = "fas fa-spinner fa-spin mainPlayIcon";
+        else if (isPlaying) icon.className = "fas fa-pause mainPlayIcon";
+        else icon.className = "fas fa-play mainPlayIcon";
       });
 
       if (miniPlayIcon) {
-        if (isLoading) {
-          miniPlayIcon.className = "fas fa-spinner fa-spin miniPlayIcon";
-        } else if (isPlaying) {
-          miniPlayIcon.className = "fas fa-pause miniPlayIcon";
-        } else {
-          miniPlayIcon.className = "fas fa-play miniPlayIcon";
-        }
+        if (isLoading) miniPlayIcon.className = "fas fa-spinner fa-spin miniPlayIcon";
+        else if (isPlaying) miniPlayIcon.className = "fas fa-pause miniPlayIcon";
+        else miniPlayIcon.className = "fas fa-play miniPlayIcon";
       }
     }
 
@@ -1822,7 +1802,7 @@
     });
     audio.addEventListener("error", () => tryNextStreamSource());
 
-    // ================= VOLUME & MUTE =================
+    // ================= VOLUME =================
     volumeSliders.forEach(slider => {
       slider.addEventListener("input", (e) => {
         const val = parseFloat(e.target.value);
@@ -1855,13 +1835,12 @@
       });
     }
 
-    // Ocultar slider no iOS
     const isIOSDevice = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     if (isIOSDevice) {
       document.querySelectorAll(".volumeBoxEl").forEach(el => el.style.display = "none");
     }
 
-    // ================= GRADE DE PROGRAMAÇÃO =================
+    // ================= GRADE =================
     const GRADE = [
       { dias: [1,2,3,4,5], inicio: "04:00", fim: "06:00", programa: "De Olho na Cidade" },
       { dias: [1,2,3,4,5], inicio: "06:00", fim: "08:00", programa: "Chama a Paraíso" },
@@ -1948,7 +1927,6 @@
       }
     }
 
-    // Renderizar lista da grade nos containers (mobile e desktop)
     let selectedDayFilter = 'weekday';
 
     function renderizarListaGrade() {
@@ -1984,39 +1962,27 @@
       });
     });
 
-    // ================= NOTÍCIAS AUTOMÁTICAS (FEED WORDPRESS DO SISTEMAPARAISO.COM.BR) =================
+    // ================= NOTÍCIAS (WP) =================
     const WP_API_URL = 'https://sistemaparaiso.com.br/wp-json/wp/v2/posts?_embed&per_page=12';
 
     async function carregarFeedNoticias() {
       try {
-        const res = await fetch(WP_API_URL, {
-          headers: { 'Accept': 'application/json' }
-        });
+        const res = await fetch(WP_API_URL, { headers: { 'Accept': 'application/json' } });
         if (!res.ok) throw new Error("Erro WP API: " + res.status);
         const posts = await res.json();
 
         const noticias = posts.map(p => {
-          // Extrair foto destacada da matéria
           let imgUrl = null;
-          try {
-            imgUrl = p._embedded['wp:featuredmedia'][0].source_url;
-          } catch (e) {
-            imgUrl = null;
-          }
+          try { imgUrl = p._embedded['wp:featuredmedia'][0].source_url; } catch (e) { imgUrl = null; }
 
-          // Limpar entidades e tags HTML do título
           const divTemp = document.createElement("div");
           divTemp.innerHTML = p.title?.rendered || "Sem título";
           const tituloLimpo = divTemp.textContent || divTemp.innerText || "";
 
-          // Limpar e resumir o texto
           divTemp.innerHTML = p.excerpt?.rendered || "";
           let descLimpa = divTemp.textContent || divTemp.innerText || "";
-          if (descLimpa.length > 130) {
-            descLimpa = descLimpa.slice(0, 130).trim() + "...";
-          }
+          if (descLimpa.length > 130) descLimpa = descLimpa.slice(0, 130).trim() + "...";
 
-          // Formatar data em português
           let dataFormatada = "Recente";
           try {
             const d = new Date(p.date);
@@ -2034,27 +2000,15 @@
 
         renderizarNoticiasFeed(noticias.length > 0 ? noticias : getNoticiasPadrao());
       } catch (e) {
-        console.warn("Falha ao buscar feed do site sistemaparaiso.com.br, usando fallback:", e);
+        console.warn("Falha ao buscar feed WP, usando fallback:", e);
         renderizarNoticiasFeed(getNoticiasPadrao());
       }
     }
 
     function getNoticiasPadrao() {
       return [
-        {
-          titulo: "Paraíso FM 101,1: A voz e o coração de Sobral",
-          desc: "Acompanhe nossa programação líder em audiência com jornalismo sério e os melhores sucessos.",
-          link: "https://sistemaparaiso.com.br",
-          img: null,
-          data: "Destaque"
-        },
-        {
-          titulo: "Notícias de Sobral e Região Noroeste do Ceará",
-          desc: "Fique por dentro das principais notícias locais, política, utilidade pública e acontecimentos.",
-          link: "https://sistemaparaiso.com.br",
-          img: null,
-          data: "Plantão"
-        }
+        { titulo: "Paraíso FM 101,1: A voz e o coração de Sobral", desc: "Acompanhe nossa programação líder em audiência com jornalismo sério e os melhores sucessos.", link: "https://sistemaparaiso.com.br", img: null, data: "Destaque" },
+        { titulo: "Notícias de Sobral e Região Noroeste do Ceará", desc: "Fique por dentro das principais notícias locais, política, utilidade pública e acontecimentos.", link: "https://sistemaparaiso.com.br", img: null, data: "Plantão" }
       ];
     }
 
@@ -2080,7 +2034,7 @@
       document.querySelectorAll(".newsContainerEl").forEach(el => el.innerHTML = html);
     }
 
-    // ================= SLEEP TIMER (MODO SONO) =================
+    // ================= SLEEP TIMER =================
     let sleepInterval = null;
     let sleepRemainingSec = 0;
     const timerBackdrop = document.getElementById("timerModalBackdrop");
@@ -2138,7 +2092,7 @@
       timerStatusTexts.forEach(el => el.textContent = "Modo Sono");
     }
 
-    // ================= LOCALIZAÇÃO SILENCIOSA POR IP =================
+    // ================= LOCALIZAÇÃO POR IP =================
     async function detectarCidadePorIP() {
       try {
         const res = await fetch("https://ipapi.co/json/");
@@ -2151,30 +2105,25 @@
       }
     }
 
-    // ================= PWA: SERVICE WORKER =================
+    // ================= PWA =================
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./service-worker.js').catch(err => console.warn(err));
     }
 
-    // ================= MODAL: COMPARTILHAR =================
+    // ================= MODAL COMPARTILHAR =================
     const SHARE_URL  = 'https://appradio.sistemaparaiso.com';
     const SHARE_TEXT = '📻 Ouça a Paraíso FM 101,1 ao vivo! A melhor rádio de Sobral e região. Acesse o app:';
     const shareModalBackdrop = document.getElementById('shareModalBackdrop');
 
-    // Configurar links de compartilhamento
     document.getElementById('shareWhatsApp').href =
       `https://wa.me/?text=${encodeURIComponent(SHARE_TEXT + ' ' + SHARE_URL)}`;
     document.getElementById('shareTelegram').href =
       `https://t.me/share/url?url=${encodeURIComponent(SHARE_URL)}&text=${encodeURIComponent(SHARE_TEXT)}`;
 
-    // Abrir modal
     document.querySelectorAll('.btnOpenShareModal').forEach(btn => {
-      btn.addEventListener('click', () => {
-        shareModalBackdrop.classList.add('open');
-      });
+      btn.addEventListener('click', () => shareModalBackdrop.classList.add('open'));
     });
 
-    // Fechar modal
     document.getElementById('btnCloseShareModal').addEventListener('click', () => {
       shareModalBackdrop.classList.remove('open');
     });
@@ -2182,15 +2131,8 @@
       if (e.target === shareModalBackdrop) shareModalBackdrop.classList.remove('open');
     });
 
-    // Copiar link (botão da grid)
-    document.getElementById('shareCopyLink').addEventListener('click', () => {
-      copiarLink('shareCopyLink');
-    });
-
-    // Copiar link (botão da caixa)
-    document.getElementById('shareLinkCopyBtn').addEventListener('click', () => {
-      copiarLink('shareLinkCopyBtn');
-    });
+    document.getElementById('shareCopyLink').addEventListener('click', () => copiarLink('shareCopyLink'));
+    document.getElementById('shareLinkCopyBtn').addEventListener('click', () => copiarLink('shareLinkCopyBtn'));
 
     function copiarLink(btnId) {
       navigator.clipboard.writeText(SHARE_URL).then(() => {
@@ -2203,14 +2145,12 @@
           btn.style.color = '';
         }, 2000);
       }).catch(() => {
-        // Fallback para navegadores antigos
         const input = document.getElementById('shareLinkInput');
         input.select();
         document.execCommand('copy');
       });
     }
 
-    // Web Share API (botão "Mais opções")
     document.getElementById('shareNative').addEventListener('click', async () => {
       if (navigator.share) {
         try {
@@ -2219,15 +2159,202 @@
             text: SHARE_TEXT,
             url: SHARE_URL
           });
-        } catch (e) {
-          // Usuário cancelou ou erro — não fazer nada
-        }
+        } catch (e) {}
       } else {
-        // Fallback: copiar link
         copiarLink('shareNative');
       }
     });
 
+        // ================= VÍDEO LIVE / YOUTUBE (DATA API v3) =================
+    const YT_API_KEY = 'AIzaSyDQez4w2dwlg8ej3y9rHFbAddjekRgJlWc';
+    const YT_API_BASE = 'https://www.googleapis.com/youtube/v3';
+    const YT_RSS_URL = `https://www.youtube.com/feeds/videos.xml?channel_id=${YOUTUBE_CHANNEL_ID}`;
+
+    // Busca live ativa via API v3
+    async function buscarLiveAtiva() {
+      try {
+        const url = `${YT_API_BASE}/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&eventType=live&type=video&key=${YT_API_KEY}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('API erro ' + res.status);
+        const data = await res.json();
+        if (data.items && data.items.length > 0) {
+          return data.items[0].id.videoId;
+        }
+        return null;
+      } catch (e) {
+        console.warn('Falha API live, tentando RSS:', e);
+        return null;
+      }
+    }
+
+    // Busca vídeos recentes via API v3
+    async function buscarVideosRecentes(maxResults = 6) {
+      try {
+        const url = `${YT_API_BASE}/search?part=snippet&channelId=${YOUTUBE_CHANNEL_ID}&order=date&maxResults=${maxResults}&type=video&key=${YT_API_KEY}`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('API erro ' + res.status);
+        const data = await res.json();
+        return (data.items || []).map(item => ({
+          videoId: item.id.videoId,
+          title: item.snippet.title,
+          published: item.snippet.publishedAt,
+          thumb: item.snippet.thumbnails?.medium?.url || item.snippet.thumbnails?.default?.url,
+          isLive: item.snippet.liveBroadcastContent === 'live'
+        }));
+      } catch (e) {
+        console.warn('Falha API vídeos, tentando RSS:', e);
+        return buscarVideosViaRSS(maxResults);
+      }
+    }
+
+    // Fallback: RSS (caso a API falhe)
+    async function buscarVideosViaRSS(maxResults = 6) {
+      try {
+        const res = await fetch(YT_RSS_URL);
+        const xml = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(xml, 'text/xml');
+        const entries = Array.from(doc.querySelectorAll('entry')).slice(0, maxResults);
+
+        return entries.map(entry => {
+          const videoId = entry.getElementsByTagName('yt:videoId')[0]?.textContent
+                       || entry.getElementsByTagName('videoId')[0]?.textContent;
+          const title = entry.querySelector('title')?.textContent || 'Vídeo';
+          const published = entry.querySelector('published')?.textContent || '';
+          return {
+            videoId,
+            title,
+            published,
+            thumb: `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg`,
+            isLive: entry.getElementsByTagName('media:live').length > 0
+                 || /ao vivo|🔴|\blive\b/i.test(title)
+          };
+        });
+      } catch (e) {
+        return [];
+      }
+    }
+
+    // Monta o card da live/vídeo na área principal
+    async function montarEmbedLive(containerId, statusBadgeId, sectionTitleId, gridId) {
+      const container = document.getElementById(containerId);
+      const statusBadge = document.getElementById(statusBadgeId);
+      const sectionTitle = document.getElementById(sectionTitleId);
+      const grid = document.getElementById(gridId);
+      if (!container) return;
+
+      // Mostra loading
+      container.innerHTML = `<div class="yt-loading-msg">Verificando transmissão...</div>`;
+      if (statusBadge) {
+        statusBadge.className = 'badge-onair is-offline';
+        statusBadge.innerHTML = '<span class="dot-pulse"></span> VERIFICANDO...';
+      }
+
+      // 1. Tenta achar live ativa
+      const liveVideoId = await buscarLiveAtiva();
+
+      if (liveVideoId) {
+        // 🔴 TEM LIVE
+        if (statusBadge) {
+          statusBadge.className = 'badge-onair is-live';
+          statusBadge.innerHTML = '<span class="dot-pulse"></span> AO VIVO';
+        }
+        container.innerHTML = `
+          <iframe
+            src="https://www.youtube.com/embed/${liveVideoId}?autoplay=0&rel=0"
+            title="Live Paraíso FM"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            loading="lazy">
+          </iframe>
+        `;
+        // Esconde a seção "Vídeos recentes" e a grade (não precisa mostrar quando tem live)
+        if (sectionTitle) sectionTitle.style.display = 'none';
+        if (grid) grid.style.display = 'none';
+        return;
+      }
+
+      // 2. Sem live → mostra vídeo mais recente no player + grade completa
+      if (statusBadge) {
+        statusBadge.className = 'badge-onair is-offline';
+        statusBadge.innerHTML = '<span class="dot-pulse"></span> OFFLINE';
+      }
+      if (sectionTitle) sectionTitle.style.display = 'flex';
+      if (grid) grid.style.display = 'grid';
+
+      const videos = await buscarVideosRecentes(6);
+
+      if (videos.length === 0) {
+        container.innerHTML = `
+          <div class="yt-loading-msg" style="padding: 40px 20px;">
+            <i class="fab fa-youtube" style="font-size: 38px; color: #FF0000; opacity: 0.6; display:block; margin-bottom:10px;"></i>
+            Sem transmissão no momento.
+          </div>
+        `;
+        return;
+      }
+
+      // Vídeo mais recente no player
+      container.innerHTML = `
+        <iframe
+          src="https://www.youtube.com/embed/${videos[0].videoId}?autoplay=0&rel=0"
+          title="Vídeo recente"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy">
+        </iframe>
+      `;
+    }
+
+    // Renderiza a grade de vídeos recentes
+    async function carregarVideosRecentes(containerId) {
+      const container = document.getElementById(containerId);
+      if (!container) return;
+
+      const videos = await buscarVideosRecentes(6);
+
+      if (videos.length === 0) {
+        container.innerHTML = `<div class="yt-loading-msg" style="grid-column: 1/-1;">Nenhum vídeo encontrado.</div>`;
+        return;
+      }
+
+      container.innerHTML = videos.map(v => {
+        let dataFmt = '';
+        try {
+          dataFmt = new Date(v.published).toLocaleDateString('pt-BR', { day: '2-digit', month: 'short' });
+        } catch(e) {}
+
+        return `
+          <a class="yt-video-card" href="https://www.youtube.com/watch?v=${v.videoId}" target="_blank" rel="noopener noreferrer">
+            <img class="yt-video-thumb" src="${v.thumb}" alt="${v.title}" loading="lazy" onerror="this.src='https://img.radios.com.br/radio/lg/radio14228_1674649732.jpeg'">
+            <div class="yt-video-info">
+              <div class="yt-video-title">${v.title}</div>
+              <div class="yt-video-meta">
+                ${v.isLive ? '<span class="yt-live-tag">Live</span>' : ''}
+                <i class="far fa-calendar"></i> ${dataFmt}
+              </div>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+
+    // Inicializa tudo
+    function inicializarVideoLive() {
+      // Mobile
+      montarEmbedLive('liveEmbedWrapper', 'liveStatusBadge', 'ytSectionTitle', 'ytVideosGrid');
+      carregarVideosRecentes('ytVideosGrid');
+
+      // Desktop
+      montarEmbedLive('liveEmbedWrapperDesktop', 'liveStatusBadgeDesktop', 'ytSectionTitleDesktop', 'ytVideosGridDesktop');
+      carregarVideosRecentes('ytVideosGridDesktop');
+
+      // Atualiza a cada 3 minutos (detecta início/fim de live automaticamente)
+      setInterval(() => {
+        montarEmbedLive('liveEmbedWrapper', 'liveStatusBadge', 'ytSectionTitle', 'ytVideosGrid');
+        montarEmbedLive('liveEmbedWrapperDesktop', 'liveStatusBadgeDesktop', 'ytSectionTitleDesktop', 'ytVideosGridDesktop');
+      }, 180000);
+    }
     // ================= INICIALIZAÇÃO =================
     document.addEventListener("DOMContentLoaded", () => {
       atualizarProgramaNoAr();
@@ -2235,6 +2362,7 @@
       renderizarListaGrade();
       carregarFeedNoticias();
       detectarCidadePorIP();
+      inicializarVideoLive();
     });
   </script>
 </body>
